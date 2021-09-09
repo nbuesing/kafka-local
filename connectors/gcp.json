@@ -1,0 +1,27 @@
+{
+  "connector.class": "io.aiven.kafka.connect.gcs.GcsSinkConnector",
+
+  "tasks.max": "1",
+
+  "topics": "s3_topic",
+
+  "gcs.bucket.name" : "bucket",
+
+  "gcs.credentials.path" : "/etc/kafka-connect/jars/key.json",
+
+  "format.output.type" : "jsonl",
+  "format.output.fields": "key,value,offset,timestamp,headers",
+  "format.output.envelope": true,
+  "file.name.prefix" : "temp/",
+  "file.compression.type" : "gzip",
+  "file.name.timestamp.timezone" : "UTC",
+  "file.name.timestamp.source" : "wallclock",
+  "file.name.template" : "y={{timestamp:unit=yyyy}}/m={{timestamp:unit=MM}}/d={{timestamp:unit=dd}}/H={{timestamp:unit=HH}}/{{topic}}-{{partition:padding=true}}-{{start_offset:padding=true}}.gz",
+
+  "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "key.converter.schemas.enable": false,
+
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "value.converter.schemas.enable": false
+
+}

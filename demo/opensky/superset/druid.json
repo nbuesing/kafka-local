@@ -1,0 +1,15 @@
+{
+  "allow_csv_upload": true,
+  "allow_ctas": true,
+  "allow_cvas": true,
+  "allow_dml": true,
+  "allow_multi_schema_metadata_fetch": true,
+  "allow_run_async": true,
+  "cache_timeout": 0,
+  "configuration_method": "sqlalchemy_form",
+  "database_name": "druid",
+  "expose_in_sqllab": true,
+  "impersonate_user": true,
+  "parameters": {},
+  "sqlalchemy_uri": "druid://druid-router:8888/druid/v2/sql"
+}

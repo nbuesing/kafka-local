@@ -1,0 +1,28 @@
+{
+  "connector.class": "com.github.nbuesing.kafka.connect.opensky.OpenSkySourceConnector",
+
+  "tasks.max": "1",
+
+  "topic": "flightdata",
+
+  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "value.converter.schemas.enable": "false",
+
+  "interval": "60",
+
+  "_USA_bounding.boxes": "45.8389 47.8229 5.9962 10.5226 , 24.396308 49.384358 -124.848974 -66.885444",
+  "_NA_AND_INDIA_bounding.boxes": "10.008944 74.924300 -171.386719 -47.812500, 3.062117 35.664915 62.964567 94.077848",
+
+  "opensky.timeout.connect": "20s",
+  "opensky.timeout.read": "40s",
+  "opensky.username": "${file:/etc/kafka-connect/secrets/opensky.properties:USERNAME}",
+  "opensky.password": "${file:/etc/kafka-connect/secrets/opensky.properties:PASSWORD}",
+
+  "transforms": "flatten,rename",
+  "transforms.flatten.type": "org.apache.kafka.connect.transforms.Flatten$Value",
+  "transforms.flatten.delimiter": "_",
+  "transforms.rename.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+  "transforms.rename.renames": "location_lat:latitude,location_lon:longitude"
+}

@@ -1,0 +1,16 @@
+create stream FLIGHTS (
+  id varchar KEY,
+  callsign varchar,
+  originCountry varchar,
+  timePosition bigint,
+  lastContact bigint,
+  latitude double,
+  longitude double,
+  barometricAltitude double,
+  geometricAltitude double,
+  onGround boolean,
+  heading double,
+  velocity double
+) with (kafka_topic='flightdata', value_format='json', timestamp='lastContact');
+
+describe FLIGHTS extended;

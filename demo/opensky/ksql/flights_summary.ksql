@@ -1,0 +1,21 @@
+create table FLIGHTS_SUMMARY as 
+  select 
+     id, 
+     latest_by_offset(callsign) callsign,
+     max(timeposition) timeposition,
+     max(lastcontact) lastcontact,
+     latest_by_offset(velocity) velocity,
+     latest_by_offset(velocity) heading,
+     latest_by_offset(latitude) latitude,
+     latest_by_offset(longitude) longitude,
+     latest_by_offset(geometricAltitude) altitude,
+     geopoint_segment_distance(geopoint(latitude, longitude, geometricaltitude, timeposition)) distance,
+     latest_by_offset(nearest_airport(latitude, longitude)->code) nearest_aiport,
+     latest_by_offset(nearest_city(latitude, longitude)->name) nearest_city,
+     latest_by_offset(nearest_city(latitude, longitude)->iso) nearest_region
+ from flights 
+ window session(30 minutes)
+ where onGround = false
+ group by id;
+
+describe FLIGHTS_SUMMARY extended;

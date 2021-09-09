@@ -1,0 +1,44 @@
+# Java tuning
+DRUID_XMX=1g
+DRUID_XMS=1g
+DRUID_MAXNEWSIZE=250m
+DRUID_NEWSIZE=250m
+DRUID_MAXDIRECTMEMORYSIZE=6172m
+
+druid_emitter_logging_logLevel=debug
+
+druid_extensions_loadList=["druid-kafka-indexing-service", "druid-histogram", "druid-datasketches", "druid-lookups-cached-global", "postgresql-metadata-storage", "kafka-emitter"]
+
+#druid_extensions_loadList=["druid-kafka-indexing-service", "druid-histogram", "druid-datasketches", "druid-lookups-cached-global", "postgresql-metadata-storage", "druid-google-extensions"]
+
+#druid_extensions_loadList=["druid-kafka-indexing-service", "druid-histogram", "druid-datasketches", "druid-lookups-cached-global", "postgresql-metadata-storage", "druid-s3-extensions", "druid-google-extensions"]
+
+druid_zk_service_host=druid-zookeeper
+
+druid_metadata_storage_host=
+druid_metadata_storage_type=postgresql
+druid_metadata_storage_connector_connectURI=jdbc:postgresql://druid-postgres:5432/druid
+druid_metadata_storage_connector_user=druid
+druid_metadata_storage_connector_password=FoolishPassword
+
+druid_coordinator_balancer_strategy=cachingCost
+
+druid_indexer_runner_javaOptsArray=["-server", "-Xmx1g", "-Xms1g", "-XX:MaxDirectMemorySize=3g", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]
+druid_indexer_fork_property_druid_processing_buffer_sizeBytes=268435456
+
+druid_storage_type=local
+druid_storage_storageDirectory=/opt/data/segments
+druid_indexer_logs_type=file
+druid_indexer_logs_directory=/opt/data/indexing-logs
+
+druid_processing_numThreads=2
+druid_processing_numMergeBuffers=2
+
+druid_emitter=kafka
+druid_emitter_kafka_bootstrap_servers=broker-1:9092,broker-2:9092,broker-3:9092,broker-4:9092
+druid_emitter_kafka_metric_topic=druid-metric
+druid_emitter_kafka_alert_topic=druid-alert
+druid_emitter_kafka_producer_config={"max.block.ms":10000}
+
+
+DRUID_LOG4J=<?xml version="1.0" encoding="UTF-8" ?><Configuration status="WARN"><Appenders><Console name="Console" target="SYSTEM_OUT"><PatternLayout pattern="%d{ISO8601} %p [%t] %c - %m%n"/></Console></Appenders><Loggers><Root level="info"><AppenderRef ref="Console"/></Root><Logger name="org.apache.druid.jetty.RequestLog" additivity="false" level="DEBUG"><AppenderRef ref="Console"/></Logger></Loggers></Configuration>

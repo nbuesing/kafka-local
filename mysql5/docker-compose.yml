@@ -1,0 +1,25 @@
+---
+version: '3.7'
+
+networks:
+  default:
+    external: true
+    name: kafka-local
+
+volumes:
+  mysql5: {}
+
+services:
+  mysql5:
+    image: mysql:5.7.35
+    hostname: mysql5
+    container_name: mysql5
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./init.d:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpw
+

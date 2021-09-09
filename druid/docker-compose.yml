@@ -1,0 +1,176 @@
+---
+version: '3.7'
+
+networks:
+  default:
+    external: true
+    name: kafka-local
+
+volumes:
+  postgres: {}
+  zk: {}
+  zk_datalog: {}
+  zk_logs: {}
+  coordinator: {}
+  broker: {}
+  historical: {}
+  middlemanager: {}
+  router: {}
+
+services:
+  druid-postgres:
+    image: postgres:latest
+    container_name: druid-postgres
+    hostname: druid-postgres
+    healthcheck:
+      test: pg_isready -U druid
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: FoolishPassword
+      POSTGRES_USER: druid
+      POSTGRES_DB: druid
+
+  # Need 3.5 or later for container nodes
+  druid-zookeeper:
+    image: zookeeper:3.5
+    container_name: druid-zookeeper
+    hostname: druid-zookeeper
+    healthcheck:
+      test: echo ruok | nc -w 2 localhost 2181 | grep imok
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - zk:/data
+      - zk_datalog:/datalog
+      - zk_logs:/logs
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_4LW_COMMANDS_WHITELIST: "ruok,stat"
+
+  druid-coordinator:
+    image: apache/druid:0.21.1
+    container_name: druid-coordinator
+    hostname: druid-coordinator
+    healthcheck:
+      test: wget --spider http://localhost:8081/status/health || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - coordinator:/opt/druid/var
+      - ./storage:/opt/data
+      - ./staging:/opt/staging
+    depends_on: 
+      - druid-zookeeper
+      - druid-postgres
+    ports:
+      - "38081:8081"
+    command:
+      - coordinator
+    env_file:
+      - environment
+
+  druid-broker:
+    image: apache/druid:0.21.1
+    container_name: druid-broker
+    hostname: druid-broker
+    healthcheck:
+      test: wget --spider http://localhost:8082/status/health || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - broker:/opt/druid/var
+      - ./staging:/opt/staging
+    depends_on: 
+      - druid-zookeeper
+      - druid-postgres
+      - druid-coordinator
+    ports:
+      - "38082:8082"
+    command:
+      - broker
+    env_file:
+      - environment
+
+  druid-historical:
+    image: apache/druid:0.21.1
+    container_name: druid-historical
+    hostname: druid-historical
+    healthcheck:
+      test: wget --spider http://localhost:8083/druid/historical/v1/readiness || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - historical:/opt/druid/var
+      - ./storage:/opt/data
+      - ./staging:/opt/staging
+    depends_on: 
+      - druid-zookeeper
+      - druid-postgres
+      - druid-coordinator
+    ports:
+      - "38083:8083"
+    command:
+      - historical
+    env_file:
+      - environment
+
+  druid-middlemanager:
+    image: apache/druid:0.21.1
+    container_name: druid-middlemanager
+    hostname: druid-middlemanager
+    healthcheck:
+      test: wget --spider http://localhost:8091/status/health || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - middlemanager:/opt/druid/var
+      - ./storage:/opt/data
+      - ./staging:/opt/staging
+    depends_on: 
+      - druid-zookeeper
+      - druid-postgres
+      - druid-coordinator
+    ports:
+      - "18091:8091"
+    command:
+      - middleManager
+    env_file:
+      - environment
+
+  druid-router:
+    image: apache/druid:0.21.1
+    container_name: druid-router
+    hostname: druid-router
+    healthcheck:
+      test: wget --spider http://localhost:8888/status/health || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - router:/opt/druid/var
+      - ./staging:/opt/staging
+    depends_on:
+      - druid-zookeeper
+      - druid-postgres
+      - druid-coordinator
+    ports:
+      - "38888:8888"
+    command:
+      - router
+    env_file:
+      - environment

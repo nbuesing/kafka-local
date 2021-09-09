@@ -1,0 +1,81 @@
+---
+version: '3.7'
+
+networks:
+  default:
+    external: true
+    name: kafka-local
+
+volumes:
+  c1_kafka_data: {}
+  c1_kafka_secrets: {}
+  c2_kafka_data: {}
+  c2_kafka_secrets: {}
+
+services:
+
+  connect-1:
+    image: confluentinc/cp-kafka-connect:6.1.1
+    hostname: connect-1
+    container_name: connect-1
+    ports:
+      - "18083:8083"
+    volumes:
+      - c1_kafka_data:/var/lib/kafka/data
+      - c1_kafka_secrets:/etc/kafka/secrets
+      - ./jars:/etc/kafka-connect/jars
+      - ./secrets:/etc/kafka-connect/secrets
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: 'broker-1:9092,broker-2:9092,broker-3:9092,broker-4:9092'
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: 'connect-cluster'
+      CONNECT_CONFIG_STORAGE_TOPIC: 'connect-cluster-sink-config'
+      CONNECT_OFFSET_STORAGE_TOPIC: 'connect-cluster-sink-offsets'
+      CONNECT_STATUS_STORAGE_TOPIC: 'connect-cluster-sink-status'
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_CONFIG_PROVIDERS: file
+      CONNECT_CONFIG_PROVIDERS_FILE_CLASS: 'org.apache.kafka.common.config.provider.FileConfigProvider'
+      CONNECT_KEY_CONVERTER: 'io.confluent.connect.avro.AvroConverter'
+      CONNECT_VALUE_CONVERTER: 'io.confluent.connect.avro.AvroConverter'
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+      CONNECT_INTERNAL_KEY_CONVERTER: 'org.apache.kafka.connect.json.JsonConverter'
+      CONNECT_INTERNAL_VALUE_CONVERTER: 'org.apache.kafka.connect.json.JsonConverter'
+      CONNECT_REST_ADVERTISED_HOST_NAME: 'connect-1'
+      CONNECT_PLUGIN_PATH: /etc/kafka-connect/jars,/usr/share/java
+      CONNECT_LOG4J_ROOT_LOGLEVEL: INFO
+  
+  connect-2:
+    image: confluentinc/cp-kafka-connect:6.1.1
+    hostname: connect-2
+    container_name: connect-2
+    ports:
+      - "28083:8083"
+    volumes:
+      - c2_kafka_data:/var/lib/kafka/data
+      - c2_kafka_secrets:/etc/kafka/secrets
+      - ./jars:/etc/kafka-connect/jars
+      - ./secrets:/etc/kafka-connect/secrets
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: 'broker-1:9092,broker-2:9092,broker-3:9092,broker-4:9092'
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: 'connect-cluster'
+      CONNECT_CONFIG_STORAGE_TOPIC: 'connect-cluster-sink-config'
+      CONNECT_OFFSET_STORAGE_TOPIC: 'connect-cluster-sink-offsets'
+      CONNECT_STATUS_STORAGE_TOPIC: 'connect-cluster-sink-status'
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_CONFIG_PROVIDERS: file
+      CONNECT_CONFIG_PROVIDERS_FILE_CLASS: 'org.apache.kafka.common.config.provider.FileConfigProvider'
+      CONNECT_KEY_CONVERTER: 'io.confluent.connect.avro.AvroConverter'
+      CONNECT_VALUE_CONVERTER: 'io.confluent.connect.avro.AvroConverter'
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+      CONNECT_INTERNAL_KEY_CONVERTER: 'org.apache.kafka.connect.json.JsonConverter'
+      CONNECT_INTERNAL_VALUE_CONVERTER: 'org.apache.kafka.connect.json.JsonConverter'
+      CONNECT_REST_ADVERTISED_HOST_NAME: 'connect-2'
+      CONNECT_PLUGIN_PATH: /etc/kafka-connect/jars,/usr/share/java
+      CONNECT_LOG4J_ROOT_LOGLEVEL: INFO

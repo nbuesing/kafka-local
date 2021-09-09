@@ -1,0 +1,59 @@
+{
+  "type": "kafka",
+  "spec": {
+    "ioConfig": {
+      "type": "kafka",
+      "consumerProperties": {
+        "bootstrap.servers": "broker-1:9092"
+      },
+      "topic": "_metrics-kafka-streams",
+      "inputFormat": {
+        "type": "json"
+      },
+      "useEarliestOffset": true
+    },
+    "tuningConfig": {
+      "type": "kafka"
+    },
+    "dataSchema": {
+      "dataSource": "_metrics-kafka-streams",
+      "granularitySpec": {
+        "type": "uniform",
+        "queryGranularity": "fifteen_minute",
+        "segmentGranularity": "fifteen_minute",
+        "rollup": true
+      },
+      "timestampSpec": {
+        "column": "timestamp",
+        "format": "millis"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          "group",
+          "group-id",
+          "client-id",
+          "thread-id",
+          "task-id",
+          "processor-node-id",
+          "partition",
+          "subtopology",
+          "topic",
+          "record-cache-id",
+          "rocksdb-state",
+          "name"
+        ]
+      },
+      "metricsSpec": [
+        {
+          "name": "count",
+          "type": "count"
+        },
+        {
+          "name": "value",
+          "type": "doubleLast",
+          "fieldName": "value"
+        }
+      ]
+    }
+  }
+}

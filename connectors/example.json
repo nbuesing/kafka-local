@@ -1,0 +1,28 @@
+{
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "dialect.name" : "MySqlDatabaseDialect",
+    "tasks.max": "1",
+    "connection.url": "${file:/etc/kafka-connect/secrets/mysql.properties:CONNECTION_URL}",
+    "connection.user" : "${file:/etc/kafka-connect/secrets/mysql.properties:CONNECTION_USER}",
+    "connection.password" : "${file:/etc/kafka-connect/secrets/mysql.properties:CONNECTION_PASSWORD}",
+
+    "tables" : "EXAMPLE",
+    "topic.prefix": "MAIN",
+    "schema.pattern": "MAIN",
+
+    "poll.interval.ms" : 6000,
+    "mode":"bulk",
+    "pk.mode": "key+value",
+
+    "validate.non.null": true,
+    "_key.converter.schemas.enable": false,
+
+
+    "transforms" : "SetKeySchemaName,SetValueSchemaName",
+    "transforms.SetKeySchemaName.type": "org.apache.kafka.connect.transforms.SetSchemaMetadata$Key",
+    "transforms.SetKeySchemaName.schema.name": "FOO",
+    "transforms.SetValueSchemaName.type": "org.apache.kafka.connect.transforms.SetSchemaMetadata$Value",
+    "transforms.SetValueSchemaName.schema.name": "BAR"
+
+}
+
