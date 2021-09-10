@@ -46,7 +46,7 @@ services:
       CONNECT_REST_ADVERTISED_HOST_NAME: 'connect-1'
       CONNECT_PLUGIN_PATH: /etc/kafka-connect/jars,/usr/share/java
       CONNECT_LOG4J_ROOT_LOGLEVEL: INFO
-  
+ 
   connect-2:
     image: confluentinc/cp-kafka-connect:6.1.1
     hostname: connect-2

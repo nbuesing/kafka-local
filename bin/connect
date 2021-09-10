@@ -56,6 +56,15 @@ if [[ ( $OPERATION == "create" || $OPERATION == "update" ) && ! -f ${CONFIG}  ]]
 #  exit
 fi
 
+cat ${CONFIG} | jq > /dev/null
+
+if [ $? -ne 0 ]; then
+  echo""
+  exit
+fi
+
+
+
 NAME=$(basename $NAME)
 
 echo ""

@@ -18,21 +18,21 @@ services:
       - ./data:/data
     command: -port 8001 -scheme http -external-url http://fake-gcs-server:8001
 
-#  cloudserver:
-#    image: zenko/cloudserver:latest
-#    container_name: cloudserver
-#    hostname: cloudserver
-#    ports:
-#      - "8000:8000"
-#    environment:
-#      - SCALITY_ACCESS_KEY_ID=accessKey1
-#      - SCALITY_SECRET_ACCESS_KEY=secretKey1
-#      - S3BACKEND=mem
-#      - LOG_LEVEL=trace
-#      - REMOTE_MANAGEMENT_DISABLE=1
-#    volumes:
-#      - ./cloudserver/data:/data
-#      - ./cloudserver/metadata:/metadata
+  cloudserver:
+    image: zenko/cloudserver:latest
+    container_name: cloudserver
+    hostname: cloudserver
+    ports:
+      - "8000:8000"
+    environment:
+      - SCALITY_ACCESS_KEY_ID=accessKey1
+      - SCALITY_SECRET_ACCESS_KEY=secretKey1
+      - S3BACKEND=mem
+      - LOG_LEVEL=trace
+      - REMOTE_MANAGEMENT_DISABLE=1
+    volumes:
+      - ./cloudserver/data:/data
+      - ./cloudserver/metadata:/metadata
 
   localstack:
     image: localstack/localstack:0.12.12

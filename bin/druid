@@ -1,0 +1,50 @@
+#!/bin/sh
+
+usage() {
+  echo ""
+  echo "Usage: $0 {load|unload} name"
+  echo ""
+}
+
+if [ $# -lt 2 ]; then
+  usage
+  exit
+fi
+
+OPERATION=$1
+shift
+
+NAME=$1
+shift
+
+if [[ $NAME == *.json ]]; then
+  NAME=${NAME%.*}
+fi
+
+DATA=./${NAME}.json
+
+URL=http://localhost:38081
+CONTENT_TYPE_HDR='Content-Type:application/json'
+
+
+load() {
+  curl -X POST -H $CONTENT_TYPE_HDR -d @$DATA $URL/druid/indexer/v1/supervisor
+}
+
+
+unload() {
+  curl -X POST $URL/druid/indexer/v1/supervisor/${spec}/reset
+  curl -X POST $URL/druid/indexer/v1/supervisor/${spec}/shutdown
+}
+
+
+case "${OPERATION}" in
+  load)
+    load
+    ;;
+  unload)
+    unload
+    ;;
+  *)
+    usage
+esac

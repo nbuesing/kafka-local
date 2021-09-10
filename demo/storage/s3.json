@@ -1,0 +1,55 @@
+{
+  "connector.class": "io.confluent.connect.s3.S3SinkConnector",
+
+  "tasks.max": "1",
+
+  "topics": "s3_topic",
+
+  "partitioner.class": "io.confluent.connect.storage.partitioner.TimeBasedPartitioner",
+  "path.format": "'y'=YYYY/'m'=MM/'d'=dd/'H'=HH",
+  "partition.duration.ms" : 3600000,
+  "locale" : "en-US",
+  "timezone" : "UTC",
+ 
+  "timestamp.extractor" : "Record",
+
+  "_timestamp.extractor" : "RecordField",
+  "_timestamp.field" : "foo",
+
+  "_rotate.interval.ms" : "...",
+ 
+  "format.class" : "io.confluent.connect.s3.format.json.JsonFormat",
+  "storage.class": "io.confluent.connect.s3.storage.S3Storage",
+
+  "_store.url" : "_ this is to test against a local s3 complaint server called localstack _",
+  "store.url" : "http://localstack:4566",
+
+  "_store.url" : "http://cloudserver:8000",
+
+  "s3.region": "_local_",
+
+  "s3.bucket.name": "foo",
+
+  "_aws" : "aws client jar uses global configuration (so misleading if configured here), deploy creds as part of your deployment",
+  "aws.access.key.id": "${file:/etc/kafka-connect/secrets/aws.properties:AWS_ACCESS_KEY_ID}",
+  "aws.secret.access.key": "${file:/etc/kafka-connect/secrets/aws.properties:AWS_SECRET_ACCESS_KEY}",
+
+  "s3.part.size": "5242880",
+  "s3.compression.type": "gzip",
+  "flush.size": "3",
+
+  "key.converter": "org.apache.kafka.connect.converters.ByteArrayConverter",
+  "_key.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "key.converter.schemas.enable": false,
+
+  "value.converter": "org.apache.kafka.connect.converters.ByteArrayConverter",
+  "_value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "value.converter.schemas.enable": false,
+ 
+  "errors.tolerance": "all",
+  "errors.deadletterqueue.topic.name":"connect.sink.dlt.S3SinkConnector",
+  "errors.log.include.messages" : true,
+  "errors.deadletterqueue.context.headers.enable" : true,
+  "errors.deadletterqueue.topic.replication.factor": 3
+
+}

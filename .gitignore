@@ -19,6 +19,7 @@ build
 /flink/tmp/*
 /s3/data/*
 
+/storage/data/*
 /demo/**/tmp/*
 
 /connect/secrets/opensky.properties
