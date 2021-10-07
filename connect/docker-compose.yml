@@ -26,7 +26,9 @@ services:
       - ./jars:/etc/kafka-connect/jars
       - ./secrets:/etc/kafka-connect/secrets
     environment:
+      #CONNECT_BOOTSTRAP_SERVERS: 'broker-1-lb:9094,broker-2-lb:9094,broker-3-lb:9094,broker-4-lb:9094'
       CONNECT_BOOTSTRAP_SERVERS: 'broker-1:9092,broker-2:9092,broker-3:9092,broker-4:9092'
+      CONNECT_CONNECTOR_CLIENT_CONFIG_OVERRIDE_POLICY: All
       CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: 'connect-cluster'
       CONNECT_CONFIG_STORAGE_TOPIC: 'connect-cluster-sink-config'
@@ -59,7 +61,9 @@ services:
       - ./jars:/etc/kafka-connect/jars
       - ./secrets:/etc/kafka-connect/secrets
     environment:
+      #CONNECT_BOOTSTRAP_SERVERS: 'broker-1-lb:9094,broker-2-lb:9094,broker-3-lb:9094,broker-4-lb:9094'
       CONNECT_BOOTSTRAP_SERVERS: 'broker-1:9092,broker-2:9092,broker-3:9092,broker-4:9092'
+      CONNECT_CONNECTOR_CLIENT_CONFIG_OVERRIDE_POLICY: All
       CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: 'connect-cluster'
       CONNECT_CONFIG_STORAGE_TOPIC: 'connect-cluster-sink-config'

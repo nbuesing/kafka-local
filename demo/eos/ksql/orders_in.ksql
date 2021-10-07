@@ -1,0 +1,9 @@
+create stream ORDERS (
+  ordertime bigint,
+  orderid bigint,
+  itemid varchar,
+  orderunits double,
+  address struct<city varchar, state varchar, zipcode varchar>
+) with (kafka_topic='orders_json', value_format='json', timestamp='ordertime');
+
+describe ORDERS extended;

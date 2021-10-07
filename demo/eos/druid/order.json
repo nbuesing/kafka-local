@@ -1,0 +1,59 @@
+{
+  "type": "kafka",
+  "spec": {
+    "ioConfig": {
+      "type": "kafka",
+      "consumerProperties": {
+        "bootstrap.servers": "broker-1-lb:9094,broker-2-lb:9094,broker-3-lb:9094",
+        "isolation.level": "read_committed"
+      },
+      "topic": "ORDERS_OUT",
+      "inputFormat": {
+        "type": "json"
+      },
+      "useEarliestOffset": true
+    },
+    "tuningConfig": {
+      "type": "kafka"
+    },
+    "dataSchema": {
+      "dataSource": "orders",
+      "timestampSpec": {
+        "column": "ORDERTIME",
+        "format": "auto"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          {
+            "type": "long",
+            "name": "ORDERID"
+          },
+          "ITEMID",
+          {
+            "type": "double",
+            "name": "ORDERUNITS"
+          },
+          "CITY",
+          "STATE",
+          "ZIPCODE"
+        ]
+      },
+      "metricsSpec": [
+        {
+          "type": "count",
+          "name": "count"
+        }
+      ],
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": "HOUR",
+        "queryGranularity": null,
+        "rollup": false,
+        "intervals": null
+      },
+      "transformSpec": {
+        "transforms": []
+      }
+    }
+  }
+}

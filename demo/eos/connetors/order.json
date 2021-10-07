@@ -1,0 +1,18 @@
+{
+    "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
+    "kafka.topic": "orders_json",
+    "quickstart": "orders",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+    "max.interval": 100,
+    "iterations": 10000,
+    "tasks.max": "1",
+
+    "_producer.override.bootstrap.server" : "broker-1-lb:9094,broker-2-lb:9094,broker-3-lb:9094,broker-4-lb:9094",
+    "producer.override.request.timeout.ms" : 5000,
+    "producer.override.acks" : "1",
+    "producer.override.acks" : "1",
+    "producer.override.enable.idempotence" : "false"
+
+}

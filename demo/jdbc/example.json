@@ -6,19 +6,20 @@
     "connection.user" : "${file:/etc/kafka-connect/secrets/mysql.properties:CONNECTION_USER}",
     "connection.password" : "${file:/etc/kafka-connect/secrets/mysql.properties:CONNECTION_PASSWORD}",
 
-    "tables" : "EXAMPLE",
+    "tables" : "SEQ_EXAMPLE",
     "topic.prefix": "MAIN",
     "schema.pattern": "MAIN",
 
     "poll.interval.ms" : 6000,
-    "mode":"bulk",
-    "pk.mode": "key+value",
+    "mode":"incrementing",
+    "_mode":"bulk",
+    "_pk.mode": "key+value",
 
     "validate.non.null": true,
     "_key.converter.schemas.enable": false,
 
 
-    "transforms" : "SetKeySchemaName,SetValueSchemaName",
+    "_transforms" : "SetKeySchemaName,SetValueSchemaName",
     "transforms.SetKeySchemaName.type": "org.apache.kafka.connect.transforms.SetSchemaMetadata$Key",
     "transforms.SetKeySchemaName.schema.name": "FOO",
     "transforms.SetValueSchemaName.type": "org.apache.kafka.connect.transforms.SetSchemaMetadata$Value",

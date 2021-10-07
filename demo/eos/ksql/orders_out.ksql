@@ -1,0 +1,11 @@
+create stream ORDERS_OUT as
+  select ORDERTIME,
+    ORDERID,
+    ITEMID,
+    ORDERUNITS,
+    UCASE(ADDRESS->CITY) as CITY,
+    UCASE(ADDRESS->STATE) as STATE,
+    ADDRESS->ZIPCODE as ZIPCODE
+  from ORDERS;
+
+describe ORDERS_OUT extended;
