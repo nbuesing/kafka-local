@@ -9,7 +9,7 @@ networks:
 services:
 
   ksql-server:
-    image: confluentinc/ksqldb-server:0.20.0
+    image: confluentinc/ksqldb-server:0.21.0
     hostname: ksql-server
     container_name: ksql-server
     healthcheck:
@@ -28,8 +28,8 @@ services:
       KSQL_APPLICATION_ID: "ksql-server"
       KSQL_UDFS_ENABLED: "true"
       KSQL_KSQL_EXTENSION_DIR: "/etc/ksqldb/ext"
-      KSQL_BOOTSTRAP_SERVERS: "broker-1-lb:9094,broker-2-lb:9094,broker-3-lb:9094,broker-4-lb:9094"
-      #KSQL_BOOTSTRAP_SERVERS: "broker-1:9092,broker-2:9092,broker-3:9092,broker-4:9092"
+      #KSQL_BOOTSTRAP_SERVERS: "broker-1-lb:9094,broker-2-lb:9094,broker-3-lb:9094,broker-4-lb:9094"
+      KSQL_BOOTSTRAP_SERVERS: "broker-1:9092,broker-2:9092,broker-3:9092,broker-4:9092"
       KSQL_KSQL_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
       KSQL_KSQL_STREAMS_COMMIT_INTERVAL_MS: 5000
       KSQL_CACHE_MAX_BYTES_BUFFERING: 0
@@ -49,7 +49,7 @@ services:
 
 # you can use ksql installed locally, just keep in mind it could be a different version as confluent installs ksql versioned as as part of confluent's versioning, not ksqldb's versioning
 #  ksql-cli:
-#    image: confluentinc/ksqldb-cli:0.20.0
+#    image: confluentinc/ksqldb-cli:0.21.0
 #    hostname: ksql-cli
 #    container_name: ksql-cli
 #    depends_on:

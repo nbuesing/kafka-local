@@ -17,7 +17,7 @@ volumes:
 services:
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:6.2.0
+    image: confluentinc/cp-zookeeper:6.2.1
     container_name: zookeeper
     hostname: zookeeper
     ports:
@@ -38,7 +38,7 @@ services:
       - ./secrets:/etc/zookeeper/secrets
 
   broker-1:
-    image: confluentinc/cp-kafka:6.2.0
+    image: confluentinc/cp-kafka:6.2.1
     hostname: broker-1
     container_name: broker-1
     stop_grace_period: 120s
@@ -76,7 +76,7 @@ services:
 
 
   broker-2:
-    image: confluentinc/cp-kafka:6.2.0
+    image: confluentinc/cp-kafka:6.2.1
     hostname: broker-2
     container_name: broker-2
     stop_grace_period: 120s
@@ -111,7 +111,7 @@ services:
       CONFLUENT_METRICS_ENABLE: 'false'
 
   broker-3:
-    image: confluentinc/cp-kafka:6.2.0
+    image: confluentinc/cp-kafka:6.2.1
     hostname: broker-3
     container_name: broker-3
     stop_grace_period: 120s
@@ -146,7 +146,7 @@ services:
       CONFLUENT_METRICS_ENABLE: 'false'
 
   broker-4:
-    image: confluentinc/cp-kafka:6.2.0
+    image: confluentinc/cp-kafka:6.2.1
     hostname: broker-4
     container_name: broker-4
     stop_grace_period: 120s
@@ -181,7 +181,7 @@ services:
       CONFLUENT_METRICS_ENABLE: 'false'
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:6.2.0
+    image: confluentinc/cp-schema-registry:6.2.1
     hostname: schema-registry
     container_name: schema-registry
     stop_grace_period: 120s

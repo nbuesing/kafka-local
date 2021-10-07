@@ -54,7 +54,7 @@ services:
       ZOO_4LW_COMMANDS_WHITELIST: "ruok,stat"
 
   druid-coordinator:
-    image: apache/druid:0.21.1
+    image: apache/druid:0.22.0
     container_name: druid-coordinator
     hostname: druid-coordinator
     healthcheck:
@@ -78,7 +78,7 @@ services:
       - environment
 
   druid-broker:
-    image: apache/druid:0.21.1
+    image: apache/druid:0.22.0
     container_name: druid-broker
     hostname: druid-broker
     healthcheck:
@@ -102,7 +102,7 @@ services:
       - environment
 
   druid-historical:
-    image: apache/druid:0.21.1
+    image: apache/druid:0.22.0
     container_name: druid-historical
     hostname: druid-historical
     healthcheck:
@@ -127,7 +127,7 @@ services:
       - environment
 
   druid-middlemanager:
-    image: apache/druid:0.21.1
+    image: apache/druid:0.22.0
     container_name: druid-middlemanager
     hostname: druid-middlemanager
     healthcheck:
@@ -152,7 +152,7 @@ services:
       - environment
 
   druid-router:
-    image: apache/druid:0.21.1
+    image: apache/druid:0.22.0
     container_name: druid-router
     hostname: druid-router
     healthcheck:
