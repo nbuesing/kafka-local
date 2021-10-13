@@ -15,7 +15,7 @@ fi
 
 (cd kafka-connect-opensky; git pull; ./gradlew --no-daemon build --warning-mode all)
 
-#(cd ../../../connect/jars; tar xfv ../../demo/opensky/tmp/kafka-connect-opensky/build/distributions/kafka-connect-opensky.tar)
+(cd ../../../connect/jars; tar xfv ../../demo/opensky/tmp/kafka-connect-opensky/build/distributions/kafka-connect-opensky.tar)
 
 #
 # Ksql User Defined Functions - Geo
