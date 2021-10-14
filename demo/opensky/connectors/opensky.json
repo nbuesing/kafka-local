@@ -17,8 +17,10 @@
 
   "opensky.timeout.connect": "20s",
   "opensky.timeout.read": "40s",
-  "opensky.username": "${file:/etc/kafka-connect/secrets/opensky.properties:USERNAME}",
-  "opensky.password": "${file:/etc/kafka-connect/secrets/opensky.properties:PASSWORD}",
+
+  "_opensky": "enable username and password if you have credentials",
+  "_opensky.username": "${file:/etc/kafka-connect/secrets/opensky.properties:USERNAME}",
+  "_opensky.password": "${file:/etc/kafka-connect/secrets/opensky.properties:PASSWORD}",
 
   "transforms": "flatten,rename",
   "transforms.flatten.type": "org.apache.kafka.connect.transforms.Flatten$Value",

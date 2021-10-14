@@ -17,6 +17,24 @@ fi
 
 (cd ../../../connect/jars; tar xfv ../../demo/opensky/tmp/kafka-connect-opensky/build/distributions/kafka-connect-opensky.tar)
 
+
+
+#
+# create the secrets file for opensky.properties
+#
+
+if [ ! -f ../../../connect/secrets/opensky.properties ]; then
+
+cat <<EOF > ../../../connect/secrets/opensky.properties
+USERNAME=
+PASSWORD=
+EOF
+
+fi
+
+
+
+
 #
 # Ksql User Defined Functions - Geo
 #

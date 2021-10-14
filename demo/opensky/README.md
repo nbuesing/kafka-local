@@ -16,15 +16,17 @@
 
 ## Steps
 
-* Optionals
+* Optional Steps
 
   * Mapbox
+  
+  Some of the superset charts leverage map data; if you are using them you will want to register with MapBox and attach the key to the superset.  
+  The `docker-compose.yml` will use the environment variable `MAPBOX_API_KEY` if provided.
+  
+  * OpenSky
 
-    * MAPBOX_API_KEY optional
-
-  * OpenSky Credentials
-
-    * ...
+  OpenSky has limitations to how frequently it can be accessed.  Create a username/password if you need such access and update the opensky.properties to have those credentials.
+  Change the configuration to accept them as well.
 
 * build kafka-connect-opensky
 
@@ -36,46 +38,100 @@
 
 * start all the necessary containers
 
-  * ./up.sh
+  All the contatainers that need to be started for this demonstration can be done manually, or through the `up.sh` script.
+  
+  ```
+  cd demo/opensky
+  ./up.sh
+  ```
+  
+  * Containers
 
-  * Setup
+    * Apache Kafka Cluster: 1 zookeeper, 4 brokers
 
-  * Apache Kafka Cluster: 1 zookeeper, 4 brokers
+    * Apache Kafka Distributed Connect Cluster: 2 connectors
 
-  * Apache Kafka Distributed Connect Cluster: 2 connectors
+    * KsqlDB
 
-  * KsqlDB
+      * the ksql-cli is not deployed by default, assuming you have `ksql` as part of a local installation, and you can use that for connecting to the ksqlDB server.
+  
+    * Apache Druid
 
-  * Apache Druid
-
-  * Apache Superset
+    * Apache Superset
+  
+      * to properly configure superset with druid support, a custom Docker image is created, see `dashboards/superset/Dockerfile` if you are interested.
 
 * start OpenSky connector
 
-  * ./connect create ./connector/opensky.json
+  * connector takes time to get up and running, use `./connect connectors` or `./connect plugins` to validate that the RESTful API is available.
+  
+  * `./connect` is a convience script wrapping the RESTful operations in a `systemctl`-like script.  There are other options out there now worth exploring.
+  
+  ```
+  cd connectors
+  ./connect connectors
+  ./connect create ./opensky.json
+  ```
 
 * KsqlDB
 
-  * create stream for topic created by connector
+  ```
+  cd ksqlDB
+  ./create.sh flights.sql
+  ./create.sh flights_summary.sql
+  ```
 
-  * create table that enriches the data
+  * summary
+    
+    * create stream for topic created by connector
 
+    * create table that enriches the data
+
+  * feel free to launch `ksql` manually and run those scripts as well.
+  
 * Druid
 
   * create the Druid Dataset
 
+  ```
+  cd druid
+  ./load.sh flight_summary.json
+  ```
+
+  * summary
+  
+    * a single datasource is created with dimensions and metrics explicitly specified.
+  
+    * the flight_summary.json could also be pasted into the UI and then reviewed and edited within Druid.
+  
 * Superset
 
-  * Create Database Connection
+  ```
+  cd superset
+  ./create.sh
+  ```
 
-  * Create Dataset
+  * summary
+    
+    * Create Database Connection
 
-  * Create Chart
+    * Create Dataset
 
+    * Create Charts
+
+    * Like Druid, you could do this all within superset manually.  The database and dataset are rather trivial to do manually.
+    The charts are more difficult due to the nature of the preset time range query.
+      
 ## Teardown
 
 * stop all the containers and remove their volumes
 
   * ./down.sh
+  
+  * summary
+  
+    * goes into each directory that was part of the `up.sh` script and execute `docker compose down -v`. 
+  
+    * all volumes are removed; if you want to persist volumes adjust accordingly.
 
 
