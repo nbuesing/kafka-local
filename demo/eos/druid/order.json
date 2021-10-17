@@ -19,20 +19,17 @@
     "dataSchema": {
       "dataSource": "orders",
       "timestampSpec": {
-        "column": "ORDERTIME",
+        "column": "ORDER_TS",
         "format": "auto"
       },
       "dimensionsSpec": {
         "dimensions": [
           {
             "type": "long",
-            "name": "ORDERID"
+            "name": "ORDER_ID"
           },
-          "ITEMID",
-          {
-            "type": "double",
-            "name": "ORDERUNITS"
-          },
+          "USER_ID",
+          "STORE_ID",
           "CITY",
           "STATE",
           "ZIPCODE"
@@ -41,7 +38,12 @@
       "metricsSpec": [
         {
           "type": "count",
-          "name": "count"
+          "name": "COUNT"
+        },
+        {
+          "type": "longSum",
+          "name": "QUANTITY",
+          "fieldName": "QUANTITY"
         }
       ],
       "granularitySpec": {

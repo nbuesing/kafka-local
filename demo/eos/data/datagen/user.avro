@@ -1,0 +1,62 @@
+{
+  "namespace": "ksql",
+  "name": "user",
+  "type": "record",
+  "fields": [
+    {
+      "name": "user_id",
+      "type": {
+        "type": "int",
+        "arg.properties": {
+          "iteration": {
+            "start": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "rewards",
+      "type": {
+        "type": "enum",
+        "name": "Reward",
+        "symbols": [
+          "NONE",
+          "SILVER",
+          "GOLD",
+          "PLATINUM"
+        ],
+        "arg.properties": {
+          "options": [
+            "NONE",
+            "SILVER",
+            "GOLD",
+            "PLATINUM"
+          ]
+        }
+      }
+    },
+    {
+      "name": "area_code",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "options": [
+            "218",
+            "320",
+            "507",
+            "612",
+            "651",
+            "763",
+            "952",
+            "262",
+            "414",
+            "534",
+            "608",
+            "715",
+            "920"
+          ]
+        }
+      }
+    }
+  ]
+}

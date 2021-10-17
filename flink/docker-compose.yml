@@ -8,7 +8,7 @@ networks:
 
 services:
   jobmanager:
-    image: flink:1.13.1-scala_2.12-java11
+    image: flink:1.14.0-scala_2.12-java11
     container_name: flink_jobmanager
     ports:
       - "48081:8081"
@@ -26,7 +26,7 @@ services:
       - ./tmp:/Users/buesing/workspaces/gorillio/beam-pipelines/pipeline
 
   taskmanager:
-    image: flink:1.13.1-scala_2.12-java11
+    image: flink:1.14.0-scala_2.12-java11
     depends_on:
       - jobmanager
     command: taskmanager

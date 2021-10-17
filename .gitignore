@@ -6,6 +6,7 @@ build
 /tmp
 /ksqlDB/ext/*
 /connect/jars/*
+/connect/data/*
 /connect/tmp/*
 /mysql5/data/*
 /mysql/data/*

@@ -1,9 +1,9 @@
-create stream ORDERS (
-  ordertime bigint,
-  orderid bigint,
-  itemid varchar,
-  orderunits double,
+create or replace stream ORDERS (
+  order_id bigint,
+  user_id varchar,
+  store_id varchar,
+  quantity bigint,
   address struct<city varchar, state varchar, zipcode varchar>
-) with (kafka_topic='orders_json', value_format='json', timestamp='ordertime');
+) with (kafka_topic='orders_json', value_format='json');
 
 describe ORDERS extended;

@@ -24,6 +24,7 @@ services:
       - c1_kafka_data:/var/lib/kafka/data
       - c1_kafka_secrets:/etc/kafka/secrets
       - ./jars:/etc/kafka-connect/jars
+      - ./data:/data
       - ./secrets:/etc/kafka-connect/secrets
     environment:
       #CONNECT_BOOTSTRAP_SERVERS: 'broker-1-lb:9094,broker-2-lb:9094,broker-3-lb:9094,broker-4-lb:9094'
@@ -31,9 +32,9 @@ services:
       CONNECT_CONNECTOR_CLIENT_CONFIG_OVERRIDE_POLICY: All
       CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: 'connect-cluster'
-      CONNECT_CONFIG_STORAGE_TOPIC: 'connect-cluster-sink-config'
-      CONNECT_OFFSET_STORAGE_TOPIC: 'connect-cluster-sink-offsets'
-      CONNECT_STATUS_STORAGE_TOPIC: 'connect-cluster-sink-status'
+      CONNECT_CONFIG_STORAGE_TOPIC: 'connect-cluster-config'
+      CONNECT_OFFSET_STORAGE_TOPIC: 'connect-cluster-offsets'
+      CONNECT_STATUS_STORAGE_TOPIC: 'connect-cluster-status'
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 3
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 3
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 3
@@ -59,6 +60,7 @@ services:
       - c2_kafka_data:/var/lib/kafka/data
       - c2_kafka_secrets:/etc/kafka/secrets
       - ./jars:/etc/kafka-connect/jars
+      - ./data:/data
       - ./secrets:/etc/kafka-connect/secrets
     environment:
       #CONNECT_BOOTSTRAP_SERVERS: 'broker-1-lb:9094,broker-2-lb:9094,broker-3-lb:9094,broker-4-lb:9094'
@@ -66,9 +68,9 @@ services:
       CONNECT_CONNECTOR_CLIENT_CONFIG_OVERRIDE_POLICY: All
       CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: 'connect-cluster'
-      CONNECT_CONFIG_STORAGE_TOPIC: 'connect-cluster-sink-config'
-      CONNECT_OFFSET_STORAGE_TOPIC: 'connect-cluster-sink-offsets'
-      CONNECT_STATUS_STORAGE_TOPIC: 'connect-cluster-sink-status'
+      CONNECT_CONFIG_STORAGE_TOPIC: 'connect-cluster-config'
+      CONNECT_OFFSET_STORAGE_TOPIC: 'connect-cluster-offsets'
+      CONNECT_STATUS_STORAGE_TOPIC: 'connect-cluster-status'
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 3
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 3
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 3

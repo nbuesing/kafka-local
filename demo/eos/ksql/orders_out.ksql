@@ -1,8 +1,10 @@
-create stream ORDERS_OUT as
-  select ORDERTIME,
-    ORDERID,
-    ITEMID,
-    ORDERUNITS,
+create or replace stream ORDERS_OUT as
+  select 
+    ROWTIME as ORDER_TS,
+    ORDER_ID,
+    USER_ID,
+    STORE_ID,
+    QUANTITY,
     UCASE(ADDRESS->CITY) as CITY,
     UCASE(ADDRESS->STATE) as STATE,
     ADDRESS->ZIPCODE as ZIPCODE

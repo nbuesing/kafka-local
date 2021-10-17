@@ -16,6 +16,7 @@ volumes:
   historical: {}
   middlemanager: {}
   router: {}
+  storage: {}
 
 services:
   druid-postgres:
@@ -27,6 +28,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    ports:
+      - "35432:5432"
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
@@ -65,7 +68,8 @@ services:
       start_period: 60s
     volumes:
       - coordinator:/opt/druid/var
-      - ./storage:/opt/data
+      - storage:/opt/data
+      #- ./storage:/opt/data
       - ./staging:/opt/staging
     depends_on: 
       - druid-zookeeper
@@ -113,7 +117,8 @@ services:
       start_period: 60s
     volumes:
       - historical:/opt/druid/var
-      - ./storage:/opt/data
+      - storage:/opt/data
+      #- ./storage:/opt/data
       - ./staging:/opt/staging
     depends_on: 
       - druid-zookeeper
@@ -138,7 +143,8 @@ services:
       start_period: 60s
     volumes:
       - middlemanager:/opt/druid/var
-      - ./storage:/opt/data
+      - storage:/opt/data
+      #- ./storage:/opt/data
       - ./staging:/opt/staging
     depends_on: 
       - druid-zookeeper

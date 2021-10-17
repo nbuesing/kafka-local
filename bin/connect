@@ -88,8 +88,20 @@ EOF
 fi
 
 
+# TODO check that connect is up
+
+declare -a plugins=$(curl -k -s -H "${ACCEPT}" -H "${CONTENT_TYPE}" -X GET ${CONNECT_URL}/connector-plugins | jq -r '.[].class')
+[ $? -eq 1 ] && error_msg "unable to connect to connect cluster" && exit 1
+
+if [ ${#plugins[@]} -eq 0 ]; then
+  echo "connect cluster is not yet available."
+  exit
+fi
+
+
+
 get() {
-  curl -k -H "${ACCEPT}" -H "${CONTENT_TYPE}" -X GET ${CONNECT_URL}/connectors/${NAME} | jq
+  curl -k -s -H "${ACCEPT}" -H "${CONTENT_TYPE}" -X GET ${CONNECT_URL}/connectors/${NAME} | jq
 }
 
 create() {
@@ -101,15 +113,15 @@ update() {
 }
 
 pause() {
-  curl -k -i -H "${ACCEPT}" -H "${CONTENT_TYPE}" -X PUT ${CONNECT_URL}/connectors/${NAME}/pause 
+  curl -k -s -H "${ACCEPT}" -H "${CONTENT_TYPE}" -X PUT ${CONNECT_URL}/connectors/${NAME}/pause 
 }
 
 resume() {
-  curl -k -i -H "${ACCEPT}" -H "${CONTENT_TYPE}" -X PUT ${CONNECT_URL}/connectors/${NAME}/resume 
+  curl -k -s -H "${ACCEPT}" -H "${CONTENT_TYPE}" -X PUT ${CONNECT_URL}/connectors/${NAME}/resume 
 }
 
 delete() {
-  curl -k -i -H "${ACCEPT}" -H "${CONTENT_TYPE}" -X DELETE ${CONNECT_URL}/connectors/${NAME} 
+  curl -k -s -H "${ACCEPT}" -H "${CONTENT_TYPE}" -X DELETE ${CONNECT_URL}/connectors/${NAME} | jq
 }
 
 status() {
