@@ -68,8 +68,8 @@ services:
       start_period: 60s
     volumes:
       - coordinator:/opt/druid/var
-      - storage:/opt/data
-      #- ./storage:/opt/data
+      #- storage:/opt/data
+      - ./storage:/opt/data
       - ./staging:/opt/staging
     depends_on: 
       - druid-zookeeper
@@ -117,8 +117,8 @@ services:
       start_period: 60s
     volumes:
       - historical:/opt/druid/var
-      - storage:/opt/data
-      #- ./storage:/opt/data
+      #- storage:/opt/data
+      - ./storage:/opt/data
       - ./staging:/opt/staging
     depends_on: 
       - druid-zookeeper
@@ -143,8 +143,8 @@ services:
       start_period: 60s
     volumes:
       - middlemanager:/opt/druid/var
-      - storage:/opt/data
-      #- ./storage:/opt/data
+      #- storage:/opt/data
+      - ./storage:/opt/data
       - ./staging:/opt/staging
     depends_on: 
       - druid-zookeeper

@@ -88,15 +88,37 @@ EOF
 fi
 
 
-# TODO check that connect is up
 
-declare -a plugins=$(curl -k -s -H "${ACCEPT}" -H "${CONTENT_TYPE}" -X GET ${CONNECT_URL}/connector-plugins | jq -r '.[].class')
-[ $? -eq 1 ] && error_msg "unable to connect to connect cluster" && exit 1
+#
+# validate that the connector.class provided in the connector is available within the connect cluster.
+#
+
+plugin=$(cat ${CONFIG} | jq -r '."connector.class"')
+
+declare -a plugins
+IFS=',' read -r -a plugins <<< "$(curl -k -s -H "${ACCEPT}" -H "${CONTENT_TYPE}" http://localhost:18083/connector-plugins | jq -r '.[].class' | tr '\n' ',')"
 
 if [ ${#plugins[@]} -eq 0 ]; then
-  echo "connect cluster is not yet available."
+  echo ""
+  echo "unable to get a list of plugins available within the connect cluster; API is not yet available."
+  echo ""
   exit
 fi
+
+if [[ ! " ${plugins[*]} " =~ " ${plugin} " ]]; then
+  echo ""
+  echo "connector.class=${plugin} is not available in the connect cluster."
+  echo ""
+  exit  
+fi
+
+#if [[ " ${plugins[*]} " =~ " ${plugin} " ]]; then
+#  echo "success"
+#fi
+
+#
+
+
 
 
 

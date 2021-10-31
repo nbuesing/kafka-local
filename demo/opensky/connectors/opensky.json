@@ -22,6 +22,7 @@
   "_opensky.username": "${file:/etc/kafka-connect/secrets/opensky.properties:USERNAME}",
   "_opensky.password": "${file:/etc/kafka-connect/secrets/opensky.properties:PASSWORD}",
 
+
   "transforms": "flatten,rename",
   "transforms.flatten.type": "org.apache.kafka.connect.transforms.Flatten$Value",
   "transforms.flatten.delimiter": "_",

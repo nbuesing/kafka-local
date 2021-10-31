@@ -1,4 +1,4 @@
-create or replace stream ORDERS_OUT as
+create or replace stream ORDERS_ENRICHED as
   select 
     ROWTIME as ORDER_TS,
     ORDER_ID,
@@ -10,4 +10,4 @@ create or replace stream ORDERS_OUT as
     ADDRESS->ZIPCODE as ZIPCODE
   from ORDERS;
 
-describe ORDERS_OUT extended;
+describe ORDERS_ENRICHED extended;

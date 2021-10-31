@@ -15,7 +15,7 @@
       }
     },
     {
-      "name": "rewards",
+      "name": "reward",
       "type": {
         "type": "enum",
         "name": "Reward",

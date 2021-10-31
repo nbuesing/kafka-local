@@ -2,7 +2,7 @@
 
 usage() {
   echo ""
-  echo "Usage: $0 {load|unload} name"
+  echo "Usage: $0 {load|unload} specification-file"
   echo ""
 }
 
@@ -21,9 +21,17 @@ if [[ $NAME == *.json ]]; then
   NAME=${NAME%.*}
 fi
 
-DATA=./${NAME}.json
+DATA=${NAME}.json
+
+if [ ! -f $DATA ]; then
+  echo ""
+  echo "specification file not found."
+  echo ""
+  exit
+fi
 
 URL=http://localhost:38081
+
 CONTENT_TYPE_HDR='Content-Type:application/json'
 
 
@@ -33,6 +41,18 @@ load() {
 
 
 unload() {
+
+  spec=$(cat $DATA | jq -r ".spec.dataSchema.dataSource | select (.!=null)")
+
+  echo $spec
+
+  if [ "${spec}" == "" ]; then 
+    echo ""
+    echo "unable to extract dataSource from spec."
+    echo ""
+    exit
+  fi
+
   curl -X POST $URL/druid/indexer/v1/supervisor/${spec}/reset
   curl -X POST $URL/druid/indexer/v1/supervisor/${spec}/shutdown
 }

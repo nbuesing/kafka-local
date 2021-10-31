@@ -31,7 +31,6 @@ services:
       #KSQL_BOOTSTRAP_SERVERS: "broker-1-lb:9094,broker-2-lb:9094,broker-3-lb:9094,broker-4-lb:9094"
       KSQL_BOOTSTRAP_SERVERS: "broker-1:9092,broker-2:9092,broker-3:9092,broker-4:9092"
       KSQL_KSQL_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
-      KSQL_KSQL_STREAMS_COMMIT_INTERVAL_MS: 5000
       KSQL_CACHE_MAX_BYTES_BUFFERING: 0
       KSQL_LOG4J_ROOT_LOGLEVEL: DEBUG
       KSQL_LOG4J_LOGGERS: "org.apache.kafka.connect.runtime.rest=WARN,org.reflections=ERROR"
@@ -44,8 +43,8 @@ services:
       KSQL_PRODUCER_INTERCEPTOR_CLASSES:
       KSQL_CONSUMER_INTERCEPTOR_CLASSES:
       KSQL_KSQL_FAIL_ON_DESERIALIZATION_ERROR: "true"
-      #KSQL_KSQL_STREAMS_PROCESSING_GUARANTEE: exactly_once
-
+      KSQL_KSQL_STREAMS_COMMIT_INTERVAL_MS: 8000
+      KSQL_KSQL_STREAMS_PROCESSING_GUARANTEE: at_least_once
 
 # you can use ksql installed locally, just keep in mind it could be a different version as confluent installs ksql versioned as as part of confluent's versioning, not ksqldb's versioning
 #  ksql-cli:

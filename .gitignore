@@ -3,6 +3,9 @@
 .gradle
 grafana.db
 build
+
+*.bak
+
 /tmp
 /ksqlDB/ext/*
 /connect/jars/*
