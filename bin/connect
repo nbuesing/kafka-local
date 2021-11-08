@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 if ! [ -x "$(command -v jq)" ]; then
     echo ""
     echo "jq is not found, please install and make it available on your path, https://stedolan.github.io/jq"
@@ -14,6 +15,11 @@ CONTENT_TYPE="Content-Type:application/json"
 
 if [ $# -eq 1  ]; then
   case "$1" in
+    available)
+      curl -k -s -H "${ACCEPT}" -H "${CONTENT_TYPE}" -X GET ${CONNECT_URL}/connector-plugins 2>&1 >/dev/null
+      [ $? -ne 0 ] && exit 1
+      exit 0
+      ;;
     plugins)
       curl -k -s -H "${ACCEPT}" -H "${CONTENT_TYPE}" -X GET ${CONNECT_URL}/connector-plugins | jq 'sort_by(.)'
       exit
@@ -29,7 +35,7 @@ fi
 if [ $# -lt 2 ]; then
   echo ""
   echo "Usage: "
-  echo "      $0 {plugins|connectors}"
+  echo "      $0 {available|plugins|connectors}"
   echo "      $0 {create|pause|resume|delete|status|validate} name"
   echo ""
   exit

@@ -18,7 +18,7 @@ shift
 
 if [ ! -f $FILE ]; then
   echo ""
-  echo "unable to fine ksql file.
+  echo "unable to find ksql file."
   echo ""
   exit
 fi

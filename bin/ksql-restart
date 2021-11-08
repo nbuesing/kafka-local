@@ -1,5 +1,19 @@
 #!/bin/sh
 
+#
+# 'compose' is now a command built into Docker Desktop, use that is avaiable, other default to docker-compose script.
+#
+
+docker compose --help | grep -e "^Docker Compose$" 2>&1 >/dev/null
+if [ $? -eq 0 ]; then
+ COMPOSE="docker compose"
+else
+ COMPOSE="docker-compose"
+fi
+
+
+
+
 DIR=$(dirname $0)
 KSQLDB_DIR="${DIR}/../ksqlDB"
 KSQLDB_DOCKER_COMPOSE_FILE="${KSQLDB_DIR}/docker-compose.yml"
@@ -85,7 +99,7 @@ if [ "$CONTAINER" == "$(docker ps --format "{{.Names}}" | grep $CONTAINER)" ]; t
     docker kill $CONTAINER
   elif [[ "$shutdown" == true ]]; then
     echo "shutting down $CONTAINER"
-    (cd $KSQLDB_DIR; docker-compose stop ksql-server)
+    (cd $KSQLDB_DIR; $COMPOSE stop ksql-server)
   else
     echo "not shutting down or killing $CONTAINER" 
   fi
@@ -105,7 +119,7 @@ fi
 #
 
 if [[ "$restart" == true ]]; then
-  (cd $KSQLDB_DIR; docker-compose up -d ksql-server)
+  (cd $KSQLDB_DIR; $COMPOSE up -d ksql-server)
 else 
   echo ""
   echo "--restart not provided, container not restarted"

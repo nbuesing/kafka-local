@@ -5,7 +5,7 @@
       "type": "kafka",
       "consumerProperties": {
         "bootstrap.servers": "broker-1:9092,broker-2:9092,broker-3:9092",
-        "isolation.level": "read_committed"
+        "isolation.level": "read_uncommitted"
       },
       "topic": "ORDERS_ENRICHED",
       "inputFormat": {
@@ -23,7 +23,7 @@
       "maxTotalRows": 200000
     },
     "dataSchema": {
-      "dataSource": "orders",
+      "dataSource": "orders_uncommitted",
       "timestampSpec": {
         "column": "ORDER_TS",
         "format": "auto"
@@ -35,10 +35,10 @@
             "name": "ORDER_ID"
           },
           "USER_ID",
-          "USER_REWARD",
-          "USER_AREA_CODE",
           "STORE_ID",
-          "STORE_ZIPCODE"
+          "CITY",
+          "STATE",
+          "ZIPCODE"
         ]
       },
       "metricsSpec": [
@@ -50,12 +50,7 @@
           "type": "longSum",
           "name": "QUANTITY",
           "fieldName": "QUANTITY"
-        },
-	  {
- 	    "type" : "thetaSketch",
-  	    "name" : "USER_ID_SKETCH",
- 	    "fieldName" : "USER_ID"
- 	  }
+        }
       ],
       "granularitySpec": {
         "type": "uniform",

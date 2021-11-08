@@ -23,22 +23,14 @@
       "maxTotalRows": 200000
     },
     "dataSchema": {
-      "dataSource": "orders",
+      "dataSource": "rewards",
       "timestampSpec": {
         "column": "ORDER_TS",
         "format": "auto"
       },
       "dimensionsSpec": {
         "dimensions": [
-          {
-            "type": "long",
-            "name": "ORDER_ID"
-          },
-          "USER_ID",
-          "USER_REWARD",
-          "USER_AREA_CODE",
-          "STORE_ID",
-          "STORE_ZIPCODE"
+          "USER_REWARD"
         ]
       },
       "metricsSpec": [
@@ -50,18 +42,13 @@
           "type": "longSum",
           "name": "QUANTITY",
           "fieldName": "QUANTITY"
-        },
-	  {
- 	    "type" : "thetaSketch",
-  	    "name" : "USER_ID_SKETCH",
- 	    "fieldName" : "USER_ID"
- 	  }
+        }
       ],
       "granularitySpec": {
         "type": "uniform",
         "segmentGranularity": "HOUR",
-        "queryGranularity": null,
-        "rollup": false,
+        "queryGranularity": "minute",
+        "rollup": true,
         "intervals": null
       },
       "transformSpec": {
