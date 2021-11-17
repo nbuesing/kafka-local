@@ -1,5 +1,8 @@
 #!/bin/sh
 
+DIR=$(dirname $0)
+cd $DIR
+
 if ! [ -x "$(command -v jq)" ]; then
     echo ""
     echo "jq is not found, please install and make it available on your path, https://stedolan.github.io/jq"

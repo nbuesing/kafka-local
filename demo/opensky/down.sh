@@ -2,8 +2,8 @@
 
 cd $(dirname $0)/../..
 
-(cd connect; docker compose down -v)
-(cd dashboards; docker compose down -v)
-(cd druid; docker compose down -v)
-(cd ksqlDB; docker compose down -v)
-(cd kafka; docker compose down -v)
+(cd connect; docker compose stop)
+(cd dashboards; docker compose stop)
+(cd druid; docker compose stop)
+(cd ksqlDB; docker compose stop)
+(cd kafka; docker compose stop)

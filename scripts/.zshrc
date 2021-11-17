@@ -4,6 +4,7 @@
 
 alias d='docker'
 alias dc='docker compose'
+alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.RunningFor}}\t{{.Status}}\t{{.Size}}\t{{.Ports}}"'
 
 alias kt='kafka-topics --bootstrap-server localhost:19092,localhost:29092,localhost:39092'
 

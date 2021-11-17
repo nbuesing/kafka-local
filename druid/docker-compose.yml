@@ -11,11 +11,11 @@ volumes:
   zk: {}
   zk_datalog: {}
   zk_logs: {}
-  coordinator: {}
-  broker: {}
-  historical: {}
-  middlemanager: {}
-  router: {}
+  coordinator_var: {}
+  broker_var: {}
+  historical_var: {}
+  middlemanager_var: {}
+  router_var: {}
   storage: {}
 
 services:
@@ -55,6 +55,14 @@ services:
     environment:
       ZOO_MY_ID: 1
       ZOO_4LW_COMMANDS_WHITELIST: "ruok,stat"
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '0.50'
+#          memory: 50M
+#        reservations:
+#          memory: 20M
+
 
   druid-coordinator:
     image: apache/druid:0.22.0
@@ -67,9 +75,9 @@ services:
       retries: 5
       start_period: 60s
     volumes:
-      - coordinator:/opt/druid/var
-      #- storage:/opt/data
-      - ./storage:/opt/data
+      - coordinator_var:/opt/druid/var
+      - storage:/opt/data
+      #- ./storage:/opt/data
       - ./staging:/opt/staging
     depends_on: 
       - druid-zookeeper
@@ -92,7 +100,7 @@ services:
       retries: 5
       start_period: 60s
     volumes:
-      - broker:/opt/druid/var
+      - broker_var:/opt/druid/var
       - ./staging:/opt/staging
     depends_on: 
       - druid-zookeeper
@@ -116,9 +124,9 @@ services:
       retries: 5
       start_period: 60s
     volumes:
-      - historical:/opt/druid/var
-      #- storage:/opt/data
-      - ./storage:/opt/data
+      - historical_var:/opt/druid/var
+      - storage:/opt/data
+      #- ./storage:/opt/data
       - ./staging:/opt/staging
     depends_on: 
       - druid-zookeeper
@@ -142,9 +150,9 @@ services:
       retries: 5
       start_period: 60s
     volumes:
-      - middlemanager:/opt/druid/var
-      #- storage:/opt/data
-      - ./storage:/opt/data
+      - middlemanager_var:/opt/druid/var
+      - storage:/opt/data
+      #- ./storage:/opt/data
       - ./staging:/opt/staging
     depends_on: 
       - druid-zookeeper
@@ -168,7 +176,7 @@ services:
       retries: 5
       start_period: 60s
     volumes:
-      - router:/opt/druid/var
+      - router_var:/opt/druid/var
       - ./staging:/opt/staging
     depends_on:
       - druid-zookeeper

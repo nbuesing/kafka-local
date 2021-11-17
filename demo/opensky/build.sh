@@ -2,7 +2,6 @@
 
 cd $(dirname $0)/tmp
 
-
 #
 # Build latest OpenSky From GitHub
 #
@@ -17,8 +16,6 @@ fi
 
 (cd ../../../connect/jars; tar xfv ../../demo/opensky/tmp/kafka-connect-opensky/build/distributions/kafka-connect-opensky.tar)
 
-
-
 #
 # create the secrets file for opensky.properties
 #
@@ -31,9 +28,6 @@ PASSWORD=
 EOF
 
 fi
-
-
-
 
 #
 # Ksql User Defined Functions - Geo

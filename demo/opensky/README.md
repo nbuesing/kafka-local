@@ -61,50 +61,17 @@
   
       * to properly configure superset with druid support, a custom Docker image is created, see `dashboards/superset/Dockerfile` if you are interested.
 
-* start OpenSky connector
+* start up all the applications
 
-  * connector takes time to get up and running, use `./connect connectors` or `./connect plugins` to validate that the RESTful API is available.
-  
-  * `./connect` is a convience script wrapping the RESTful operations in a `systemctl`-like script.  There are other options out there now worth exploring.
-  
-  ```
-  cd connectors
-  ./connect connectors
-  ./connect create ./opensky.json
-  ```
+  * `setup.sh` handles all of this for you, here is what it does
 
-* KsqlDB
+    * create the topics
 
-  ```
-  cd ksqlDB
-  ./create.sh flights.sql
-  ./create.sh flights_summary.sql
-  ```
+    * start OpenSky connector
 
-  * summary
-    
-    * create stream for topic created by connector
+    * creates two ksql statements, one to ingest the data into ksqlDB and one to enrich the data with the user defined functions that were deployed with the ksqlDB.
 
-    * create table that enriches the data
-
-  * feel free to launch `ksql` manually and run those scripts as well.
-  
-* Druid
-
-  * create the Druid Dataset
-
-  ```
-  cd druid
-  ./load.sh flight_summary.json
-  ```
-
-  * summary
-  
-    * a single datasource is created with dimensions and metrics explicitly specified.
-  
-    * the flight_summary.json could also be pasted into the UI and then reviewed and edited within Druid.
-  
-* Superset
+    * Superset
 
   ```
   cd superset

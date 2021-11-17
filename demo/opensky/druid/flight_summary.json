@@ -10,7 +10,8 @@
       "inputFormat": {
         "type": "json"
       },
-      "useEarliestOffset": true
+      "useEarliestOffset": true,
+      "taskCount": 4
     },
     "tuningConfig": {
       "type": "kafka"
