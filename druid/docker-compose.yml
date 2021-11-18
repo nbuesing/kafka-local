@@ -112,6 +112,10 @@ services:
       - broker
     env_file:
       - environment
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 1.25G 
 
   druid-historical:
     image: apache/druid:0.22.0
