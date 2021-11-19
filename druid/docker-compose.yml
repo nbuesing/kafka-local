@@ -16,7 +16,7 @@ volumes:
   historical_var: {}
   middlemanager_var: {}
   router_var: {}
-  storage: {}
+  shared: {}
 
 services:
   druid-postgres:
@@ -76,8 +76,7 @@ services:
       start_period: 60s
     volumes:
       - coordinator_var:/opt/druid/var
-      - storage:/opt/data
-      #- ./storage:/opt/data
+      - shared:/opt/shared
       - ./staging:/opt/staging
     depends_on: 
       - druid-zookeeper
@@ -129,8 +128,7 @@ services:
       start_period: 60s
     volumes:
       - historical_var:/opt/druid/var
-      - storage:/opt/data
-      #- ./storage:/opt/data
+      - shared:/opt/shared
       - ./staging:/opt/staging
     depends_on: 
       - druid-zookeeper
@@ -155,9 +153,8 @@ services:
       start_period: 60s
     volumes:
       - middlemanager_var:/opt/druid/var
-      - storage:/opt/data
-      #- ./storage:/opt/data
-      - ./staging:/opt/staging
+      - shared:/opt/shared
+      - ./staging:/opt/staging:rwx
     depends_on: 
       - druid-zookeeper
       - druid-postgres

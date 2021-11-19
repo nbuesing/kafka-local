@@ -27,9 +27,10 @@ druid_indexer_runner_javaOptsArray="[\"-server\", \"-Xmx1g\", \"-Xms1g\", \"-XX:
 druid_indexer_fork_property_druid_processing_buffer_sizeBytes=268435456
 
 druid_storage_type=local
-druid_storage_storageDirectory=/opt/data/segments
+druid_storage_storageDirectory=/opt/shared/segments
 druid_indexer_logs_type=file
-druid_indexer_logs_directory=/opt/data/indexing-logs
+druid_indexer_logs_directory=/opt/shared/indexing-logs
+
 
 # 6 is too much for my local setup, ...
 druid_processing_numThreads=2
@@ -46,5 +47,5 @@ druid_emitter_kafka_producer_config="{\"max.block.ms\":10000}"
 druid_query_groupBy_maxOnDiskStorage=4
 druid_query_groupBy_maxMergingDictionarySize=300000000
 
-DRUID_LOG4J="<?xml version=\"1.0\" encoding=\"UTF-8\" ?><Configuration status=\"WARN\"><Appenders><Console name=\"Console\" target=\"SYSTEM_OUT\"><PatternLayout pattern=\"%d{ISO8601} %p [%t] %c - %m%n\"/></Console></Appenders><Loggers><Root level=\"info\"><AppenderRef ref=\"Console\"/></Root><Logger name=\"org.apache.druid.jetty.RequestLog\" additivity=\"false\" level=\"DEBUG\"><AppenderRef ref=\"Console\"/></Logger></Loggers></Configuration>"
+DRUID_LOG4J="<?xml version=\"1.0\" encoding=\"UTF-8\" ?><Configuration status=\"WARN\"><Appenders><Console name=\"Console\" target=\"SYSTEM_OUT\"><PatternLayout pattern=\"%d{ISO8601} %p [%t] %c - %m%n\"/></Console></Appenders><Loggers><Root level=\"info\"><AppenderRef ref=\"Console\"/></Root><Logger name=\"org.apache.druid.jetty.RequestLog\" additivity=\"false\" level=\"INFO\"><AppenderRef ref=\"Console\"/></Logger></Loggers></Configuration>"
 
