@@ -145,6 +145,8 @@ services:
     image: apache/druid:0.22.0
     container_name: druid-middlemanager
     hostname: druid-middlemanager
+#    deploy:
+#      replicas: 2
     healthcheck:
       test: wget --spider http://localhost:8091/status/health || exit 1
       interval: 5s

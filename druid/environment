@@ -4,6 +4,9 @@ DRUID_XMX=1g
 DRUID_MAXNEWSIZE=250m
 DRUID_NEWSIZE=250m
 DRUID_MAXDIRECTMEMORYSIZE=6172m
+
+
+
  
 druid_emitter_logging_logLevel=debug
 
@@ -23,7 +26,13 @@ druid_metadata_storage_connector_password=FoolishPassword
 
 druid_coordinator_balancer_strategy=cachingCost
 
-druid_indexer_runner_javaOptsArray="[\"-server\", \"-Xmx1g\", \"-Xms1g\", \"-XX:MaxDirectMemorySize=3g\", \"-Duser.timezone=UTC\", \"-Dfile.encoding=UTF-8\", \"-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager\"]"
+druid_worker_capacity=8
+
+# if both are set, both get applied, and javaOpts will get applied first, and dockerized containers set this one, not the Array property.
+druid_indexer_runner_javaOpts=""
+
+druid_indexer_runner_javaOptsArray="[\"-server\", \"-Xmx512g\", \"-Xms256m\", \"-XX:MaxDirectMemorySize=3g\", \"-Duser.timezone=UTC\", \"-Dfile.encoding=UTF-8\", \"-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager\"]"
+
 druid_indexer_fork_property_druid_processing_buffer_sizeBytes=268435456
 
 druid_storage_type=local

@@ -49,7 +49,7 @@ services:
     environment:
       GF_SECURITY_ADMIN_PASSWORD: grafana
       GF_AUTH_ANONYMOUS_ENABLED: "true"
-      GF_INSTALL_PLUGINS: "grafadruid-druid-datasource"
+      GF_INSTALL_PLUGINS: "grafana-piechart-panel, grafadruid-druid-datasource"
     volumes:
       - grafana:/var/lib/grafana
       - ./grafana/prometheus.yml:/etc/grafana/provisioning/datasources/prometheus.yml
@@ -133,17 +133,17 @@ services:
     environment:
       KAFKA_BROKERCONNECT: broker-1:9092,broker-2:9092,broker-3:9092,broker-4:9092
 
-  cmak_zk:
-    image: zookeeper:latest
-    restart: always
-    environment:
-      ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
-  cmak:
-    image: cmak:latest #hlebalbau/kafka-manager:stable
-    hostname: cmak
-    container_name: cmak
-    restart: always
-    command:
-      - "-Dcmak.zkhosts=cmak_zk:2181"
-    ports:
-      - "9005:9000"
+#  cmak_zk:
+#    image: zookeeper:latest
+#    restart: always
+#    environment:
+#      ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
+#  cmak:
+#    image: cmak:latest #hlebalbau/kafka-manager:stable
+#    hostname: cmak
+#    container_name: cmak
+#    restart: always
+#    command:
+#      - "-Dcmak.zkhosts=cmak_zk:2181"
+#    ports:
+#      - "9005:9000"

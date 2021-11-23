@@ -1,0 +1,59 @@
+{
+  "type": "index_parallel",
+  "spec": {
+    "ioConfig": {
+      "type": "index_parallel",
+      "inputSource": {
+        "type": "local",
+        "baseDir": "/opt/staging",
+        "filter": "*.csv"
+      },
+      "inputFormat": {
+        "type": "csv",
+        "findColumnsFromHeader": true
+      }
+    },
+    "tuningConfig": {
+      "type": "index_parallel",
+      "partitionsSpec": {
+        "type": "hashed"
+      },
+      "forceGuaranteedRollup": true
+    },
+    "dataSchema": {
+      "dataSource": "rollup_store_rewards_user",
+      "timestampSpec": {
+        "column": "time",
+        "format": "iso"
+      },
+      "granularitySpec": {
+        "queryGranularity": "hour",
+        "rollup": true,
+        "segmentGranularity": "hour"
+      },
+      "metricsSpec": [
+        {
+          "name": "count",
+          "type": "count"
+        },
+        {
+          "name": "quantity",
+          "type": "longSum",
+          "fieldName": "quantity"
+        },
+        {
+          "name": "amount",
+          "type": "doubleSum",
+          "fieldName": "amount"
+        }
+      ],
+      "dimensionsSpec": {
+        "dimensions": [
+          "store_name",
+          "rewards",
+          "user"
+        ]
+      }
+    }
+  }
+}

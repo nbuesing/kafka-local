@@ -53,7 +53,7 @@ services:
         condition: service_healthy
     ports:
       - '19092:19092'
-      #- '17071:7071'
+      - '17071:7071'
     volumes:
       - bk1:/var/lib/kafka/data
       - ./jmx_prometheus:/opt/jmx_prometheus

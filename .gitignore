@@ -26,4 +26,6 @@ build
 /storage/data/*
 /demo/**/tmp/*
 
+/kafka/jmx_prometheus/jmxterm.jar
+
 /connect/secrets/opensky.properties
