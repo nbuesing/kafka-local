@@ -1,0 +1,39 @@
+{
+    "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
+
+    "kafka.topic": "datagen.orders",
+
+    "key.converter": "io.confluent.connect.avro.AvroConverter",
+    "key.converter.schema.registry.url": "http://schema-registry:8081",
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url": "http://schema-registry:8081",
+
+    "_key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "_value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "_value.converter.schemas.enable": "false",
+
+    "max.interval": 10,
+    "iterations": 100000000,
+    "tasks.max": "1",
+
+    "schema.filename": "/data/datagen/order.avro",
+
+    "transforms" : "tokey,cast,flatten",
+    "transforms.tokey.type" : "org.apache.kafka.connect.transforms.ValueToKey",
+    "transforms.tokey.fields" : "order_id",
+
+    "transforms.cast.type" : "org.apache.kafka.connect.transforms.Cast$Key",
+    "transforms.cast.spec" : "order_id:string",
+
+    "transforms.flatten.type" : "org.apache.kafka.connect.transforms.Flatten$Value",
+    "transforms.flatten.delimiter" : "_",
+
+
+
+    "_transforms.extract.type" : "org.apache.kafka.connect.transforms.ExtractField$Key",
+    "_transforms.extract.field" : "order_id",
+
+    "_producer.override.request.timeout.ms" : 5000
+
+
+}

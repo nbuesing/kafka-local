@@ -29,7 +29,7 @@ services:
       timeout: 5s
       retries: 5
     ports:
-      - "35432:5432"
+      - "45432:5432"
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
@@ -82,7 +82,7 @@ services:
       - druid-zookeeper
       - druid-postgres
     ports:
-      - "38081:8081"
+      - "48081:8081"
     command:
       - coordinator
     env_file:
@@ -106,7 +106,7 @@ services:
       - druid-postgres
       - druid-coordinator
     ports:
-      - "38082:8082"
+      - "48082:8082"
     command:
       - broker
     env_file:
@@ -135,7 +135,7 @@ services:
       - druid-postgres
       - druid-coordinator
     ports:
-      - "38083:8083"
+      - "48083:8083"
     command:
       - historical
     env_file:
@@ -162,7 +162,7 @@ services:
       - druid-postgres
       - druid-coordinator
     ports:
-      - "18091:8091"
+      - "48091:8091"
     command:
       - middleManager
     env_file:
@@ -186,7 +186,7 @@ services:
       - druid-postgres
       - druid-coordinator
     ports:
-      - "38888:8888"
+      - "48888:8888"
     command:
       - router
     env_file:

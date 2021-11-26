@@ -1,0 +1,33 @@
+{
+  "connector.class": "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirCsvSourceConnector",
+
+  "tasks.max": "1",
+
+  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "value.converter.schemas.enable": "false",
+
+  "topic": "stores",
+
+  "csv.first.row.as.header": "true",
+  "schema.generation.enabled": "false",
+
+  "key.schema" : "{\"name\":\"store_key\",\"type\":\"STRUCT\",\"isOptional\":false,\"fieldSchemas\":{\"store_id\":{\"type\":\"STRING\",\"isOptional\":false}}}",
+  "value.schema" : "{\"name\":\"store\",\"type\":\"STRUCT\",\"isOptional\":false,\"fieldSchemas\":{\"store_id\":{\"type\":\"STRING\",\"isOptional\":false},\"zipcode\":{\"type\":\"STRING\",\"isOptional\":false}}}",
+
+  "input.path": "/data/spooldir",
+  "input.file.pattern": "stores.csv",
+  "error.path": "/data/spooldir/errors",
+  "finished.path": "/data/spooldir/finished",
+
+  "transforms" : "tokey,extract",
+  "transforms.tokey.type" : "org.apache.kafka.connect.transforms.ValueToKey",
+  "transforms.tokey.fields" : "store_id",
+
+  "transforms.extract.type" : "org.apache.kafka.connect.transforms.ExtractField$Key",
+  "transforms.extract.field" : "store_id",
+
+  "halt.on.error": "true"
+
+}
+

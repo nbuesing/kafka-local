@@ -8,25 +8,27 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "description": "",
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": 721,
   "graphTooltip": 0,
-  "iteration": 1619301501463,
+  "iteration": 1637954742236,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "gridPos": {
         "h": 6,
         "w": 12,
@@ -35,10 +37,10 @@
       },
       "id": 15,
       "options": {
-        "content": "![](https://raw.githubusercontent.com/nbuesing/kafka-local/main/monitoring/static/consumer_request_metrics.png)\n         ",
+        "content": "![](https://raw.githubusercontent.com/nbuesing/kafka-local/main/monitoring/static/consumer_request_metrics.png)",
         "mode": "markdown"
       },
-      "pluginVersion": "7.4.3",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "queryType": "randomWalk",
@@ -47,7 +49,6 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "",
       "type": "text"
     },
     {
@@ -59,7 +60,6 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -90,7 +90,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.3",
+      "pluginVersion": "8.2.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -100,7 +100,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=\"RequestQueueTimeMs\",request=\"${consumer}\"}",
+          "exemplar": true,
+          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=\"RequestQueueTimeMs\",request=\"${consumer}\"}",
           "interval": "",
           "legendFormat": "{{instance}}",
           "queryType": "randomWalk",
@@ -158,7 +159,6 @@
           "color": {
             "mode": "palette-classic"
           },
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -190,10 +190,11 @@
         "showUnfilled": true,
         "text": {}
       },
-      "pluginVersion": "7.4.3",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
-          "expr": "avg (kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=~\"RequestQueueTimeMs|LocalTimeMs|RemoteTimeMs|ResponseQueueTimeMs|ResponseSendTimeMs\",request=\"${consumer}\"}) by (name)",
+          "exemplar": true,
+          "expr": "avg (kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=~\"RequestQueueTimeMs|LocalTimeMs|RemoteTimeMs|ResponseQueueTimeMs|ResponseSendTimeMs\",request=\"${consumer}\"}) by (name)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -225,7 +226,6 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -256,7 +256,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.3",
+      "pluginVersion": "8.2.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -266,7 +266,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=\"LocalTimeMs\",request=\"${consumer}\"}",
+          "exemplar": true,
+          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=\"LocalTimeMs\",request=\"${consumer}\"}",
           "interval": "",
           "legendFormat": "{{instance}}",
           "queryType": "randomWalk",
@@ -325,7 +326,6 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -356,7 +356,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.3",
+      "pluginVersion": "8.2.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -366,7 +366,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=\"RequestBytes\",request=\"${consumer}\"}",
+          "exemplar": true,
+          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=\"RequestBytes\",request=\"${consumer}\"}",
           "interval": "",
           "legendFormat": "{{instance}}",
           "queryType": "randomWalk",
@@ -425,7 +426,6 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -456,7 +456,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.3",
+      "pluginVersion": "8.2.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -466,7 +466,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=\"RemoteTimeMs\",request=\"${consumer}\"}",
+          "exemplar": true,
+          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=\"RemoteTimeMs\",request=\"${consumer}\"}",
           "interval": "",
           "legendFormat": "{{instance}}",
           "queryType": "randomWalk",
@@ -525,7 +526,6 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -556,7 +556,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.3",
+      "pluginVersion": "8.2.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -566,7 +566,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=\"ResponseQueueTimeMs\",request=\"${consumer}\"}",
+          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=\"$cluster\",instance=~\"$instance\",name=\"ResponseQueueTimeMs\",request=\"${consumer}\"}",
           "interval": "",
           "legendFormat": "{{instance}}",
           "queryType": "randomWalk",
@@ -625,7 +625,6 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -656,7 +655,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.3",
+      "pluginVersion": "8.2.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -666,7 +665,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=\"ResponseSendTimeMs\",request=\"${consumer}\"}",
+          "exemplar": true,
+          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=\"ResponseSendTimeMs\",request=\"${consumer}\"}",
           "interval": "",
           "legendFormat": "{{instance}}",
           "queryType": "randomWalk",
@@ -718,7 +718,7 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 27,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [
     "kafka_cluster",
@@ -727,14 +727,44 @@
   "templating": {
     "list": [
       {
-        "allValue": null,
+        "allValue": ".+",
         "current": {
-          "selected": false,
+          "selected": true,
+          "text": "kafka-core",
+          "value": "kafka-core"
+        },
+        "datasource": "prometheus",
+        "definition": "label_values(jvm_info{cluster_type=\"kafka\"}, cluster_id)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "cluster",
+        "multi": false,
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info{cluster_type=\"kafka\"}, cluster_id)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
         "datasource": "prometheus",
-        "definition": "kafka_server_app_info_commitid",
+        "definition": "label_values(jvm_info{cluster_type=\"kafka\", cluster_id=\"$cluster\"}, instance)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -744,15 +774,14 @@
         "name": "instance",
         "options": [],
         "query": {
-          "query": "kafka_server_app_info_commitid",
+          "query": "label_values(jvm_info{cluster_type=\"kafka\", cluster_id=\"$cluster\"}, instance)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
-        "regex": "/.*instance=\"(.*)\",job.*$/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -760,9 +789,9 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "text": "999",
-          "value": "999"
+          "selected": false,
+          "text": "50",
+          "value": "50"
         },
         "description": null,
         "error": null,
@@ -773,7 +802,7 @@
         "name": "percentile",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "50",
             "value": "50"
           },
@@ -793,7 +822,7 @@
             "value": "99"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "999",
             "value": "999"
           }
@@ -806,7 +835,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "consumer",
           "value": "FetchConsumer"
         },
@@ -819,7 +848,7 @@
         "name": "consumer",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "consumer",
             "value": "FetchConsumer"
           },
@@ -869,5 +898,5 @@
   "timezone": "browser",
   "title": "Kafka Cluster - Consumer Metrics",
   "uid": "kafka_cluster_consumer",
-  "version": 1
+  "version": 3
 }

@@ -12,7 +12,6 @@ ACTIVE_BROKERS=$(sed -n -E -e "s/^  (broker-[0-9]):/\1 /p" ./kafka/docker-compos
 
 (cd connect; docker compose up -d)
 
-(cd ksqlDB; docker compose up -d)
-
 (cd druid; docker compose up -d)
 
+(cd ksqlDB; docker compose up -d)

@@ -1,0 +1,49 @@
+{
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+
+    "connection.url": "${file:/etc/kafka-connect/secrets/mysql.properties:CONNECTION_URL}",
+    "connection.user" : "${file:/etc/kafka-connect/secrets/mysql.properties:CONNECTION_USER}",
+    "connection.password" : "${file:/etc/kafka-connect/secrets/mysql.properties:CONNECTION_PASSWORD}",
+
+    "dialect.name": "MySqlDatabaseDialect",
+
+    "tasks.max": "4",
+
+    "topics.regex": "datagen\\..*",
+    "table.name.format": "${topic}",
+
+    "quote.sql.identifiers": "never",
+    "quote.database.names": "never",
+    "quote.table.names": "never",
+    "quote.column.names": "never",
+
+    "connection.attempts" : "3",
+    "connection.backoff.ms" : "100",
+    "max.retries": "3",
+    "retry.backoff.ms": "100",
+
+    "errors.tolerance": "all",
+    "errors.log.enable": "true",
+    "errors.log.include.messages": "true",
+    "errors.deadletterqueue.topic.name": "dlq.jdbcsink_",
+    "errors.deadletterqueue.context.headers.enable": "true",
+
+    "transforms": "cast,topicName",
+
+    "transforms.cast.type" : "org.apache.kafka.connect.transforms.Cast$Value",
+    "transforms.cast.spec" : "order_id:string",
+
+    "transforms.topicName.type":"org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.topicName.regex":"datagen\\.(.*)",
+    "transforms.topicName.replacement":"MAIN.$1",
+
+    "auto.create": "false",
+    "pk.mode": "record_value",
+    "pk.fields": "order_id",
+
+    "insert.mode": "upsert",
+
+    "consumer.override.max.poll.records": "1000",
+    "batch.size": "1000"
+
+}

@@ -8,6 +8,12 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
@@ -15,62 +21,15 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 6,
   "links": [],
   "panels": [
     {
       "datasource": null,
       "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 21,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 18,
-      "options": {
-        "folderId": null,
-        "maxItems": 100,
-        "query": "",
-        "showHeadings": false,
-        "showRecentlyViewed": false,
-        "showSearch": true,
-        "showStarred": false,
-        "tags": [
-          "streams"
-        ]
-      },
-      "pluginVersion": "7.4.3",
-      "targets": [
-        {
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Kafka Streams",
-      "type": "dashlist"
-    },
-    {
-      "datasource": null,
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "gridPos": {
         "h": 11,
         "w": 12,
-        "x": 12,
+        "x": 0,
         "y": 0
       },
       "id": 19,
@@ -86,7 +45,7 @@
           "kafka_cluster"
         ]
       },
-      "pluginVersion": "7.4.3",
+      "pluginVersion": "8.1.1",
       "targets": [
         {
           "queryType": "randomWalk",
@@ -101,20 +60,48 @@
     {
       "datasource": null,
       "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "gridPos": {
-        "h": 10,
+        "h": 11,
         "w": 12,
         "x": 12,
+        "y": 0
+      },
+      "id": 18,
+      "options": {
+        "maxItems": 100,
+        "query": "",
+        "showHeadings": false,
+        "showRecentlyViewed": false,
+        "showSearch": true,
+        "showStarred": false,
+        "tags": [
+          "connect_cluster"
+        ]
+      },
+      "pluginVersion": "8.1.1",
+      "targets": [
+        {
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Kafka Connect",
+      "type": "dashlist"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
         "y": 11
       },
       "id": 20,
       "options": {
+        "folderId": null,
         "maxItems": 100,
         "query": "",
         "showHeadings": false,
@@ -125,7 +112,7 @@
           "jvm"
         ]
       },
-      "pluginVersion": "7.4.3",
+      "pluginVersion": "8.1.1",
       "targets": [
         {
           "queryType": "randomWalk",
@@ -138,8 +125,8 @@
       "type": "dashlist"
     }
   ],
-  "refresh": "5s",
-  "schemaVersion": 27,
+  "refresh": "",
+  "schemaVersion": 30,
   "style": "dark",
   "tags": [
     "home"
@@ -148,12 +135,13 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1m",
     "to": "now"
   },
   "timepicker": {
     "hidden": true,
     "refresh_intervals": [
+      "1s",
       "5s",
       "10s",
       "30s",
@@ -166,6 +154,7 @@
       "1d"
     ],
     "time_options": [
+      "1m",
       "5m",
       "15m",
       "1h",
@@ -180,5 +169,5 @@
   "timezone": "",
   "title": "Home",
   "uid": "home",
-  "version": 1
+  "version": 2
 }

@@ -8,16 +8,24 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "description": "Apache Kafka resource usage and throughput",
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": 721,
   "graphTooltip": 0,
-  "iteration": 1617791080702,
+  "iteration": 1637954452188,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "aliasColors": {},
@@ -26,12 +34,6 @@
       "dashes": false,
       "datasource": "prometheus",
       "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -60,7 +62,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.3",
+      "pluginVersion": "8.2.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -70,7 +72,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum (kafka_server_socket_server_metrics_connection_count{job=\"kafka\", instance=~\"$instance\"}) by (listener)",
+          "exemplar": true,
+          "expr": "sum (kafka_server_socket_server_metrics_connection_count{cluster_id=~\"$cluster\", instance=~\"$instance\"}) by (listener)",
           "interval": "",
           "legendFormat": "{{listener}}",
           "queryType": "randomWalk",
@@ -127,12 +130,6 @@
       "dashes": false,
       "datasource": "prometheus",
       "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -161,7 +158,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.3",
+      "pluginVersion": "8.2.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -171,7 +168,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum (kafka_server_socket_server_metrics_connection_creation_rate{job=\"kafka\", instance=~\"$instance\"}) by (listener)",
+          "exemplar": true,
+          "expr": "sum (kafka_server_socket_server_metrics_connection_creation_rate{cluster_id=~\"$cluster\", instance=~\"$instance\"}) by (listener)",
           "interval": "",
           "legendFormat": "{{listener}}",
           "queryType": "randomWalk",
@@ -231,16 +229,10 @@
       },
       "datasource": "prometheus",
       "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 12,
         "x": 0,
         "y": 8
@@ -251,14 +243,15 @@
         "show": true,
         "values": true
       },
-      "legendType": "Under graph",
+      "legendType": "Right side",
       "links": [],
       "nullPointMode": "connected",
       "pieType": "pie",
       "strokeWidth": 1,
       "targets": [
         {
-          "expr": "sum(kafka_server_socket_server_metrics_connections{job=~\"kafka\",instance=~\"$instance\"}) by (clientSoftwareName, clientSoftwareVersion)",
+          "exemplar": true,
+          "expr": "sum(kafka_server_socket_server_metrics_connections{cluster_id=~\"$cluster\",instance=~\"$instance\"}) by (clientSoftwareName, clientSoftwareVersion)",
           "interval": "",
           "legendFormat": "{{clientSoftwareName}} - {{clientSoftwareVersion}}",
           "queryType": "randomWalk",
@@ -273,7 +266,7 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 27,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [
     "kafka_cluster",
@@ -282,14 +275,44 @@
   "templating": {
     "list": [
       {
-        "allValue": null,
+        "allValue": ".+",
         "current": {
-          "selected": false,
+          "selected": true,
+          "text": "kafka-core",
+          "value": "kafka-core"
+        },
+        "datasource": "prometheus",
+        "definition": "label_values(jvm_info{cluster_type=\"kafka\"}, cluster_id)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "cluster",
+        "multi": false,
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info{cluster_type=\"kafka\"}, cluster_id)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
         "datasource": "prometheus",
-        "definition": "kafka_server_app_info_commitid",
+        "definition": "label_values(jvm_info{cluster_type=\"kafka\", cluster_id=\"$cluster\"}, instance)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -299,15 +322,14 @@
         "name": "instance",
         "options": [],
         "query": {
-          "query": "kafka_server_app_info_commitid",
+          "query": "label_values(jvm_info{cluster_type=\"kafka\", cluster_id=\"$cluster\"}, instance)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
-        "regex": "/.*instance=\"(.*)\",job.*$/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -347,5 +369,5 @@
   "timezone": "browser",
   "title": "Kafka Cluster - Connections",
   "uid": "kafka_cluster_connections",
-  "version": 1
+  "version": 5
 }

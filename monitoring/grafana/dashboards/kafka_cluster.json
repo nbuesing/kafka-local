@@ -12,7 +12,7 @@
       }
     ]
   },
-  "description": "Apache Kafka resource usage and throughput",
+  "description": "",
   "editable": true,
   "gnetId": 721,
   "graphTooltip": 0,
@@ -1857,14 +1857,17 @@
     "kafka"
   ],
   "templating": {
-    "list": []
+    "list": [
+    ]
   },
+
   "time": {
     "from": "now-1m",
     "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
+      "1s",
       "5s",
       "10s",
       "30s",
@@ -1877,6 +1880,7 @@
       "1d"
     ],
     "time_options": [
+      "1m",
       "5m",
       "15m",
       "1h",

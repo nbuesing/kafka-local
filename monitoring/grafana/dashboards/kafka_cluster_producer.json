@@ -35,7 +35,7 @@
       },
       "id": 17,
       "options": {
-        "content": "![](https://raw.githubusercontent.com/nbuesing/kafka-local/main/monitor/static/producer_request_metrics.png)\n         ",
+        "content": "![](https://raw.githubusercontent.com/nbuesing/kafka-local/main/monitoring/static/producer_request_metrics.png)",
         "mode": "markdown"
       },
       "pluginVersion": "7.4.3",
@@ -100,7 +100,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=\"RequestQueueTimeMs\",request=\"Produce\"}",
+          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=\"RequestQueueTimeMs\",request=\"Produce\"}",
           "interval": "",
           "legendFormat": "{{instance}}",
           "queryType": "randomWalk",
@@ -193,7 +193,7 @@
       "pluginVersion": "7.4.3",
       "targets": [
         {
-          "expr": "avg (kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=~\"RequestQueueTimeMs|LocalTimeMs|RemoteTimeMs|ResponseQueueTimeMs|ResponseSendTimeMs\",request=\"Produce\"}) by (name)",
+          "expr": "avg (kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=~\"RequestQueueTimeMs|LocalTimeMs|RemoteTimeMs|ResponseQueueTimeMs|ResponseSendTimeMs\",request=\"Produce\"}) by (name)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -257,7 +257,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=\"LocalTimeMs\",request=\"Produce\"}",
+          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=\"LocalTimeMs\",request=\"Produce\"}",
           "interval": "",
           "legendFormat": "{{instance}}",
           "queryType": "randomWalk",
@@ -363,7 +363,7 @@
       "targets": [
         {
           "exemplar": false,
-          "expr": "avg(kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=\"TotalTimeMs\",request=\"Produce\"})",
+          "expr": "avg(kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=\"TotalTimeMs\",request=\"Produce\"})",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -427,7 +427,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=\"RemoteTimeMs\",request=\"Produce\"}",
+          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=\"RemoteTimeMs\",request=\"Produce\"}",
           "interval": "",
           "legendFormat": "{{instance}}",
           "queryType": "randomWalk",
@@ -527,7 +527,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=\"RequestBytes\",request=\"Produce\"}",
+          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=\"RequestBytes\",request=\"Produce\"}",
           "interval": "",
           "legendFormat": "{{instance}}",
           "queryType": "randomWalk",
@@ -627,7 +627,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=\"ResponseQueueTimeMs\",request=\"Produce\"}",
+          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=\"ResponseQueueTimeMs\",request=\"Produce\"}",
           "interval": "",
           "legendFormat": "{{instance}}",
           "queryType": "randomWalk",
@@ -727,7 +727,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{job=\"kafka\",instance=~\"$instance\",name=\"ResponseSendTimeMs\",request=\"Produce\"}",
+          "expr": "kafka_network_requestmetrics_${percentile}thpercentile{cluster_id=~\"$cluster\",instance=~\"$instance\",name=\"ResponseSendTimeMs\",request=\"Produce\"}",
           "interval": "",
           "legendFormat": "{{instance}}",
           "queryType": "randomWalk",
@@ -788,14 +788,44 @@
   "templating": {
     "list": [
       {
-        "allValue": null,
+        "allValue": ".+",
         "current": {
-          "selected": false,
+          "selected": true,
+          "text": "kafka-core",
+          "value": "kafka-core"
+        },
+        "datasource": "prometheus",
+        "definition": "label_values(jvm_info{cluster_type=\"kafka\"}, cluster_id)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "cluster",
+        "multi": false,
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info{cluster_type=\"kafka\"}, cluster_id)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
         "datasource": "prometheus",
-        "definition": "kafka_server_app_info_commitid",
+        "definition": "label_values(jvm_info{cluster_type=\"kafka\", cluster_id=\"$cluster\"}, instance)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -805,15 +835,14 @@
         "name": "instance",
         "options": [],
         "query": {
-          "query": "kafka_server_app_info_commitid",
+          "query": "label_values(jvm_info{cluster_type=\"kafka\", cluster_id=\"$cluster\"}, instance)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
-        "regex": "/.*instance=\"(.*)\",job.*$/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false

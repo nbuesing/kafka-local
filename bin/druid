@@ -30,7 +30,7 @@ if [ ! -f $DATA ]; then
   exit
 fi
 
-URL=http://localhost:38081
+URL=http://localhost:48081
 
 CONTENT_TYPE_HDR='Content-Type:application/json'
 

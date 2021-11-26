@@ -1,0 +1,44 @@
+{
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+
+    "connection.url": "${file:/etc/kafka/secrets/mysql.properties:CONNECTION_URL}",
+    "connection.user" : "${file:/etc/kafka/secrets/mysql.properties:CONNECTION_USER}",
+    "connection.password" : "${file:/etc/kafka/secrets/mysql.properties:CONNECTION_PASSWORD}",
+
+    "dialect.name": "MySqlDatabaseDialect",
+
+    "tasks.max": "4",
+
+    "topics.regex": "datagen-.*",
+    "table.name.format": "${topic}",
+
+    "quote.sql.identifiers": "never",
+    "quote.database.names": "never",
+    "quote.table.names": "never",
+    "quote.column.names": "never",
+
+    "connection.attempts" : "3",
+    "connection.backoff.ms" : "100",
+    "max.retries": "3",
+    "retry.backoff.ms": "100",
+
+    "errors.tolerance": "all",
+    "errors.log.enable": "true",
+    "errors.log.include.messages": "true",
+    "errors.deadletterqueue.topic.name": "x.errors-sink",
+    "errors.deadletterqueue.context.headers.enable": "true",
+
+    "transforms": "topicName",
+
+    "transforms.topicName.type":"org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.topicName.regex":"datagen-(.*)",
+    "transforms.topicName.replacement":"$1",
+
+    "auto.create": "false",
+    "pk.mode": "record_key",
+    "insert.mode": "upsert",
+
+    "consumer.override.max.poll.records": "1000",
+    "batch.size": "1000"
+
+}

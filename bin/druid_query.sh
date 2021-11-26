@@ -3,8 +3,8 @@
 DATA=$1
 shift
 
-URL=http://localhost:38082
-#URL=http://localhost:38081
+URL=http://localhost:48082
+#URL=http://localhost:48081
 
 CONTENT_TYPE_HDR='Content-Type:application/json'
 
