@@ -23,7 +23,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1637962294415,
+  "iteration": 1637962128266,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -63,10 +63,8 @@
               "mode": "off"
             }
           },
-          "decimals": 0,
           "links": [],
           "mappings": [],
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -80,24 +78,24 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "ms"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 11,
-        "w": 8,
+        "h": 7,
+        "w": 12,
         "x": 0,
         "y": 0
       },
-      "id": 203,
+      "id": 136,
       "links": [],
       "options": {
         "legend": {
           "calcs": [
-            "mean",
-            "lastNotNull",
-            "max"
+            "min",
+            "max",
+            "last"
           ],
           "displayMode": "table",
           "placement": "right"
@@ -109,8 +107,10 @@
       "pluginVersion": "8.1.3",
       "targets": [
         {
-          "expr": "kafka_connect_task_error_metrics_total_record_failures{job=\"kafka-connect\", instance=~\"$instance\",cluster_id=~\"connect-cluster\",connector=~\"$connector\"}",
+          "expr": "kafka_connect_sink_task_metrics_put_batch_avg_time_ms{job=\"kafka-connect\", instance=~\"$instance\",cluster_id=~\"connect-cluster\",connector=~\"$connector\",task!=\"\"}",
           "format": "time_series",
+          "hide": false,
+          "instant": false,
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{connector}}-{{task}}",
@@ -119,7 +119,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Total record failures",
+      "title": "Put Batch Average time",
       "type": "timeseries"
     },
     {
@@ -158,10 +158,8 @@
               "mode": "off"
             }
           },
-          "decimals": 0,
           "links": [],
           "mappings": [],
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -175,24 +173,24 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "ms"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 11,
-        "w": 8,
-        "x": 8,
+        "h": 7,
+        "w": 12,
+        "x": 12,
         "y": 0
       },
-      "id": 205,
+      "id": 137,
       "links": [],
       "options": {
         "legend": {
           "calcs": [
-            "mean",
-            "lastNotNull",
-            "max"
+            "min",
+            "max",
+            "last"
           ],
           "displayMode": "table",
           "placement": "right"
@@ -204,8 +202,10 @@
       "pluginVersion": "8.1.3",
       "targets": [
         {
-          "expr": "kafka_connect_task_error_metrics_total_record_errors{job=\"kafka-connect\", instance=~\"$instance\",cluster_id=~\"connect-cluster\",connector=~\"$connector\"}",
+          "expr": "kafka_connect_sink_task_metrics_put_batch_max_time_ms{job=\"kafka-connect\", instance=~\"$instance\",cluster_id=~\"connect-cluster\",connector=~\"$connector\",task!=\"\"}",
           "format": "time_series",
+          "hide": false,
+          "instant": false,
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{connector}}-{{task}}",
@@ -214,7 +214,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Total record errors",
+      "title": "Put Batch Max time",
       "type": "timeseries"
     },
     {
@@ -256,7 +256,6 @@
           "decimals": 0,
           "links": [],
           "mappings": [],
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -270,120 +269,21 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 11,
-        "w": 8,
-        "x": 16,
-        "y": 0
-      },
-      "id": 206,
-      "links": [],
-      "options": {
-        "legend": {
-          "calcs": [
-            "mean",
-            "lastNotNull",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.1.3",
-      "targets": [
-        {
-          "expr": "kafka_connect_task_error_metrics_total_records_skipped{job=\"kafka-connect\", instance=~\"$instance\",cluster_id=~\"connect-cluster\",connector=~\"$connector\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "{{connector}}-{{task}}",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Total record skipped",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "prometheus",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 0,
-          "links": [],
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 8,
+        "h": 8,
+        "w": 12,
         "x": 0,
-        "y": 11
+        "y": 7
       },
-      "id": 208,
+      "id": 135,
       "links": [],
       "options": {
         "legend": {
-          "calcs": [
-            "mean",
-            "lastNotNull",
-            "max"
-          ],
+          "calcs": [],
           "displayMode": "table",
           "placement": "right"
         },
@@ -394,8 +294,9 @@
       "pluginVersion": "8.1.3",
       "targets": [
         {
-          "expr": "kafka_connect_task_error_metrics_total_errors_logged{job=\"kafka-connect\", instance=~\"$instance\",cluster_id=~\"connect-cluster\",connector=~\"$connector\"}",
+          "expr": "kafka_connect_sink_task_metrics_partition_count{job=\"kafka-connect\", instance=~\"$instance\",cluster_id=~\"connect-cluster\",connector=~\"$connector\",task!=\"\"}",
           "format": "time_series",
+          "instant": false,
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{connector}}-{{task}}",
@@ -404,197 +305,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Total errors logged",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "prometheus",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 0,
-          "links": [],
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 8,
-        "x": 8,
-        "y": 11
-      },
-      "id": 207,
-      "links": [],
-      "options": {
-        "legend": {
-          "calcs": [
-            "mean",
-            "lastNotNull",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.1.3",
-      "targets": [
-        {
-          "expr": "kafka_connect_task_error_metrics_total_retries{job=\"kafka-connect\", instance=~\"$instance\",cluster_id=~\"connect-cluster\",connector=~\"$connector\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "{{connector}}-{{task}}",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Total retries",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "prometheus",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 0,
-          "links": [],
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 8,
-        "x": 16,
-        "y": 11
-      },
-      "id": 202,
-      "links": [],
-      "options": {
-        "legend": {
-          "calcs": [
-            "mean",
-            "lastNotNull",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.1.3",
-      "targets": [
-        {
-          "expr": "kafka_connect_task_error_metrics_deadletterqueue_produce_requests{job=\"kafka-connect\", instance=~\"$instance\",cluster_id=~\"connect-cluster\",connector=~\"$connector\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "{{connector}}-{{task}}",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Dead letter queue Produce requests",
+      "title": "Partition Count",
       "type": "timeseries"
     }
   ],
@@ -700,7 +411,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-1m",
     "to": "now"
   },
   "timepicker": {
@@ -732,7 +443,7 @@
     ]
   },
   "timezone": "",
-  "title": "Kafka Connect Cluster - Connector Errors",
-  "uid": "kafka_connect_cluster_connector_error",
+  "title": "Kafka Connect Cluster - Sink Connector",
+  "uid": "kafka_connect_cluster_connector_sink",
   "version": 1
 }

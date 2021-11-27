@@ -33,6 +33,10 @@
 
     "transforms": "unwrap,topicName",
 
+   
+    "transforms.rename.type" : "org.apache.kafka.connect.transforms.ReplaceField$Value",
+    "transforms.rename.renames": "store_id:foo",
+
     "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
 
     "transforms.topicName.type":"org.apache.kafka.connect.transforms.RegexRouter",

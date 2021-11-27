@@ -23,7 +23,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1637962532771,
+  "iteration": 1637981348518,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -671,7 +671,7 @@
         ]
       },
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 24,
         "x": 0,
         "y": 0
@@ -874,7 +874,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 9
+        "y": 8
       },
       "id": 113,
       "links": [],
@@ -882,8 +882,8 @@
         "legend": {
           "calcs": [
             "mean",
-            "lastNotNull",
-            "max"
+            "max",
+            "last"
           ],
           "displayMode": "list",
           "placement": "right"
@@ -968,7 +968,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 9
+        "y": 8
       },
       "id": 114,
       "links": [],
@@ -976,8 +976,8 @@
         "legend": {
           "calcs": [
             "mean",
-            "lastNotNull",
-            "max"
+            "max",
+            "last"
           ],
           "displayMode": "list",
           "placement": "right"
@@ -1063,7 +1063,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 16
+        "y": 15
       },
       "id": 115,
       "links": [],
@@ -1071,8 +1071,8 @@
         "legend": {
           "calcs": [
             "mean",
-            "lastNotNull",
-            "max"
+            "max",
+            "last"
           ],
           "displayMode": "list",
           "placement": "right"
@@ -1156,7 +1156,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 16
+        "y": 15
       },
       "id": 116,
       "links": [],
@@ -1164,8 +1164,8 @@
         "legend": {
           "calcs": [
             "mean",
-            "lastNotNull",
-            "max"
+            "max",
+            "last"
           ],
           "displayMode": "list",
           "placement": "right"
@@ -1251,7 +1251,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 23
+        "y": 22
       },
       "id": 117,
       "links": [],
@@ -1259,8 +1259,8 @@
         "legend": {
           "calcs": [
             "mean",
-            "lastNotNull",
-            "max"
+            "max",
+            "last"
           ],
           "displayMode": "list",
           "placement": "right"
@@ -1423,5 +1423,5 @@
   "timezone": "",
   "title": "Kafka Connect Cluster - Connector",
   "uid": "kafka_connect_cluster_connector",
-  "version": 3
+  "version": 5
 }
