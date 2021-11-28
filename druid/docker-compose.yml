@@ -77,8 +77,9 @@ services:
     volumes:
       - coordinator_var:/opt/druid/var
       - shared:/opt/shared
+      - ./jmx_prometheus:/opt/jmx_prometheus
       - ./staging:/opt/staging
-    depends_on: 
+    depends_on:
       - druid-zookeeper
       - druid-postgres
     ports:
@@ -87,6 +88,9 @@ services:
       - coordinator
     env_file:
       - environment
+    environment:
+      JAVA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/druid-config.yml
+      # -Djava.rmi.server.hostname=0.0.0.0 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.rmi.port=9999 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
 
   druid-broker:
     image: apache/druid:0.22.0
@@ -100,8 +104,9 @@ services:
       start_period: 60s
     volumes:
       - broker_var:/opt/druid/var
+      - ./jmx_prometheus:/opt/jmx_prometheus
       - ./staging:/opt/staging
-    depends_on: 
+    depends_on:
       - druid-zookeeper
       - druid-postgres
       - druid-coordinator
@@ -111,6 +116,8 @@ services:
       - broker
     env_file:
       - environment
+    environment:
+      JAVA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/druid-config.yml
 #    deploy:
 #      resources:
 #        limits:
@@ -129,8 +136,9 @@ services:
     volumes:
       - historical_var:/opt/druid/var
       - shared:/opt/shared
+      - ./jmx_prometheus:/opt/jmx_prometheus
       - ./staging:/opt/staging
-    depends_on: 
+    depends_on:
       - druid-zookeeper
       - druid-postgres
       - druid-coordinator
@@ -140,6 +148,8 @@ services:
       - historical
     env_file:
       - environment
+    environment:
+      JAVA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/druid-config.yml
 
   druid-middlemanager:
     image: apache/druid:0.22.0
@@ -156,8 +166,9 @@ services:
     volumes:
       - middlemanager_var:/opt/druid/var
       - shared:/opt/shared
+      - ./jmx_prometheus:/opt/jmx_prometheus
       - ./staging:/opt/staging:rwx
-    depends_on: 
+    depends_on:
       - druid-zookeeper
       - druid-postgres
       - druid-coordinator
@@ -167,6 +178,8 @@ services:
       - middleManager
     env_file:
       - environment
+    environment:
+      JAVA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/druid-config.yml
 
   druid-router:
     image: apache/druid:0.22.0
@@ -180,6 +193,7 @@ services:
       start_period: 60s
     volumes:
       - router_var:/opt/druid/var
+      - ./jmx_prometheus:/opt/jmx_prometheus
       - ./staging:/opt/staging
     depends_on:
       - druid-zookeeper
@@ -191,3 +205,26 @@ services:
       - router
     env_file:
       - environment
+    environment:
+      JAVA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/druid-config.yml
+
+
+  #this is not part of Apache Druid
+  druid-exporter:
+    image: quay.io/opstree/druid-exporter:v0.11
+    container_name: druid-exporter
+#    command: 
+#      - "conf/example_druid_v_0_17_0.json"
+#    healthcheck:
+#      test: true || exit 1
+#      test: nc localhost 7071 || exit 1
+#      interval: 5s
+#      timeout: 5s
+#      retries: 5
+#      start_period: 60s
+    environment:
+      DRUID_URL: "http://druid-router:8888"
+      PORT: "7071"
+    ports:
+      - "17073:7071"
+

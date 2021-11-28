@@ -19,22 +19,24 @@
     ]
   },
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": null,
   "graphTooltip": 0,
+  "id": null,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "datasource": null,
       "description": "",
       "gridPos": {
-        "h": 11,
+        "h": 10,
         "w": 12,
         "x": 0,
         "y": 0
       },
       "id": 19,
       "options": {
-        "folderId": null,
         "maxItems": 100,
         "query": "",
         "showHeadings": false,
@@ -45,7 +47,7 @@
           "kafka_cluster"
         ]
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "queryType": "randomWalk",
@@ -61,10 +63,43 @@
       "datasource": null,
       "description": "",
       "gridPos": {
-        "h": 11,
+        "h": 10,
         "w": 12,
         "x": 12,
         "y": 0
+      },
+      "id": 21,
+      "options": {
+        "maxItems": 100,
+        "query": "",
+        "showHeadings": false,
+        "showRecentlyViewed": false,
+        "showSearch": true,
+        "showStarred": false,
+        "tags": [
+          "druid"
+        ]
+      },
+      "pluginVersion": "8.2.5",
+      "targets": [
+        {
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Druid",
+      "type": "dashlist"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 0,
+        "y": 10
       },
       "id": 18,
       "options": {
@@ -78,7 +113,7 @@
           "connect_cluster"
         ]
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "queryType": "randomWalk",
@@ -94,14 +129,46 @@
       "datasource": null,
       "description": "",
       "gridPos": {
-        "h": 5,
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 10
+      },
+      "id": 22,
+      "options": {
+        "maxItems": 100,
+        "query": "",
+        "showHeadings": false,
+        "showRecentlyViewed": false,
+        "showSearch": true,
+        "showStarred": false,
+        "tags": [
+          "streams"
+        ]
+      },
+      "pluginVersion": "8.2.5",
+      "targets": [
+        {
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Kafka Streams",
+      "type": "dashlist"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "gridPos": {
+        "h": 3,
         "w": 12,
         "x": 0,
-        "y": 11
+        "y": 21
       },
       "id": 20,
       "options": {
-        "folderId": null,
         "maxItems": 100,
         "query": "",
         "showHeadings": false,
@@ -112,7 +179,7 @@
           "jvm"
         ]
       },
-      "pluginVersion": "8.1.1",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "queryType": "randomWalk",
@@ -126,7 +193,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 30,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [
     "home"
@@ -141,33 +208,12 @@
   "timepicker": {
     "hidden": true,
     "refresh_intervals": [
-      "1s",
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
     ],
     "time_options": [
-      "1m",
-      "5m",
-      "15m",
-      "1h",
-      "6h",
-      "12h",
-      "24h",
-      "2d",
-      "7d",
-      "30d"
     ]
   },
   "timezone": "",
   "title": "Home",
   "uid": "home",
-  "version": 2
+  "version": 1
 }

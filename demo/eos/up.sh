@@ -15,3 +15,5 @@ ACTIVE_BROKERS=$(sed -n -E -e "s/^  (broker-[0-9]):/\1 /p" ./kafka/docker-compos
 (cd druid; docker compose up -d)
 
 (cd ksqlDB; docker compose up -d)
+
+(cd monitoring; docker compose up -d prometheus grafana)

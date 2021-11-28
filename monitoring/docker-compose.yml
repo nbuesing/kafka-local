@@ -73,7 +73,7 @@ services:
     command: --kafka.server=broker-1:9092 --kafka.server=broker-2:9092 --kafka.server=broker-3:9092
 
   kowl:
-    image: quay.io/cloudhut/kowl:v1.4.0
+    image: quay.io/cloudhut/kowl:v1.5.0
     hostname: kowl
     container_name: kowl
     healthcheck:
@@ -89,7 +89,7 @@ services:
     entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
 
   kafka-ui:
-    image: provectuslabs/kafka-ui:0.2.0
+    image: provectuslabs/kafka-ui:0.2.1
     container_name: kafka-ui
     healthcheck:
       test: curl --fail http://localhost:8080/ || exit 1
@@ -133,6 +133,14 @@ services:
       - "9004:9000"
     environment:
       KAFKA_BROKERCONNECT: broker-1:9092,broker-2:9092,broker-3:9092,broker-4:9092
+
+#  druid-exporter:
+#    image: druid-exporter:latest
+#    container_name: druid-exporter
+#    command: 
+#      - "conf/example_druid_v_0_17_0.json" -t druid-metric -b broker-1:9092,broker-2:9092,broker-3:9092,broker-4:9092 -g "druid-exporter"
+#    ports:
+#      - "9999:8000"
 
 #  cmak_zk:
 #    image: zookeeper:latest

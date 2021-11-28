@@ -18,18 +18,17 @@
       }
     ]
   },
-  "description": "Apache Kafka resource usage and throughput",
+  "description": "Kafka resource usage and throughput",
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": 721,
+  "gnetId": 7589,
   "graphTooltip": 0,
-  "iteration": 1638128923089,
+  "iteration": 1637983934060,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": "prometheus",
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -40,7 +39,7 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 10,
+            "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -54,7 +53,7 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true,
+            "spanNulls": false,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -64,6 +63,7 @@
             }
           },
           "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -82,15 +82,18 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 11,
         "w": 12,
         "x": 0,
         "y": 0
       },
-      "id": 38,
+      "id": 14,
+      "links": [],
       "options": {
         "legend": {
           "calcs": [
+            "mean",
+            "max",
             "last"
           ],
           "displayMode": "table",
@@ -103,22 +106,20 @@
       "pluginVersion": "8.2.5",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "sum (kafka_server_socket_server_metrics_connection_count{cluster_id=~\"$cluster\", instance=~\"$instance\"}) by (listener)",
-          "interval": "",
-          "legendFormat": "{{listener}}",
-          "queryType": "randomWalk",
-          "refId": "A"
+          "expr": "sum(rate(kafka_topic_partition_current_offset{instance=~\".*\",topic=~\"$topic\"}[1m])) by (topic)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{topic}}",
+          "refId": "B"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Connection Count / Listener",
+      "title": "Message in per second",
       "type": "timeseries"
     },
     {
       "datasource": "prometheus",
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -129,7 +130,7 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 10,
+            "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -143,7 +144,7 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true,
+            "spanNulls": false,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -153,6 +154,7 @@
             }
           },
           "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -171,15 +173,18 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 11,
         "w": 12,
         "x": 12,
         "y": 0
       },
-      "id": 39,
+      "id": 12,
+      "links": [],
       "options": {
         "legend": {
           "calcs": [
+            "mean",
+            "max",
             "last"
           ],
           "displayMode": "table",
@@ -193,70 +198,212 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum (kafka_server_socket_server_metrics_connection_creation_rate{cluster_id=~\"$cluster\", instance=~\"$instance\"}) by (listener)",
+          "expr": "sum(kafka_consumergroup_lag{instance=~\".*\",topic=~\"$topic\"}) by (consumergroup, topic) ",
+          "format": "time_series",
+          "instant": false,
           "interval": "",
-          "legendFormat": "{{listener}}",
-          "queryType": "randomWalk",
+          "intervalFactor": 1,
+          "legendFormat": "{{consumergroup}} (topic: {{topic}})",
           "refId": "A"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Connection Rate / Listener",
+      "title": "Lag by  Consumer Group",
       "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "breakPoint": "50%",
-      "cacheTimeout": null,
-      "combine": {
-        "label": "Others",
-        "threshold": 0
-      },
       "datasource": "prometheus",
-      "description": "",
-      "fontSize": "80%",
-      "format": "short",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
       "gridPos": {
-        "h": 10,
+        "h": 11,
         "w": 12,
         "x": 0,
-        "y": 10
+        "y": 11
       },
-      "id": 36,
-      "interval": null,
-      "legend": {
-        "show": true,
-        "values": true
-      },
-      "legendType": "Right side",
+      "id": 16,
       "links": [],
-      "nullPointMode": "connected",
-      "pieType": "pie",
-      "strokeWidth": 1,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(kafka_server_socket_server_metrics_connections{cluster_id=~\"$cluster\",instance=~\"$instance\"}) by (clientSoftwareName, clientSoftwareVersion)",
+          "expr": "sum(delta(kafka_topic_partition_current_offset{instance=~'.*', topic=~\"$topic\"}[5m])/5) by (topic)",
+          "format": "time_series",
           "interval": "",
-          "legendFormat": "{{clientSoftwareName}} - {{clientSoftwareVersion}}",
-          "queryType": "randomWalk",
+          "intervalFactor": 1,
+          "legendFormat": "{{topic}}",
           "refId": "A"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Client Versions",
-      "type": "grafana-piechart-panel",
-      "valueName": "current"
+      "title": "Message in per minute",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 11
+      },
+      "id": 18,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.2.5",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(delta(kafka_consumergroup_current_offset{instance=~'.*',topic=~\"$topic\"}[5m])/5) by (consumergroup, topic)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{consumergroup}} (topic: {{topic}})",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Message consume per minute",
+      "type": "timeseries"
     }
   ],
   "refresh": "5s",
   "schemaVersion": 32,
   "style": "dark",
   "tags": [
+    "kafka",
     "kafka_cluster",
-    "kafka"
+    "exporter"
   ],
   "templating": {
     "list": [
@@ -291,30 +438,34 @@
         "useTags": false
       },
       {
-        "allValue": ".*",
+        "allValue": null,
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "prometheus",
-        "definition": "label_values(jvm_info{cluster_type=\"kafka\", cluster_id=\"$cluster\"}, instance)",
+        "definition": "",
         "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": "instance",
-        "multi": false,
-        "name": "instance",
+        "label": null,
+        "multi": true,
+        "name": "topic",
         "options": [],
         "query": {
-          "query": "label_values(jvm_info{cluster_type=\"kafka\", cluster_id=\"$cluster\"}, instance)",
-          "refId": "StandardVariableQuery"
+          "query": "kafka_server_brokertopicmetrics_oneminuterate{cluster_id=~\"$cluster\",instance=~\".*\",name=\"BytesInPerSec\",topic!~\"__confluent.+\"}",
+          "refId": "prometheus-topic-Variable-Query"
         },
         "refresh": 1,
-        "regex": "",
+        "regex": "/topic=\\\"(.*)\\\"/",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
@@ -340,7 +491,6 @@
       "1d"
     ],
     "time_options": [
-      "1m",
       "5m",
       "15m",
       "1h",
@@ -353,7 +503,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Kafka Cluster - Connections",
-  "uid": "kafka_cluster_connections",
-  "version": 1
+  "title": "Kafka Cluster - Exporter",
+  "uid": "kafka_cluster_exporter",
+  "version": 11
 }

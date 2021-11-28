@@ -39,8 +39,8 @@ $KSQL ./ksql/users.ksql
 $KSQL ./ksql/stores.ksql
 $KSQL ./ksql/orders.ksql
 
-echo "sleeping 5 seconds to make sure the tables for users and stores are hydrated before orders enrichment stream is created"
-sleep 5
+echo "sleeping 2 seconds to make sure the tables for users and stores are hydrated before orders enrichment stream is created"
+sleep 2
 $KSQL ./ksql/orders_enriched.ksql
 
 $DRUID load ./druid/order.json

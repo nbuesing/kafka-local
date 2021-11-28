@@ -12,9 +12,14 @@ druid_emitter_logging_logLevel=debug
 
 druid_extensions_loadList="[\"druid-kafka-indexing-service\", \"druid-histogram\", \"druid-datasketches\", \"druid-lookups-cached-global\", \"postgresql-metadata-storage\", \"kafka-emitter\", \"druid-avro-extensions\", \"druid-parquet-extensions\"]"
 
+#druid_extensions_loadList="[\"druid-kafka-indexing-service\", \"druid-histogram\", \"druid-datasketches\", \"druid-lookups-cached-global\", \"postgresql-metadata-storage\", \"kafka-emitter\", \"druid-avro-extensions\", \"druid-parquet-extensions\", \"prometheus-emitter\"]"
+
 #druid_extensions_loadList=[\"druid-kafka-indexing-service\", \"druid-histogram\", \"druid-datasketches\", \"druid-lookups-cached-global\", \"postgresql-metadata-storage\", \"kafka-emitter\"]
 #druid_extensions_loadList=[\"druid-kafka-indexing-service\", \"druid-histogram\", \"druid-datasketches\", \"druid-lookups-cached-global\", \"postgresql-metadata-storage\", \"druid-google-extensions\"]
 #druid_extensions_loadList=[\"druid-kafka-indexing-service\", \"druid-histogram\", \"druid-datasketches\", \"druid-lookups-cached-global\", \"postgresql-metadata-storage\", \"druid-s3-extensions\", \"druid-google-extensions\"]
+
+druid_emitter_prometheus_port=8090
+
 
 druid_zk_service_host=druid-zookeeper
 
@@ -45,11 +50,26 @@ druid_indexer_logs_directory=/opt/shared/indexing-logs
 druid_processing_numThreads=2
 druid_processing_numMergeBuffers=2
 
-druid_emitter=kafka
+
+
+druid_emitter_composing_emitters="[\"http\", \"kafka\"]"
+druid_emitter=composing
+#druid_emitter=http
+#druid_emitter=kafka
+
+druid_emitter_http_recipientBaseUrl=http://druid-exporter:7071/druid
+
 druid_emitter_kafka_bootstrap_servers=broker-1:9092,broker-2:9092,broker-3:9092,broker-4:9092
 druid_emitter_kafka_metric_topic=druid-metric
 druid_emitter_kafka_alert_topic=druid-alert
 druid_emitter_kafka_producer_config="{\"max.block.ms\":10000}"
+
+#druid_emitter=prometheus
+#druid_emitter_prometheus_strategy=exporter
+#druid_emitter_prometheus_port=7071
+
+
+
 
 #druid.query.groupBy.maxOnDiskStorage=2
 #druid.query.groupBy.maxMergingDictionarySize=300000000
