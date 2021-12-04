@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#
+# This local environment was designed for a 64GB machine, but should work fine with 32GB. 
+#
+# However, to run with fewer resources, certain services might be best to not be enabled.
+#
+#
+
 DIR=$(dirname $0)/..
 
 DOCKER_COMPOSE=${DIR}/kafka/docker-compose.yml
@@ -7,7 +14,7 @@ DOCKER_COMPOSE=${DIR}/kafka/docker-compose.yml
 
 usage() {
   echo ""
-  echo "Usage: $0 {--uncomment|--comment|--toggle} {broker-4|connect-2}"
+  echo "Usage: $0 {--uncomment|--comment|--toggle} {broker-4|connect-2|connect-3}"
   echo ""
 }
 
@@ -38,6 +45,11 @@ for i in "$@"; do
     connect-2)
       DOCKER_COMPOSE=${DIR}/connect/docker-compose.yml
       start=$(grep -n  "^#\?  connect-2:" ${DOCKER_COMPOSE} | cut -d: -f1)
+      end=$(expr $(grep -n  "^#\?  connect-3:" ${DOCKER_COMPOSE} | cut -d: -f1) - 2)
+      ;;
+    connect-3)
+      DOCKER_COMPOSE=${DIR}/connect/docker-compose.yml
+      start=$(grep -n  "^#\?  connect-3:" ${DOCKER_COMPOSE} | cut -d: -f1)
       end="$"
       ;;
     *)

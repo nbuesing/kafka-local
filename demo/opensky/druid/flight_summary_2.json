@@ -1,0 +1,76 @@
+{
+  "type": "kafka",
+  "spec": {
+    "ioConfig": {
+      "type": "kafka",
+      "consumerProperties": {
+        "bootstrap.servers": "broker-1:9092"
+      },
+      "topic": "FLIGHTS_SUMMARY",
+      "inputFormat": {
+        "type": "json"
+      },
+      "useEarliestOffset": true,
+      "taskCount": 4
+    },
+    "tuningConfig": {
+      "type": "kafka"
+    },
+    "dataSchema": {
+      "dataSource": "flight_summary",
+      "timestampSpec": {
+        "column": "TIMEPOSITION",
+        "format": "auto"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          "CALLSIGN",
+          "PATH",
+          "NEAREST_AIRPORT",
+          "NEAREST_REGION",
+          "NEAREST_CITY",
+          {
+            "type": "long",
+            "name": "LASTCONTACT"
+          },
+          {
+            "type": "double",
+            "name": "LATITUDE"
+          },
+          {
+            "type": "double",
+            "name": "LONGITUDE"
+          },
+          {
+            "type": "double",
+            "name": "ALTITUDE"
+          },
+          {
+            "type": "double",
+            "name": "VELOCITY"
+          },
+          {
+            "type": "double",
+            "name": "DISTANCE"
+          }
+        ]
+      },
+      "metricsSpec": [
+        {
+          "type": "count",
+          "name": "count"
+        }
+      ],
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": "HOUR",
+        "queryGranularity": null,
+        "rollup": false,
+        "intervals": null
+      },
+      "transformSpec": {
+        "transforms": []
+      }
+    }
+  }
+}

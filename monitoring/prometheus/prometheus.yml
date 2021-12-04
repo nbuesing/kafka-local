@@ -38,6 +38,7 @@ scrape_configs:
     static_configs:
       - targets:
           - ksql-server:7071
+          - ksql-server-2:7071
         labels:
           cluster_type: "streams"
           cluster_id: "ksql-cluster"

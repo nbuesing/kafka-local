@@ -14,7 +14,7 @@
       "useEarliestOffset": true,
       "pollTimeout": 100,
       "period": "PT30S",
-      "taskCount": 4
+      "taskCount": 1
     },
     "tuningConfig": {
       "type": "kafka",
@@ -23,14 +23,14 @@
       "maxTotalRows": 200000
     },
     "dataSchema": {
-      "dataSource": "rewards",
+      "dataSource": "orders_store_zipcode",
       "timestampSpec": {
         "column": "ORDER_TS",
         "format": "auto"
       },
       "dimensionsSpec": {
         "dimensions": [
-          "USER_REWARD"
+          "STORE_ZIPCODE"
         ]
       },
       "metricsSpec": [

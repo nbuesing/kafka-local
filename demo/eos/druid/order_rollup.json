@@ -30,10 +30,7 @@
       },
       "dimensionsSpec": {
         "dimensions": [
-          "USER_ID",
-          "AREA_CODE",
-          "STORE_ID",
-          "POSTALCODE"
+          "USER_REWARD"
         ]
       },
       "metricsSpec": [
@@ -43,7 +40,32 @@
         },
         {
           "type": "longSum",
-          "name": "QUANTITY",
+          "name": "QUANTITY_SUM",
+          "fieldName": "QUANTITY"
+        },
+        {
+          "type": "stringLast",
+          "name": "STORE_ID_LAST",
+          "fieldName": "STORE_ID"
+        },
+        {
+          "type": "longLast",
+          "name": "QUANTITY_LAST",
+          "fieldName": "QUANTITY"
+        },
+        {
+          "type": "longFirst",
+          "name": "QUANTITY_FIRST",
+          "fieldName": "QUANTITY"
+        },
+        {
+          "type": "longMin",
+          "name": "QUANTITY_MIN",
+          "fieldName": "QUANTITY"
+        },
+        {
+          "type": "longMax",
+          "name": "QUANTITY_MAX",
           "fieldName": "QUANTITY"
         }
       ],

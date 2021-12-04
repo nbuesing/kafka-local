@@ -31,7 +31,7 @@ cd /opt/staging/exports
 
 #///opt/druid/var/druid/task/index_kafka_orders_ff239f7f6672be9_pcpaciph/work/persist/orders_2021-11-20T13:00:00.000Z_2021-11-20T14:00:00.000Z_2021-11-20T13:02:52.543Z_7/4/00000.smoosh
 
-segments=$(find /opt/druid/var/druid/task/index_kafka_${datasource}_* -name 00000.smoosh -print -quit)
+segments=$(find /opt/druid/var/druid/task/index_kafka_${datasource}_* -name 00000.smoosh -print )
 
 for i in $segments; do
 

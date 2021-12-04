@@ -42,6 +42,7 @@ DATABASE_DRUID=$(cat <<EOF
 EOF
 )
 
+#DB_ID=1
 DB_ID=$(curl -s -X POST -H "Authorization:Bearer ${TOKEN}" -H "Content-Type:application/json" --data "${DATABASE_DRUID}" ${API_URL}/database/ | jq -r ".id")
 
 echo "DATABASE ID: $DB_ID"
@@ -59,6 +60,7 @@ EOF
 )
 
 
+#DATASET_ID=1
 DATASET_ID=$(curl -s -X POST -H "Authorization:Bearer ${TOKEN}" -H "Content-Type:application/json" --data "${DATASET}" ${API_URL}/dataset/ | jq -r ".id")
 
 echo "DATASET ID: $DATASET_ID"

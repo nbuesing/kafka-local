@@ -10,6 +10,12 @@ services:
   superset:
     build: ./superset
     container_name: superset
+    healthcheck:
+      test: wget --spider http://localhost:8088 || exit 1
+      start_period: 3s
+      interval: 3s
+      timeout: 2s
+      retries: 3
     ports:
       - 28088:8088
     environment:
@@ -19,6 +25,12 @@ services:
   turnilo:
     build: ./turnilo
     container_name: turnilo
+    healthcheck:
+      test: wget --spider http://localhost:9090 || exit 1
+      start_period: 3s
+      interval: 3s
+      timeout: 2s
+      retries: 3
     ports:
       - 9090:9090
     environment:

@@ -2,7 +2,7 @@
 
 usage() {
   echo ""
-  echo "Usage: $0 {--m|--h} datasource"
+  echo "Usage: $0 {-mm|-h} datasource"
   echo ""
 }
 
@@ -10,7 +10,7 @@ SOURCE=h
 
 for i in "$@"; do
   case $i in
-    --middlemanager|-m)
+    --middlemanager|-m|-mm)
       SOURCE="mm"
       ;;
     --historical|-h)
@@ -23,14 +23,14 @@ for i in "$@"; do
   shift
 done
 
-echo $SOURCE
-echo $datasource
+if [ -z "${datasource}" ]; then
+  usage
+  exit
+fi
 
-exit
 
-shift
 
-if [ "${SOURCE}" == "mm" ; then 
+if [ "${SOURCE}" == "mm" ]; then 
 
   docker exec -it druid-middlemanager sh -c 'cd /opt/staging; FILE=$(find /opt/druid/var/druid/task -name 00000.smoosh -print -quit) && java -classpath "/opt/druid/lib/*" -Ddruid.extensions.loadList="[]" org.apache.druid.cli.Main tools dump-segment --directory $(dirname $FILE) --out ./x.txt ${COMMAND} 2>/dev/null  && cat ./x.txt'
 
