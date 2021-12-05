@@ -32,7 +32,7 @@ services:
       timeout: 2s
       retries: 3
     ports:
-      - 9090:9090
+      - 9091:9090
     environment:
       DRUID: http://druid-router:8888
 

@@ -14,7 +14,7 @@
       "useEarliestOffset": true,
       "pollTimeout": 100,
       "period": "PT30S",
-      "taskCount": 4
+      "taskCount": 1
     },
     "tuningConfig": {
       "type": "kafka",
@@ -23,7 +23,7 @@
       "maxTotalRows": 200000
     },
     "dataSchema": {
-      "dataSource": "orders_rollup",
+      "dataSource": "orders_user_reward_sketch",
       "timestampSpec": {
         "column": "ORDER_TS",
         "format": "auto"
@@ -40,33 +40,13 @@
         },
         {
           "type": "longSum",
-          "name": "QUANTITY_SUM",
+          "name": "QUANTITY",
           "fieldName": "QUANTITY"
         },
         {
-          "type": "stringLast",
-          "name": "STORE_ID_LAST",
-          "fieldName": "STORE_ID"
-        },
-        {
-          "type": "longLast",
-          "name": "QUANTITY_LAST",
-          "fieldName": "QUANTITY"
-        },
-        {
-          "type": "longFirst",
-          "name": "QUANTITY_FIRST",
-          "fieldName": "QUANTITY"
-        },
-        {
-          "type": "longMin",
-          "name": "QUANTITY_MIN",
-          "fieldName": "QUANTITY"
-        },
-        {
-          "type": "longMax",
-          "name": "QUANTITY_MAX",
-          "fieldName": "QUANTITY"
+          "type" : "thetaSketch",
+          "name" : "USER_ID_SKETCH",
+          "fieldName" : "USER_ID"
         }
       ],
       "granularitySpec": {

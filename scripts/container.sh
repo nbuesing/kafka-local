@@ -14,7 +14,7 @@ DOCKER_COMPOSE=${DIR}/kafka/docker-compose.yml
 
 usage() {
   echo ""
-  echo "Usage: $0 {--uncomment|--comment|--toggle} {broker-4|connect-2|connect-3}"
+  echo "Usage: $0 {--uncomment|--comment|--toggle} {broker-4|connect-2|connect-3|ksql-server-2}"
   echo ""
 }
 
@@ -50,6 +50,11 @@ for i in "$@"; do
     connect-3)
       DOCKER_COMPOSE=${DIR}/connect/docker-compose.yml
       start=$(grep -n  "^#\?  connect-3:" ${DOCKER_COMPOSE} | cut -d: -f1)
+      end="$"
+      ;;
+    ksql-server-2)
+      DOCKER_COMPOSE=${DIR}/ksqldb/docker-compose.yml
+      start=$(grep -n  "^#\?  ksql-server-2:" ${DOCKER_COMPOSE} | cut -d: -f1)
       end="$"
       ;;
     *)

@@ -14,7 +14,7 @@
       "useEarliestOffset": true,
       "pollTimeout": 100,
       "period": "PT30S",
-      "taskCount": 2
+      "taskCount": 1
     },
     "tuningConfig": {
       "type": "kafka",
@@ -23,22 +23,14 @@
       "maxTotalRows": 200000
     },
     "dataSchema": {
-      "dataSource": "orders",
+      "dataSource": "orders_metric_showcase",
       "timestampSpec": {
         "column": "ORDER_TS",
         "format": "auto"
       },
       "dimensionsSpec": {
         "dimensions": [
-          {
-            "type": "long",
-            "name": "ORDER_ID"
-          },
-          "USER_ID",
-          "USER_REWARD",
-          "USER_AREA_CODE",
-          "STORE_ID",
-          "STORE_ZIPCODE"
+          "USER_REWARD"
         ]
       },
       "metricsSpec": [
@@ -47,21 +39,41 @@
           "name": "COUNT"
         },
         {
-          "type": "longLast",
-          "name": "QUANTITY",
+          "type": "longSum",
+          "name": "QUANTITY_SUM",
           "fieldName": "QUANTITY"
         },
-	  {
- 	    "type" : "thetaSketch",
-  	    "name" : "USER_ID_SKETCH",
- 	    "fieldName" : "USER_ID"
- 	  }
+        {
+          "type": "stringLast",
+          "name": "STORE_ID_LAST",
+          "fieldName": "STORE_ID"
+        },
+        {
+          "type": "longLast",
+          "name": "QUANTITY_LAST",
+          "fieldName": "QUANTITY"
+        },
+        {
+          "type": "longFirst",
+          "name": "QUANTITY_FIRST",
+          "fieldName": "QUANTITY"
+        },
+        {
+          "type": "longMin",
+          "name": "QUANTITY_MIN",
+          "fieldName": "QUANTITY"
+        },
+        {
+          "type": "longMax",
+          "name": "QUANTITY_MAX",
+          "fieldName": "QUANTITY"
+        }
       ],
       "granularitySpec": {
         "type": "uniform",
         "segmentGranularity": "HOUR",
-        "queryGranularity": null,
-        "rollup": false,
+        "queryGranularity": "minute",
+        "rollup": true,
         "intervals": null
       },
       "transformSpec": {

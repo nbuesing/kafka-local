@@ -216,12 +216,9 @@ services:
 #    command: 
 #      - "conf/example_druid_v_0_17_0.json"
 #    healthcheck:
-#      test: true || exit 1
-#      test: nc localhost 7071 || exit 1
-#      interval: 5s
-#      timeout: 5s
-#      retries: 5
-#      start_period: 60s
+#      test: curl --fail http://localhost:7071/health || exit 1
+#      interval: 1s
+#      retries: 10
     environment:
       DRUID_URL: "http://druid-router:8888"
       PORT: "7071"
