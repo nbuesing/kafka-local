@@ -14,7 +14,7 @@
       "useEarliestOffset": true,
       "pollTimeout": 100,
       "period": "PT30S",
-      "taskCount": 1
+      "taskCount": 2
     },
     "tuningConfig": {
       "type": "kafka",
