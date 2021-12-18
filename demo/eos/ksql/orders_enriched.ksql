@@ -4,6 +4,7 @@ create or replace stream ORDERS_ENRICHED
       cast(O.ORDER_ID as string) as ORDER_KEY,
       O.ROWTIME                  as ORDER_TS,
       AS_VALUE(O.ORDER_ID)       as ORDER_ID,
+      O.CODE                     as CODE,
       O.USER_ID                  as USER_ID,
       U.REWARD                   as USER_REWARD,
       U.AREA_CODE                as USER_AREA_CODE,

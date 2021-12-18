@@ -14,26 +14,23 @@
       "useEarliestOffset": true,
       "pollTimeout": 100,
       "period": "PT30S",
-      "taskCount": 1
+      "taskCount": 4
     },
     "tuningConfig": {
       "type": "kafka",
-      "maxRowsInMemory": 100000,
-      "maxRowsPerSegment": 500000,
-      "maxTotalRows": 2000000
+      "maxRowsInMemory": 10000,
+      "maxRowsPerSegment": 50000,
+      "maxTotalRows": 200000
     },
     "dataSchema": {
-      "dataSource": "orders_sketch_hll_8_12",
+      "dataSource": "orders_user_reward",
       "timestampSpec": {
         "column": "ORDER_TS",
         "format": "auto"
       },
       "dimensionsSpec": {
         "dimensions": [
-          "STORE_ZIPCODE",
           "USER_REWARD"
-        ],
-        "dimensionExclusions" : [
         ]
       },
       "metricsSpec": [
@@ -42,11 +39,9 @@
           "name": "COUNT"
         },
         {
-          "type" : "HLLSketchBuild",
-          "name" : "UNIQUE_CODES",
-          "fieldName" : "CODE",
-          "lgK" : 12,
-          "tgtHllType" : "HLL_8"
+          "type": "longSum",
+          "name": "QUANTITY",
+          "fieldName": "QUANTITY"
         }
       ],
       "granularitySpec": {
@@ -57,8 +52,7 @@
         "intervals": null
       },
       "transformSpec": {
-        "transforms": [
-        ]
+        "transforms": []
       }
     }
   }

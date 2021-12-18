@@ -1,0 +1,17 @@
+create or replace stream ORDERS_ENRICHED_REKEYED
+ as
+  select 
+      USER_REWARD 	    as PARTITION_KEY,
+      ORDER_TS              as ORDER_TS,
+      ORDER_ID		    as ORDER_ID,
+      CODE,
+      USER_ID,
+      AS_VALUE(USER_REWARD) as USER_REWARD,
+      USER_PHONE_NUMBER,
+      STORE_ID,
+      STORE_ZIPCODE,
+      QUANTITY
+    from ORDERS_ENRICHED O
+    partition by USER_REWARD;
+
+describe ORDERS_ENRICHED_REKEYED extended;

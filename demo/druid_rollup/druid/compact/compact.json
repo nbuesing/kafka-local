@@ -1,0 +1,10 @@
+{
+  "type" : "compact",
+  "dataSource" : "order_user_reward",
+  "interval": "2021-01-01/2022-01-01",
+  "tuningConfig" : {
+    "type" : "index_parallel",
+    "maxRowsPerSegment" : 500000,
+    "maxRowsInMemory" : 25000
+  }
+}

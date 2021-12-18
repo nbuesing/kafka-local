@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 usage() {
   echo ""
-  echo "Usage: $0 {load|unload} specification-file"
+  echo "Usage: $0 {load|unload|task} specification-file [specification-files]"
   echo ""
 }
 
@@ -14,58 +14,69 @@ fi
 OPERATION=$1
 shift
 
-NAME=$1
-shift
-
-if [[ $NAME == *.json ]]; then
-  NAME=${NAME%.*}
-fi
-
-DATA=${NAME}.json
-
-if [ ! -f $DATA ]; then
-  echo ""
-  echo "specification file not found."
-  echo ""
-  exit
-fi
+declare -a FILES=( "$@" )
 
 URL=http://localhost:48081
 
 CONTENT_TYPE_HDR='Content-Type:application/json'
 
-# load from batch, compact, etc.
-#curl -X POST -H "Content-Type:application/json" -d @./druid/compact.json http://localhost:48081/druid/indexer/v1/task
+task() {
 
-load() {
-  curl -X POST -H $CONTENT_TYPE_HDR -d @$DATA $URL/druid/indexer/v1/supervisor
+  DATA=$1
+  if [ ! -f "$DATA" ]; then
+    echo "skipping $DATA, file not found."
+    return
+  fi
+
+  curl -s -X POST -H $CONTENT_TYPE_HDR -d @$DATA $URL/druid/indexer/v1/task | jq -r ".task"
+  #curl -X POST -H "Content-Type:application/json" -d @./druid/compact.json http://localhost:48081/druid/indexer/v1/task
 }
 
+load() {
+
+    DATA=$1
+    if [ ! -f "$DATA" ]; then
+      echo "skipping $DATA, file not found."
+      return
+    fi
+
+  curl -s -X POST -H $CONTENT_TYPE_HDR -d @$DATA $URL/druid/indexer/v1/supervisor | jq -r ".id"
+}
 
 unload() {
 
-  spec=$(cat $DATA | jq -r ".spec.dataSchema.dataSource | select (.!=null)")
-
-  echo $spec
-
-  if [ "${spec}" == "" ]; then 
-    echo ""
-    echo "unable to extract dataSource from spec."
-    echo ""
-    exit
+  DATA=$1
+  if [ ! -f "$DATA" ]; then
+    echo "skipping $DATA, file not found."
+    return
   fi
 
-  curl -X POST $URL/druid/indexer/v1/supervisor/${spec}/reset
-  curl -X POST $URL/druid/indexer/v1/supervisor/${spec}/shutdown
+  spec=$(cat $DATA | jq -r ".spec.dataSchema.dataSource | select (.!=null)")
+
+  if [ "${spec}" == "" ]; then 
+    echo "skipping $DATA, unable to extract dataSource from spec."
+    return
+  fi
+
+  curl -s -X POST $URL/druid/indexer/v1/supervisor/${spec}/reset
+  curl -s -X POST $URL/druid/indexer/v1/supervisor/${spec}/shutdown
 }
 
-
 case "${OPERATION}" in
+  task)
+    for i in "${FILES[@]}"; do
+      task $i
+    done
+    ;;
   load)
-    load
+    for i in "${FILES[@]}"; do
+      load $i
+    done
     ;;
   unload)
-    unload
+    for i in "${FILES[@]}"; do
+      unload $i
+    done
     ;;
   *)
     usage

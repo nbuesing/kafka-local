@@ -45,14 +45,59 @@
         },
         {
           "type" : "thetaSketch",
-          "name" : "USER_ID_SKETCH",
-          "fieldName" : "USER_ID"
+          "name" : "USER_ID_THETA_SKETCH_16",
+          "fieldName" : "USER_ID",
+          "size" : "16"
+        },
+        {
+          "type" : "thetaSketch",
+          "name" : "USER_ID_THETA_SKETCH_32",
+          "fieldName" : "USER_ID",
+          "size" : "32"
+        },
+        {
+          "type" : "thetaSketch",
+          "name" : "USER_ID_THETA_SKETCH_64",
+          "fieldName" : "USER_ID",
+          "size" : "64"
+        },
+        {
+          "type" : "thetaSketch",
+          "name" : "USER_ID_THETA_SKETCH_4096",
+          "fieldName" : "USER_ID",
+          "size" : "4096"
+        },
+        {
+          "type" : "thetaSketch",
+          "name" : "USER_ID_THETA_SKETCH_8192",
+          "fieldName" : "USER_ID",
+          "size" : "8192"
+        },
+        {
+          "type" : "thetaSketch",
+          "name" : "USER_ID_THETA_SKETCH_16384",
+          "fieldName" : "USER_ID",
+          "size" : "16384"
+        },
+        {
+          "type" : "HLLSketchBuild",
+          "name" : "USER_ID_HLL_SKETCH",
+          "fieldName" : "USER_ID",
+          "lgK" : 12,
+          "tgtHllType" : "HLL_4"
+        },
+        {
+          "type" : "HLLSketchBuild",
+          "name" : "USER_ID_HLL_SKETCH_TYPE_8",
+          "fieldName" : "USER_ID",
+          "lgK" : 12,
+          "tgtHllType" : "HLL_8"
         }
       ],
       "granularitySpec": {
         "type": "uniform",
         "segmentGranularity": "HOUR",
-        "queryGranularity": "minute",
+        "queryGranularity": "second",
         "rollup": true,
         "intervals": null
       },

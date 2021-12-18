@@ -15,6 +15,15 @@
          }
       },
       {
+         "name":"code",
+         "type":{
+            "type":"string",
+            "arg.properties":{
+               "regex":"[A-Z]{0,4}"
+            }
+         }
+      },
+      {
          "name":"store_id",
          "type":{
             "type":"string",

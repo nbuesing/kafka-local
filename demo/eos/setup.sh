@@ -43,4 +43,4 @@ echo "sleeping 2 seconds to make sure the tables for users and stores are hydrat
 sleep 2
 $KSQL ./ksql/orders_enriched.ksql
 
-$DRUID load ./druid/order.json
+#$DRUID load ./druid/order.json

@@ -25,8 +25,9 @@
     "dataSchema": {
       "dataSource": "orders",
       "timestampSpec": {
-        "column": "ORDER_TS",
-        "format": "auto"
+        "column": "_no_such_column_",
+        "format": "auto",
+        "missingValue": "2010-01-01T00:00:00.000Z"
       },
       "dimensionsSpec": {
         "dimensions": [
@@ -39,6 +40,9 @@
           "USER_AREA_CODE",
           "STORE_ID",
           "STORE_ZIPCODE"
+        ],
+        "dimensionExclusions": [
+          "!!!_no_such_column_!!!"
         ]
       },
       "metricsSpec": [
@@ -65,8 +69,14 @@
         "intervals": null
       },
       "transformSpec": {
-        "transforms": []
-      }
-    }
+        "filter": null,
+        "transforms": [
+          {
+            "type": "expression",
+            "name": "__time",
+            "expression": "(\"ORDER_TS\" / 2000 * 2000) + 500"
+          }
+        ]
+      }    }
   }
 }

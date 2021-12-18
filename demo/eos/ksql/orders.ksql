@@ -1,5 +1,6 @@
 create or replace stream ORDERS (
   order_id 	bigint,
+  code      varchar,
   user_id 	varchar,
   store_id 	varchar,
   quantity 	bigint,

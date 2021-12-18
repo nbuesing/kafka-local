@@ -45,6 +45,11 @@
         },
         {
           "type": "stringLast",
+          "name": "USER_REWARD_LAST",
+          "fieldName": "USER_REWARD"
+        },
+        {
+          "type": "stringLast",
           "name": "STORE_ID_LAST",
           "fieldName": "STORE_ID"
         },
