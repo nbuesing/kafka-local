@@ -11,7 +11,7 @@ services:
 ## you can use ksql installed locally, just keep in mind it could be a different version 
 ## as confluent installs ksql versioned as as part of confluent's versioning, not ksqldb's versioning
 ##  ksql-cli:
-##    image: confluentinc/ksqldb-cli:0.21.0
+##    image: confluentinc/ksqldb-cli:0.23.1
 ##    hostname: ksql-cli
 ##    container_name: ksql-cli
 ##    depends_on:
@@ -20,7 +20,7 @@ services:
 ##    tty: true
 
   ksql-server:
-    image: confluentinc/ksqldb-server:0.21.0
+    image: confluentinc/ksqldb-server:0.23.1
     hostname: ksql-server
     container_name: ksql-server
     healthcheck:
@@ -61,7 +61,7 @@ services:
       KSQL_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/streams-config.yml
 
 #  ksql-server-2:
-#    image: confluentinc/ksqldb-server:0.21.0
+#    image: confluentinc/ksqldb-server:0.23.1
 #    hostname: ksql-server-2
 #    container_name: ksql-server-2
 #    healthcheck:

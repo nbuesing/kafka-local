@@ -15,7 +15,7 @@ volumes:
 services:
 
   connect-1:
-    image: confluentinc/cp-kafka-connect:6.2.1
+    image: confluentinc/cp-kafka-connect:7.0.1
     hostname: connect-1
     container_name: connect-1
     ports:
@@ -54,7 +54,7 @@ services:
       KAFKA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/connect-config.yml
 
   connect-2:
-    image: confluentinc/cp-kafka-connect:6.2.1
+    image: confluentinc/cp-kafka-connect:7.0.1
     hostname: connect-2
     container_name: connect-2
     ports:
@@ -92,7 +92,7 @@ services:
       KAFKA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/connect-config.yml
 
 #  connect-3:
-#    image: confluentinc/cp-kafka-connect:6.2.1
+#    image: confluentinc/cp-kafka-connect:7.0.1
 #    hostname: connect-3
 #    container_name: connect-3
 #    ports:
