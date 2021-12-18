@@ -1,0 +1,6 @@
+create or replace table STORES (
+  store_id 	  varchar primary key,
+  zipcode 	  varchar
+) with (kafka_topic='stores', value_format='json');
+
+describe STORES extended;

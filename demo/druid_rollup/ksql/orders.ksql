@@ -1,0 +1,10 @@
+create or replace stream ORDERS (
+  order_id 	bigint,
+  code      varchar,
+  user_id 	varchar,
+  store_id 	varchar,
+  quantity 	bigint,
+  address 	struct<city varchar, state varchar, zipcode varchar>
+) with (kafka_topic='orders', value_format='json');
+
+describe ORDERS extended;

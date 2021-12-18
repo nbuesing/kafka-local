@@ -1,0 +1,64 @@
+{
+  "type": "kafka",
+  "spec": {
+    "ioConfig": {
+      "type": "kafka",
+      "consumerProperties": {
+        "bootstrap.servers": "broker-1:9092,broker-2:9092,broker-3:9092",
+        "isolation.level": "read_committed"
+      },
+      "topic": "ORDERS_ENRICHED",
+      "inputFormat": {
+        "type": "json"
+      },
+      "useEarliestOffset": true,
+      "pollTimeout": 100,
+      "period": "PT30S",
+      "taskCount": 1
+    },
+    "tuningConfig": {
+      "type": "kafka",
+      "maxRowsInMemory": 10000,
+      "maxRowsPerSegment": 50000,
+      "maxTotalRows": 200000
+    },
+    "dataSchema": {
+      "dataSource": "orders",
+      "timestampSpec": {
+        "column": "ORDER_TS",
+        "format": "auto"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          "USER_REWARD",
+          "STORE_ZIPCODE",
+          {
+            "type": "long",
+            "name" : "QUANTITY",
+            "field": "QUANTITY"
+          }
+        ],
+        "dimensionExclusions": [
+        ]
+      },
+      "metricsSpec": [
+        {
+          "type": "count",
+          "name": "COUNT"
+        }
+      ],
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": "fifteen_minute",
+        "queryGranularity": "minute",
+        "rollup": false,
+        "intervals": null
+      },
+      "transformSpec": {
+        "filter": null,
+        "transforms": [
+        ]
+      }
+    }
+  }
+}

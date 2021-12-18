@@ -1,0 +1,28 @@
+{
+    "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
+    "kafka.topic": "orders",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+    "max.interval": 2,
+    "iterations": 20000000,
+    "tasks.max": "1",
+
+    "schema.filename": "/data/datagen/order.avro",
+
+    "transforms" : "tokey,cast,extract,insert_ts",
+    "transforms.tokey.type" : "org.apache.kafka.connect.transforms.ValueToKey",
+    "transforms.tokey.fields" : "order_id",
+
+    "transforms.cast.type" : "org.apache.kafka.connect.transforms.Cast$Key",
+    "transforms.cast.spec" : "order_id:string",
+
+    "transforms.extract.type" : "org.apache.kafka.connect.transforms.ExtractField$Key",
+    "transforms.extract.field" : "order_id",
+
+    "transforms.insert_ts.type"           : "org.apache.kafka.connect.transforms.InsertField$Value",
+    "transforms.insert_ts.timestamp.field": "TS",
+
+
+    "_producer.override.request.timeout.ms" : 5000
+}

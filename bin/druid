@@ -34,6 +34,8 @@ URL=http://localhost:48081
 
 CONTENT_TYPE_HDR='Content-Type:application/json'
 
+# load from batch, compact, etc.
+#curl -X POST -H "Content-Type:application/json" -d @./druid/compact.json http://localhost:48081/druid/indexer/v1/task
 
 load() {
   curl -X POST -H $CONTENT_TYPE_HDR -d @$DATA $URL/druid/indexer/v1/supervisor

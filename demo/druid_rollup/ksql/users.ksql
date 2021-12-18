@@ -1,0 +1,7 @@
+create or replace table USERS (
+  user_id 	  varchar primary key,
+  reward 	  varchar,
+  phone_number 	  varchar
+) with (kafka_topic='users', value_format='json');
+
+describe USERS extended;

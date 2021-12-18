@@ -174,6 +174,7 @@ services:
       - druid-coordinator
     ports:
       - "48091:8091"
+      - "5001:5001"
     command:
       - middleManager
     env_file:
@@ -208,20 +209,12 @@ services:
     environment:
       JAVA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/druid-config.yml
 
-
-  #this is not part of Apache Druid
-  druid-exporter:
-    image: quay.io/opstree/druid-exporter:v0.11
-    container_name: druid-exporter
-#    command: 
-#      - "conf/example_druid_v_0_17_0.json"
-#    healthcheck:
-#      test: curl --fail http://localhost:7071/health || exit 1
-#      interval: 1s
-#      retries: 10
-    environment:
-      DRUID_URL: "http://druid-router:8888"
-      PORT: "7071"
-    ports:
-      - "17073:7071"
-
+#  #this is not part of Apache Druid
+#  druid-exporter:
+#    image: quay.io/opstree/druid-exporter:v0.11
+#    container_name: druid-exporter
+#    environment:
+#      DRUID_URL: "http://druid-router:8888"
+#      PORT: "7071"
+#    ports:
+#      - "17073:7071"

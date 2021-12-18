@@ -1,0 +1,26 @@
+{
+    "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
+
+    "kafka.topic": "stores",
+
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+
+    "max.interval": 0,
+    "iterations": 10000,
+    "tasks.max": "1",
+
+    "schema.filename": "/data/datagen/store.avro",
+
+    "transforms" : "tokey,cast,extract",
+    "transforms.tokey.type" : "org.apache.kafka.connect.transforms.ValueToKey",
+    "transforms.tokey.fields" : "store_id",
+
+    "transforms.cast.type" : "org.apache.kafka.connect.transforms.Cast$Key",
+    "transforms.cast.spec" : "store_id:string",
+
+    "transforms.extract.type" : "org.apache.kafka.connect.transforms.ExtractField$Key",
+    "transforms.extract.field" : "store_id"
+    
+}

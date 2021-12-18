@@ -1,0 +1,65 @@
+{
+  "type": "kafka",
+  "spec": {
+    "ioConfig": {
+      "type": "kafka",
+      "consumerProperties": {
+        "bootstrap.servers": "broker-1:9092,broker-2:9092,broker-3:9092",
+        "isolation.level": "read_committed"
+      },
+      "topic": "ORDERS_ENRICHED",
+      "inputFormat": {
+        "type": "json"
+      },
+      "useEarliestOffset": true,
+      "pollTimeout": 100,
+      "period": "PT30S",
+      "taskCount": 1
+    },
+    "tuningConfig": {
+      "type": "kafka",
+      "maxRowsInMemory": 100000,
+      "maxRowsPerSegment": 500000,
+      "maxTotalRows": 2000000
+    },
+    "dataSchema": {
+      "dataSource": "orders_sketch_hll_4_4",
+      "timestampSpec": {
+        "column": "ORDER_TS",
+        "format": "auto"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          "STORE_ZIPCODE",
+          "USER_REWARD"
+        ],
+        "dimensionExclusions" : [
+        ]
+      },
+      "metricsSpec": [
+        {
+          "type": "count",
+          "name": "COUNT"
+        },
+        {
+          "type" : "HLLSketchBuild",
+          "name" : "UNIQUE_CODES",
+          "fieldName" : "CODE",
+          "lgK" : 12,
+          "tgtHllType" : "HLL_4"
+        }
+      ],
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": "HOUR",
+        "queryGranularity": "minute",
+        "rollup": true,
+        "intervals": null
+      },
+      "transformSpec": {
+        "transforms": [
+        ]
+      }
+    }
+  }
+}

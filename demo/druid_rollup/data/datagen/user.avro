@@ -1,0 +1,52 @@
+{
+  "namespace": "ksql",
+  "name": "user",
+  "type": "record",
+  "fields": [
+    {
+      "name": "user_id",
+      "type": {
+        "type": "int",
+        "arg.properties": {
+          "iteration": {
+            "start": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "reward",
+      "type": {
+        "type": "enum",
+        "name": "Reward",
+        "symbols": [
+          "NONE",
+          "BRONZE",
+          "SILVER",
+          "GOLD",
+          "PLATINUM",
+          "DIAMOND"
+        ],
+        "arg.properties": {
+          "options": [
+            "NONE",
+            "BRONZE",
+            "SILVER",
+            "GOLD",
+            "PLATINUM",
+            "DIAMOND"
+          ]
+        }
+      }
+    },
+    {
+      "name": "phone_number",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "regex":"(218|320|507|612|651|763|952)-[1-9][0-9]{2}-[0-9]{4}"
+        }
+      }
+    }
+  ]
+}

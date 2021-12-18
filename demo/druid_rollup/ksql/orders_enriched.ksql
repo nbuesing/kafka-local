@@ -1,0 +1,19 @@
+create or replace stream ORDERS_ENRICHED
+ as
+  select 
+      cast(O.ORDER_ID as string) as ORDER_KEY,
+      O.ROWTIME                  as ORDER_TS,
+      AS_VALUE(O.ORDER_ID)       as ORDER_ID,
+      O.CODE                     as CODE,
+      O.USER_ID                  as USER_ID,
+      U.REWARD                   as USER_REWARD,
+      U.PHONE_NUMBER             as USER_PHONE_NUMBER,
+      O.STORE_ID                 as STORE_ID,
+      S.ZIPCODE                  as STORE_ZIPCODE,
+      O.QUANTITY                 as QUANTITY
+    from ORDERS O
+    join USERS  U on U.USER_ID  = O.USER_ID
+    join STORES S on S.STORE_ID = O.STORE_ID
+    partition by cast(O.ORDER_ID as string);
+
+describe ORDERS_ENRICHED extended;

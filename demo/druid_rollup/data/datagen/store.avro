@@ -1,0 +1,27 @@
+{
+  "namespace": "ksql",
+  "name": "store",
+  "type": "record",
+  "fields": [
+    {
+      "name": "store_id",
+      "type": {
+        "type": "int",
+        "arg.properties": {
+          "iteration": {
+            "start": 0
+          }
+        }
+      }
+    },
+    {
+      "name":"zipcode",
+      "type":{
+        "type":"string",
+        "arg.properties":{
+          "regex":"55[0-2][0-9]{2}"
+        }
+      }
+    }
+  ]
+}
