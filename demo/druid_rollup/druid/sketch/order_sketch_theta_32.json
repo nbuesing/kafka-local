@@ -50,8 +50,8 @@
       ],
       "granularitySpec": {
         "type": "uniform",
-        "segmentGranularity": "fifteen_minute",
-        "queryGranularity": "minute",
+        "segmentGranularity": "hour",
+        "queryGranularity": {"type": "duration", "duration": 300000},
         "rollup": true,
         "intervals": null
       },

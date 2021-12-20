@@ -5,7 +5,7 @@
     "value.converter": "org.apache.kafka.connect.json.JsonConverter",
     "value.converter.schemas.enable": "false",
     "max.interval": 2,
-    "iterations": 20000000,
+    "iterations": 1800000,
     "tasks.max": "1",
 
     "schema.filename": "/data/datagen/order.avro",

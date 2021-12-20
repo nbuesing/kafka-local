@@ -18,22 +18,19 @@
     },
     "tuningConfig": {
       "type": "kafka",
-      "maxRowsInMemory": 100000,
-      "maxRowsPerSegment": 500000,
-      "maxTotalRows": 2000000
+      "maxRowsInMemory": 10000,
+      "maxRowsPerSegment": 50000,
+      "maxTotalRows": 200000
     },
     "dataSchema": {
-      "dataSource": "orders_sketch_theta_16384",
+      "dataSource": "orders_custom_2",
       "timestampSpec": {
         "column": "ORDER_TS",
         "format": "auto"
       },
       "dimensionsSpec": {
         "dimensions": [
-          "USER_REWARD",
-          "STORE_ZIPCODE"
-        ],
-        "dimensionExclusions" : [
+          "USER_REWARD"
         ]
       },
       "metricsSpec": [
@@ -42,21 +39,30 @@
           "name": "COUNT"
         },
         {
-          "type" : "thetaSketch",
-          "name" : "UNIQUE_CODES",
-          "fieldName" : "CODE",
-          "size" : "16384"
+          "type": "longSum",
+          "name": "QUANTITY",
+          "fieldName": "QUANTITY"
         }
       ],
       "granularitySpec": {
         "type": "uniform",
-        "segmentGranularity": "hour",
-        "queryGranularity": {"type": "duration", "duration": 300000},
+        "segmentGranularity": "fifteen_minute",
+        "queryGranularity": null,
         "rollup": true,
         "intervals": null
       },
       "transformSpec": {
         "transforms": [
+          {
+            "type": "expression",
+            "name": "USER_PHONE_NUMBER",
+            "expression" : "substring(USER_PHONE_NUMBER, 0, 3)"
+          },
+          {
+            "type": "expression",
+            "name": "__time",
+            "expression": "if(timestamp_extract(\"__time\", 'MINUTE') % 2, \"__time\" / 1000 * 1000, \"__time\" / 5000 * 5000)"
+          }
         ]
       }
     }
