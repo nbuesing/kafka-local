@@ -18,6 +18,21 @@ scrape_configs:
         regex: '(.*):(.*)'
         target_label: instance
         replacement: '$1'
+  - job_name: schema-registry
+    #scrape_interval: 1s
+    static_configs:
+      - targets:
+          - schema-registry:7071
+          - connect-2:7071
+          - connect-3:7071
+        labels:
+          cluster_type: "schema-registry"
+          cluster_id: "schema-registry"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
   - job_name: kafka-connect
     #scrape_interval: 1s
     static_configs:

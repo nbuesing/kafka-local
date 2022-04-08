@@ -10,7 +10,7 @@
 
     "schema.filename": "/data/datagen/order.avro",
 
-    "transforms" : "tokey,cast,extract,insert_ts",
+    "transforms" : "tokey,cast,extract,insert_ts,InsertField",
     "transforms.tokey.type" : "org.apache.kafka.connect.transforms.ValueToKey",
     "transforms.tokey.fields" : "order_id",
 
@@ -22,6 +22,10 @@
 
     "transforms.insert_ts.type"           : "org.apache.kafka.connect.transforms.InsertField$Value",
     "transforms.insert_ts.timestamp.field": "TS",
+
+    "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+    "transforms.InsertField.static.field": "tN",
+    "transforms.InsertField.static.value": "roTechClockDetailsUpdateEvent",
 
 
     "_producer.override.request.timeout.ms" : 5000
