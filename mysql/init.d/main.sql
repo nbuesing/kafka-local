@@ -1,7 +1,9 @@
 
 CREATE DATABASE MAIN;
 
-GRANT ALL PRIVILEGES ON MAIN.* TO 'user'@'%';
+GRANT ALL PRIVILEGES ON MAIN.* TO 'user'@'%' with grant option;
+
+GRANT SUPER ON *.* TO 'user'@'%';
 
 USE MAIN;
 

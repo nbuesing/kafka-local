@@ -35,7 +35,7 @@ services:
       - ./cloudserver/metadata:/metadata
 
   localstack:
-    image: localstack/localstack:0.12.12
+    image: localstack/localstack:0.14.0
     container_name: localstack
     hostname: localstack
     ports:

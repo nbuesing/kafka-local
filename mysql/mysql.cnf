@@ -1,6 +1,10 @@
 # For advice on how to change settings please see
 # http://dev.mysql.com/doc/refman/5.7/en/server-configuration-defaults.html
 
+
+[mysql]
+local-infile=1
+
 [mysqld]
 #
 # Remove leading # and set to the amount of RAM for the most important data
@@ -23,6 +27,7 @@ skip-name-resolve
 #socket=/var/lib/mysql/mysql.sock
 #secure-file-priv=/var/lib/mysql-files
 user=mysql
+local-infile=1
 
 # Disabling symbolic-links is recommended to prevent assorted security risks
 symbolic-links=0

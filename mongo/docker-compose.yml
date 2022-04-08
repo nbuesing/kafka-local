@@ -1,0 +1,22 @@
+networks:
+  default:
+    external: true
+    name: kafka-local
+
+volumes:
+  db: {}
+  configdb: {}
+
+services:
+  mongo:
+    image: mongo:5.0.6
+    hostname: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - db:/data/db
+      - configdb:/data/configdb
+    environment:
+      MONGO_INITDB_DATABASE: main
+

@@ -201,9 +201,12 @@ services:
     ports:
       - '8081:8081'
     volumes:
+      - ./jmx_prometheus:/opt/jmx_prometheus
       - ./secrets:/etc/schema-registry/secrets
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: broker-1:9092,broker-2:9092,broker-3:9092
       KAFKA_METRIC_REPORTERS: ' '
       CONFLUENT_METRICS_ENABLE: 'false'
+      EXTRA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/sr-config.yml
+      SCHEMA_REGISTRY_OPTS  : -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/sr-config.yml

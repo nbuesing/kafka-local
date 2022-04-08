@@ -1,0 +1,6 @@
+{
+        "connector.class": "FileStreamSink",
+        "tasks.max": 1,
+        "file": "test-distributed.txt",
+        "topics": "s3_topic"
+}
