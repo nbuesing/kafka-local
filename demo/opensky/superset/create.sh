@@ -42,8 +42,8 @@ DATABASE_DRUID=$(cat <<EOF
 EOF
 )
 
-DB_ID=1
-#DB_ID=$(curl -s -X POST -H "Authorization:Bearer ${TOKEN}" -H "Content-Type:application/json" --data "${DATABASE_DRUID}" ${API_URL}/database/ | jq -r ".id")
+#DB_ID=1
+DB_ID=$(curl -s -X POST -H "Authorization:Bearer ${TOKEN}" -H "Content-Type:application/json" --data "${DATABASE_DRUID}" ${API_URL}/database/ | jq -r ".id")
 
 echo "DATABASE ID: $DB_ID"
 
