@@ -1,0 +1,11 @@
+rootProject.name = 'kafka-local'
+
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+}
+
+include 'druid_late_publisher'
+
+project(":druid_late_publisher").projectDir = file('demo/druid_late/publisher')

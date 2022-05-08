@@ -14,9 +14,18 @@ services:
     container_name: mongo
     ports:
       - "27017:27017"
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+    # to use debezium, a replica-set is needed; and a replica-set has to be initialized; leverage health-check
+    # to do this. Product requires at least 3 instances for a proper replica deployment, but for dev environment,
+    # it can be enabled as a single instance
+    healthcheck:
+      test: test $$(echo "rs.status().ok || rs.initiate().ok" | mongo --quiet) -eq 1
+      interval: 10s
+      start_period: 30s
     volumes:
       - db:/data/db
       - configdb:/data/configdb
     environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongo
       MONGO_INITDB_DATABASE: main
-

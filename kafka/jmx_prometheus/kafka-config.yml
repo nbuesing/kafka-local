@@ -1,6 +1,7 @@
    
 lowercaseOutputName: true
 rules:
+#- pattern: .*
 - pattern: java.lang<type=(.*)>
 - pattern: kafka.cluster<type=Partition, name=UnderReplicated, topic=(.+), partition=(.+)><>Value
 - pattern: kafka.controller<type=KafkaController, name=ActiveControllerCount><>Value

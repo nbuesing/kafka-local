@@ -187,6 +187,10 @@ case "${OPERATION}" in
     CONNECTOR=${CONNECTOR_CLASS##*.}
     validate ${CONNECTOR}
     ;;
+  recreate)
+    delete
+    create
+    ;;
   *)
     echo "Usage: $0 {create|pause|resume|delete|status|validate} name"
 esac

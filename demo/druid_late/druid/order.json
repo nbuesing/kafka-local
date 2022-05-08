@@ -1,0 +1,61 @@
+{
+  "type": "kafka",
+  "spec": {
+    "ioConfig": {
+      "type": "kafka",
+      "consumerProperties": {
+        "bootstrap.servers": "broker-1:9092,broker-2:9092,broker-3:9092",
+        "isolation.level": "read_committed"
+      },
+      "topic": "foo",
+      "inputFormat": {
+        "type": "json"
+      },
+      "useEarliestOffset": true,
+      "pollTimeout": 100,
+      "period": "PT30S",
+      "taskCount": 4,
+      "taskDuration" : "PT10M"
+    },
+    "tuningConfig": {
+      "type": "kafka",
+      "maxRowsInMemory": 10000,
+      "maxRowsPerSegment": 50000,
+      "maxTotalRows": 200000
+    },
+    "dataSchema": {
+      "dataSource": "orders",
+      "timestampSpec": {
+        "column": "timestamp",
+        "format": "auto"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          "orderId",
+          "userId",
+          "storeId"
+        ],
+        "dimensionExclusions": [
+        ]
+      },
+      "metricsSpec": [
+        {
+          "type": "count",
+          "name": "COUNT"
+        }
+      ],
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": {"type": "duration", "duration": "300000"},
+        "queryGranularity": "minute",
+        "rollup": false,
+        "intervals": null
+      },
+      "transformSpec": {
+        "filter": null,
+        "transforms": [
+        ]
+      }
+    }
+  }
+}

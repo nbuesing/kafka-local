@@ -1,0 +1,57 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+
+group = 'dev.buesing.ksd'
+description = "publisher"
+sourceCompatibility = JavaVersion.VERSION_18
+targetCompatibility = JavaVersion.VERSION_18
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url "https://packages.confluent.io/maven/"
+    }
+}
+
+dependencies {
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: logback_version
+    implementation group: 'com.beust', name: 'jcommander', version: jcommander_version
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jackson_version
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jackson_version
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jackson_version
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: apache_commons_version
+    implementation(group: 'org.apache.kafka', name: 'kafka-clients', version: kafka_version) {
+        version {
+            strictly kafka_version
+        }
+    }
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version
+}
+
+application {
+    mainClass = "dev.buesing.ksd.publisher.Main"
+}
+
+task buildRunScript() {
+    doLast {
+
+        def cp = sourceSets.main.runtimeClasspath.collect{"export CP=\"\${CP}:${it}\""}.join("\n")
+
+        def f = new File(projectDir, "run.sh")
+        f.text = """#!/bin/sh
+set -e
+gradle assemble > /dev/null
+
+export CP=""
+${cp}
+
+java -cp \${CP} dev.buesing.ksd.publisher.Main "\$@"
+"""
+        f.setExecutable(true)
+    }
+}
+
+build.finalizedBy buildRunScript
