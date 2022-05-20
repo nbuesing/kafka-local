@@ -7,7 +7,7 @@
         "bootstrap.servers": "broker-1:9092,broker-2:9092,broker-3:9092",
         "isolation.level": "read_committed"
       },
-      "topic": "foo",
+      "topic": "orders",
       "inputFormat": {
         "type": "json"
       },
@@ -48,7 +48,7 @@
         "type": "uniform",
         "segmentGranularity": {"type": "duration", "duration": "300000"},
         "queryGranularity": "minute",
-        "rollup": false,
+        "rollup": true,
         "intervals": null
       },
       "transformSpec": {

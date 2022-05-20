@@ -1,6 +1,3 @@
----
-version: '3.7'
-
 networks:
   default:
     external: true
@@ -8,48 +5,44 @@ networks:
 
 services:
 
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    hostname: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    volumes:
+      - ./data/minio:/data
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=miniominio
+      - MINIO_SKIP_CLIENT=no
+
+#  minio-create-buckets:
+#    image: minio/mc:latest
+#    depends_on:
+#        - minio
+#    entrypoint: >
+#        /bin/sh -c "
+#        /usr/bin/mc config host add minio http://minio:9000 admin miniominio --api s3v4;
+#        while ! /usr/bin/mc mb minio/public ; do echo 'waiting for minio'; sleep 1; done;
+#        /usr/bin/mc policy set download minio/public;
+#        exit 0;
+#        "
+
   fake-gcs-server:
-    image: fsouza/fake-gcs-server:v1.30.1
+    image: fsouza/fake-gcs-server:1.37.12
     container_name: fake-gcs-server
     hostname: fake-gcs-server
     ports:
       - "8001:8001"
     volumes:
-      - ./data:/data
-    command: -port 8001 -scheme http -external-url http://fake-gcs-server:8001
-
-  cloudserver:
-    image: zenko/cloudserver:latest
-    container_name: cloudserver
-    hostname: cloudserver
-    ports:
-      - "8000:8000"
-    environment:
-      - SCALITY_ACCESS_KEY_ID=accessKey1
-      - SCALITY_SECRET_ACCESS_KEY=secretKey1
-      - S3BACKEND=mem
-      - LOG_LEVEL=trace
-      - REMOTE_MANAGEMENT_DISABLE=1
-    volumes:
-      - ./cloudserver/data:/data
-      - ./cloudserver/metadata:/metadata
-
-  localstack:
-    image: localstack/localstack:0.14.0
-    container_name: localstack
-    hostname: localstack
-    ports:
-      - "4566:4566"
-      - "4571:4571"
-      - "8055:8080"
-    environment:
-      - SERVICES=s3
-      - DEBUG=1
-      - DATA_DIR=/data
-      - PORT_WEB_UI=
-      - LAMBDA_EXECUTOR=
-      - DOCKER_HOST=unix:///var/run/docker.sock
-    volumes:
-      - ./data:/data
-#      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
-
+      - ./data/gcs:/data
+    command: -port 8001 -scheme https -external-url https://fake-gcs-server:8001

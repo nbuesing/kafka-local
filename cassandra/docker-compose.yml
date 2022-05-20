@@ -1,0 +1,31 @@
+networks:
+  default:
+    external: true
+    name: kafka-local
+
+volumes:
+  data: {}
+  etc: {}
+
+services:
+  cassandra:
+    image: cassandra:4.0.4
+    hostname: cassandra
+    container_name: cassandra
+    ports:
+      - "9042:9042"  
+    healthcheck:
+      test: ["CMD", "cqlsh", "-e", "describe keyspaces" ]
+      interval: 5s
+      timeout: 5s
+      retries: 60
+    volumes:
+      - data:/var/lib/cassandra    
+      - etc:/etc/cassandra   
+    environment:
+      CASSANDRA_CLUSTER_NAME: cassandra
+#      CASSANDRA_SEEDS: "cass1,cass2"    
+#      CASSANDRA_DC: Mars
+#      CASSANDRA_RACK: West
+#      CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
+#      CASSANDRA_NUM_TOKENS: 128

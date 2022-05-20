@@ -13,18 +13,8 @@ WTF_CSRF_ENABLED = False
 
 #PUBLIC_ROLE_LIKE
 
-#
-# Allow for Embedded Javascript within charts that allow it
-#
-
+#Allow for Embedded Javascript within charts that allow it
 ENABLE_JAVASCRIPT_CONTROLS = True
 
-#
-# To Avoid hard-cording of personal MAPBOX_API_KEY into the local image, reference from evironment variable.
-#
+#To Avoid hard-cording of personal MAPBOX_API_KEY into the local image, reference from evironment variable.
 MAPBOX_API_KEY = os.getenv('MAPBOX_API_KEY', '')
-
-# Alternative
-#
-#MAPBOX_API_KEY = .....
-#

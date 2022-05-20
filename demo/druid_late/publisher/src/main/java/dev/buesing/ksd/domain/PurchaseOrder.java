@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "$type")
 public class PurchaseOrder {
@@ -99,5 +100,22 @@ public class PurchaseOrder {
                 ", storeId='" + storeId + '\'' +
                 ", items=" + items +
                 '}';
+    }
+
+    public List<Sku> asSkus() {
+        return this.items.stream().map(item -> {
+            Sku sku = new Sku();
+
+            sku.setTimestamp(this.getTimestamp());
+            sku.setStoreId(this.getStoreId());
+            sku.setUserId(this.getUserId());
+            sku.setOrderId(this.getOrderId());
+
+            sku.setSku(item.getSku());
+            sku.setPrice(item.getPrice());
+            sku.setQuantity(item.getQuantity());
+
+            return sku;
+        }).collect(Collectors.toList());
     }
 }

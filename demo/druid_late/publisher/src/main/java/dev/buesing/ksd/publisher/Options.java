@@ -27,14 +27,27 @@ public class Options {
     @Parameter(names = {"--timestamp"}, description = "", converter = DateTimeConverter.class)
     private LocalDateTime timestamp;
 
+    @Parameter(names = {"--min-timestamp"}, description = "", converter = DateTimeConverter.class)
+    private LocalDateTime minTimestamp;
+
+    @Parameter(names = {"--max-timestamp"}, description = "", converter = DateTimeConverter.class)
+    private LocalDateTime maxTimestamp;
+
     @Parameter(names = {"--maxQuantity"}, description = "")
     private Integer maxQuantity = 10;
 
     @Parameter(names = {"--topic"}, description = "")
-    private String topic = "foo";
+    private String topic = "orders";
+
+    @Parameter(names = {"--sku-topic"}, description = "")
+    private String skuTopic = "skus";
 
     public String getTopic() {
         return topic;
+    }
+
+    public String getSkuTopic() {
+        return skuTopic;
     }
 
     public boolean isHelp() {
@@ -63,5 +76,13 @@ public class Options {
 
     public LocalDateTime getTimestamp() {
         return timestamp;
+    }
+
+    public LocalDateTime getMinTimestamp() {
+        return minTimestamp;
+    }
+
+    public LocalDateTime getMaxTimestamp() {
+        return maxTimestamp;
     }
 }

@@ -11,6 +11,7 @@ import java.time.temporal.TemporalUnit;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -41,15 +42,15 @@ public class Producer {
 
 
     private String getRandomUser() {
-        return Integer.toString(RANDOM.nextInt(10000));
-    }
-
-    private String getRandomStore() {
         return Integer.toString(RANDOM.nextInt(1000));
     }
 
+    private String getRandomStore() {
+        return Integer.toString(RANDOM.nextInt(100));
+    }
+
     private String getRandomSku(int index) {
-        return StringUtils.leftPad(Integer.toString(RANDOM.nextInt(100_000)), 10, '0');
+        return StringUtils.leftPad(Integer.toString(RANDOM.nextInt(1000)), 10, '0');
     }
 
     private int getRandomItemCount() {
@@ -84,6 +85,9 @@ public class Producer {
         if (options.getTimestamp() != null) {
             purchaseOrder.setTimestamp(options.getTimestamp().toInstant(ZoneOffset.UTC));
             running = false;
+        } else if (options.getMinTimestamp() != null && options.getMaxTimestamp() != null) {
+            Instant random = between(options.getMinTimestamp().toInstant(ZoneOffset.UTC), options.getMaxTimestamp().toInstant(ZoneOffset.UTC));
+            purchaseOrder.setTimestamp(random);
         } else {
             purchaseOrder.setTimestamp(Instant.now().minus(options.getTimestampAdjustment().toMillis(), ChronoUnit.MILLIS));
         }
@@ -106,7 +110,7 @@ public class Producer {
 
     public void start() {
 
-        try(KafkaProducer<String, PurchaseOrder> kafkaProducer = new KafkaProducer<>(properties(options))) {
+        try (KafkaProducer<String, Object> kafkaProducer = new KafkaProducer<>(properties(options))) {
 
             while (running) {
 
@@ -120,6 +124,19 @@ public class Producer {
                         log.debug("topic={}, partition={}, offset={}", metadata.topic(), metadata.partition(), metadata.offset());
                     }
                 });
+
+                purchaseOrder.asSkus().forEach(sku -> {
+                    log.info("Sending Sku key={}, value={}", sku.getSku(), sku);
+                    kafkaProducer.send(new ProducerRecord<>(options.getSkuTopic(), null, sku.getSku(), sku), (metadata, exception) -> {
+                        if (exception != null) {
+                            log.error("error producing to kafka", exception);
+                        } else {
+                            log.debug("topic={}, partition={}, offset={}", metadata.topic(), metadata.partition(), metadata.offset());
+                        }
+                    });
+
+                });
+
 
                 pause(options.getPause());
             }
@@ -147,5 +164,9 @@ public class Producer {
         } catch (InterruptedException e) {
             //ignore
         }
+    }
+
+    private static Instant between(final Instant startInclusive, final Instant endExclusive) {
+        return Instant.ofEpochSecond(ThreadLocalRandom.current().nextLong(startInclusive.getEpochSecond(), endExclusive.getEpochSecond()));
     }
 }
