@@ -1,0 +1,75 @@
+{
+  "type": "index_parallel",
+  "spec": {
+    "ioConfig": {
+      "type": "index_parallel",
+      "inputSource": {
+        "type": "s3",
+        "prefixes": [
+          "s3://sku/topics/skus/y=2022/m=01/",
+          "s3://sku/topics/skus/y=2022/m=02/",
+          "s3://sku/topics/skus/y=2022/m=03/",
+          "s3://sku/topics/skus/y=2022/m=04/",
+          "s3://sku/topics/skus/y=2022/m=05/"
+        ],
+        "properties": {
+          "secretAccessKey": {
+            "type": "default",
+            "password": "druid_secret"
+          },
+          "accessKeyId": {
+            "type": "default",
+            "password": "druid"
+          }
+        }
+      },
+      "inputFormat": {
+        "type": "json"
+      }
+    },
+    "tuningConfig": {
+      "type": "index_parallel"
+    },
+    "dataSchema": {
+      "dataSource": "skus2",
+      "timestampSpec": {
+        "column": "timestamp",
+        "format": "auto"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          "sku",
+          "storeId"
+        ],
+        "dimensionExclusions": []
+      },
+      "metricsSpec": [
+        {
+          "type": "count",
+          "name": "count"
+        },
+        {
+          "type": "longSum",
+          "fieldName": "quantity",
+          "name": "quantity"
+        }
+      ],
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": {
+          "type": "duration",
+          "duration": "300000"
+        },
+        "queryGranularity": "minute",
+        "rollup": true,
+        "intervals": [
+          "2022-01-01T00:00:00/2022-05-01T00:00:00"
+        ]
+      },
+      "transformSpec": {
+        "filter": null,
+        "transforms": []
+      }
+    }
+  }
+}

@@ -7,5 +7,7 @@ cd $(dirname $0)/../..
 (cd ksqlDB; docker compose down -v)
 
 (cd dashboards; docker compose down -v)
+(cd storage; docker compose down -v)
+(cd connect; docker compose down -v)
 (cd druid; docker compose down -v)
 (cd kafka; docker compose down -v)
