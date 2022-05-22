@@ -1,0 +1,57 @@
+{
+  "connector.class": "io.confluent.connect.s3.S3SinkConnector",
+
+  "tasks.max": "1",
+
+  "topics": "skus",
+  "partitioner.class": "io.confluent.connect.storage.partitioner.TimeBasedPartitioner",
+  "path.format": "'y'=YYYY/'m'=MM/'d'=dd/'H'=HH",
+  "partition.duration.ms" : 3600000,
+  "locale" : "en-US",
+  "timezone" : "UTC",
+ 
+  "_timestamp.extractor" : "Record",
+
+  "timestamp.extractor" : "RecordField",
+  "timestamp.field" : "timestamp",
+
+  "_rotate.interval.ms" : "...",
+ 
+  "format.class" : "io.confluent.connect.s3.format.json.JsonFormat",
+  "storage.class": "io.confluent.connect.s3.storage.S3Storage",
+
+  "_store.url" : "_ this is to test against a local s3 complaint server _",
+  "store.url" : "http://minio:9000",
+
+  "s3.region": "local",
+  "s3.bucket.name": "sku",
+
+  "_aws" : "aws client jar uses global configuration (so misleading & insecure - if configured here), deploy creds as part of your deployment",
+  "_aws.access.key.id": "${file:/etc/kafka-connect/secrets/aws.properties:AWS_ACCESS_KEY_ID}",
+  "_aws.secret.access.key": "${file:/etc/kafka-connect/secrets/aws.properties:AWS_SECRET_ACCESS_KEY}",
+
+  "aws.access.key.id": "admin",
+  "aws.secret.access.key": "miniominio",
+
+  "s3.part.size": "5242880",
+  "s3.compression.type": "gzip",
+  "flush.size": "100",
+
+  "_key.converter": "org.apache.kafka.connect.converters.ByteArrayConverter",
+  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "key.converter.schemas.enable": false,
+
+  "_value.converter": "org.apache.kafka.connect.converters.ByteArrayConverter",
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "value.converter.schemas.enable": false,
+
+
+  "errors.tolerance": "none",
+
+  "_errors.tolerance": "all",
+  "errors.deadletterqueue.topic.name":"connect.sink.dlt.S3SinkConnector",
+  "errors.log.include.messages" : true,
+  "errors.deadletterqueue.context.headers.enable" : true,
+  "errors.deadletterqueue.topic.replication.factor": 3
+
+}
