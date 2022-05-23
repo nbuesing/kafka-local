@@ -96,26 +96,11 @@ fi
 echo "DATASET ID: $DATASET_ID"
 
 
-
-
-
 ########
 #
 # chart
 #
 
-#curl -s -X POST -H "Authorization:Bearer ${TOKEN}" -H "Content-Type:application/json" --data "${DATASET}" ${API_URL}/dataset/ 
-
-
-
-
-
-
-#declare -a COUNTRIES=(usa canada india russia germany france uk china)
-#for country in ${COUNTRIES[@]}; do
-#  echo $country
-#  cat ./chart_country.json | sed "s/#COUNTRY#/${country}/g" | sed "s/#DATASOURCE_ID#/${DATASET_ID}/g" > ./tmp/chart_${country}.json
-#  curl -s -X POST -H "Authorization:Bearer ${TOKEN}" -H "Content-Type:application/json" --data "@./tmp/chart_${country}.json" ${API_URL}/chart/
-#curl -s -X GET -H "Authorization:Bearer ${TOKEN}" -H "Content-Type:application/json" ${API_URL}/chart/foo
-#done
+curl -s -X POST -H "Authorization:Bearer ${TOKEN}" -H "Content-Type:application/json" --data "@./superset/chart_pivot.json" ${API_URL}/chart/
+curl -s -X POST -H "Authorization:Bearer ${TOKEN}" -H "Content-Type:application/json" --data "@./superset/chart_line.json" ${API_URL}/chart/
 
