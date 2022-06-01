@@ -11,3 +11,4 @@ cd $(dirname $0)/../..
 (cd kafka; docker compose down -v)
 
 (cd mysql; docker compose down -v)
+(cd mongo; docker compose down -v)

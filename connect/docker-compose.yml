@@ -21,6 +21,12 @@ services:
     ports:
       - "18083:8083"
       - "17072:7071"
+    healthcheck:
+      test: curl --fail http://localhost:8083/connector-plugins || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
     volumes:
       - c1_kafka_data:/var/lib/kafka/data
       - c1_kafka_secrets:/etc/kafka/secrets
@@ -59,6 +65,12 @@ services:
     container_name: connect-2
     ports:
       - "28083:8083"
+    healthcheck:
+      test: curl --fail http://localhost:8083/connector-plugins || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
     volumes:
       - c2_kafka_data:/var/lib/kafka/data
       - c2_kafka_secrets:/etc/kafka/secrets

@@ -7,5 +7,6 @@ cd $(dirname $0)/../..
 (cd mysql; docker compose up -d)
 (cd kafka; docker compose up -d)
 (cd connect; docker compose up -d)
-(cd monitoring; docker compose up -d )
-#(cd monitoring; docker compose up -d prometheus grafana)
+(cd monitoring; docker compose up -d prometheus grafana)
+#(cd monitoring; docker compose up -d )
+(cd connect; docker compose up -d --wait)

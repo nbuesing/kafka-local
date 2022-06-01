@@ -8,13 +8,19 @@ networks:
 
 services:
   jobmanager:
-    image: flink:1.14.0-scala_2.12-java11
+    image: flink:1.15.0-scala_2.12-java11
     container_name: flink_jobmanager
     ports:
       - "48081:8081"
       - "46123:6123"
       - "46124:6124"
       - "46125:6125"
+    healthcheck:
+      test: curl --fail http://localhost:8081/overview
+      interval: 15s
+      timeout: 5s
+      retries: 30
+      start_period: 0s
     command: jobmanager
     environment:
       - |
@@ -26,11 +32,17 @@ services:
       - ./tmp:/Users/buesing/workspaces/gorillio/beam-pipelines/pipeline
 
   taskmanager:
-    image: flink:1.14.0-scala_2.12-java11
+    image: flink:1.15.0-scala_2.12-java11
     depends_on:
       - jobmanager
     command: taskmanager
     scale: 2
+    healthcheck:
+      test: exit 0
+      interval: 15s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
     environment:
       - |
         FLINK_PROPERTIES=
