@@ -4,7 +4,7 @@ networks:
     name: kafka-local
 
 volumes:
-  data: {}
+  cassandra_data: {}
   etc: {}
 
 services:
@@ -18,14 +18,17 @@ services:
       test: ["CMD", "cqlsh", "-e", "describe keyspaces" ]
       interval: 5s
       timeout: 5s
-      retries: 60
+      retries: 20
+      start_period: 20s
     volumes:
-      - data:/var/lib/cassandra    
+      - cassandra_data:/var/lib/cassandra    
       - etc:/etc/cassandra   
+      - ./data:/data
     environment:
       CASSANDRA_CLUSTER_NAME: cassandra
+      CASSANDRA_DATACENTER: dc_main
+      CASSANDRA_PASSWORD: cassandra
 #      CASSANDRA_SEEDS: "cass1,cass2"    
-#      CASSANDRA_DC: Mars
 #      CASSANDRA_RACK: West
 #      CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
 #      CASSANDRA_NUM_TOKENS: 128

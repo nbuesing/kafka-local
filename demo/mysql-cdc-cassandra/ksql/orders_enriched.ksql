@@ -1,0 +1,18 @@
+create stream ORDERS_ENRICHED with(VALUE_FORMAT='avro')
+ as
+  select 
+      cast(O.ORDER_ID as string) as ORDER_KEY,
+      O.ROWTIME                  as ORDER_TS,
+      AS_VALUE(O.ORDER_ID)       as ORDER_ID,
+      O.USER_ID                  as USER_ID,
+      U.USER_NAME                as USER_NAME,
+      O.STORE_ID                 as STORE_ID,
+      S.STORE_NAME               as STORE_NAME,
+      O.QUANTITY                 as QUANTITY,
+      O.TS			             as TS
+    from ORDERS O
+    join USERS  U on U.USER_ID  = O.USER_ID
+    join STORES S on S.STORE_ID = O.STORE_ID
+    partition by cast(O.ORDER_ID as string);
+
+describe ORDERS_ENRICHED extended;

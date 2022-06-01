@@ -18,15 +18,15 @@ services:
 ##    tty: true
 
   ksql-server:
-    image: confluentinc/ksqldb-server:0.23.1
+    image: confluentinc/ksqldb-server:0.25.1
     hostname: ksql-server
     container_name: ksql-server
     healthcheck:
       test: curl -f http://localhost:8088/healthcheck || exit 1
       interval: 5s
       timeout: 5s
-      retries: 5
-      start_period: 60s
+      retries: 20
+      start_period: 20s
     ports:
       - '8088:8088'
     volumes:
@@ -59,7 +59,7 @@ services:
       KSQL_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/streams-config.yml
 
 #  ksql-server-2:
-#    image: confluentinc/ksqldb-server:0.23.1
+#    image: confluentinc/ksqldb-server:0.25.1
 #    hostname: ksql-server-2
 #    container_name: ksql-server-2
 #    healthcheck:

@@ -20,6 +20,7 @@ jmxterm.jar
 /connect/tmp/*
 /mysql5/data/*
 /mysql/data/*
+/cassandra/data/*
 /oracle/data/*
 /druid/storage/*
 /druid/staging/*

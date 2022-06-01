@@ -26,7 +26,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
-      start_period: 30s
+      start_period: 20s
     volumes:
       - c1_kafka_data:/var/lib/kafka/data
       - c1_kafka_secrets:/etc/kafka/secrets
@@ -70,7 +70,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
-      start_period: 30s
+      start_period: 20s
     volumes:
       - c2_kafka_data:/var/lib/kafka/data
       - c2_kafka_secrets:/etc/kafka/secrets
