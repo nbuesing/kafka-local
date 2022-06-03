@@ -8,16 +8,13 @@
   "_loadBalancing.localDc": "dc_main",
   "loadBalancing.localDc": "datacenter1",
 
-  "topic.mysql_main.MAIN.orders.main.orders.mapping": "order_id=value.order_id, store_id=value.store_id, user_id=value.user_id, quantity=value.quantity, ts=value.ts",
-  "topic.mysql_main.MAIN.orders.main.orders.consistencyLevel": "LOCAL_QUORUM",
+  "topic._mysql_.main.orders.main.orders.mapping": "order_id=value.order_id, store_id=value.store_id, user_id=value.user_id, quantity=value.quantity, ts=value.ts",
+  "topic._mysql_.main.orders.main.orders.consistencyLevel": "LOCAL_QUORUM",
 
-  "topic.ORDERS_ENRICHED.main.orders_enriched.mapping": "order_id=value.ORDER_ID, store_id=value.STORE_ID, store_name=value.STORE_NAME, user_id=value.USER_ID, user_name=value.USER_NAME, quantity=value.QUANTITY, ts=value.TS",
-  "topic.ORDERS_ENRICHED.main.orders_enriched.consistencyLevel": "LOCAL_QUORUM",
+  "topic.MYSQL_ORDERS_ENRICHED.main.orders_enriched.mapping": "order_id=value.ORDER_ID, store_id=value.STORE_ID, store_name=value.STORE_NAME, user_id=value.USER_ID, user_name=value.USER_NAME, quantity=value.QUANTITY, ts=value.TS",
+  "topic.MYSQL_ORDERS_ENRICHED.main.orders_enriched.consistencyLevel": "LOCAL_QUORUM",
 
-  "_database": "_DATABASE_",
-  "_collection": "_COLLECTION_",
-
-  "topics": "mysql_main.MAIN.orders,ORDERS_ENRICHED",
+  "topics": "_mysql_.main.orders,MYSQL_ORDERS_ENRICHED",
 
   "key.converter": "org.apache.kafka.connect.storage.StringConverter",
   "key.converter.schemas.enable": "false",
@@ -29,8 +26,6 @@
   "value.converter.schema.registry.url": "http://schema-registry:8081",
   "value.converter.schemas.enable": "true",
 
-  "__TODO__" : "predicate so it is only for order enriched",
-
   "transforms"                       : "convertTS",
   "transforms.convertTS.type"        : "org.apache.kafka.connect.transforms.TimestampConverter$Value",
   "transforms.convertTS.field"       : "TS",
@@ -39,5 +34,5 @@
 
   "predicates"                              : "isEnrichedTopic",
   "predicates.isEnrichedTopic.type"          : "org.apache.kafka.connect.transforms.predicates.TopicNameMatches",
-  "predicates.isEnrichedTopic.pattern"       : "ORDERS_ENRICHED"
+  "predicates.isEnrichedTopic.pattern"       : "MYSQL_ORDERS_ENRICHED"
 }

@@ -1,0 +1,27 @@
+{
+  "connector.class": "com.datastax.oss.kafka.sink.CassandraSinkConnector",
+
+  "tasks.max": 1,
+
+  "contactPoints": "cassandra",
+  "port": "9042",
+  "_loadBalancing.localDc": "dc_main",
+  "loadBalancing.localDc": "datacenter1",
+
+  "topic.ALL_ORDERS.main.all_orders.mapping": "source_system=value.SOURCE_SYSTEM, order_id=value.ORDER_ID, store_id=value.STORE_ID, store_name=value.STORE_NAME, user_id=value.USER_ID, user_name=value.USER_NAME, quantity=value.QUANTITY, ts=value.ORDER_TS",
+  "topic.ALL_ORDERS.main.all_orders.consistencyLevel": "LOCAL_QUORUM",
+
+  "topics": "ALL_ORDERS",
+
+  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "key.converter.schemas.enable": "false",
+
+  "value.converter": "io.confluent.connect.avro.AvroConverter",
+  "value.converter.schema.registry.url": "http://schema-registry:8081",
+  "value.converter.schemas.enable": "true",
+
+  "transforms"                       : "convertTS",
+  "transforms.convertTS.type"        : "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+  "transforms.convertTS.field"       : "TS",
+  "transforms.convertTS.target.type" : "unix"
+}

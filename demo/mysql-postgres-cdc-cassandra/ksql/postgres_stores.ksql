@@ -1,0 +1,6 @@
+create or replace table POSTGRES_STORES (
+  store_id 	  varchar primary key,
+  store_name 	  varchar
+) with (kafka_topic='_postgres_.public.stores', value_format='avro', key_format='kafka');
+
+describe POSTGRES_STORES extended;

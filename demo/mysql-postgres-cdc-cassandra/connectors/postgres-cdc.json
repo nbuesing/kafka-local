@@ -1,27 +1,42 @@
 {
 
-  "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+  "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
 
-  "tasks.max": "1",
+  "tasks.max": "3",
 
-  "database.hostname": "mysql",
-  "database.port": "3306",
-  "database.user": "root",
-  "database.password": "mysql",
+  "database.hostname": "postgres",
+  "database.port": "5432",
+  "database.user": "admin",
+  "database.password": "postgres",
 
   "database.server.id": "111111",
-  "database.server.name": "mysql_main",
+  "database.server.name": "_postgres_",
 
-  "database.include.list": "MAIN",
+  "database.include.list": "main",
 
-  "_table.include.list": "users,stores,orders",
+  "schema.whitelist": "main,public",
 
-  "snapshot.mode" : "schema_only",
-  "_snapshot.mode" : "schema_only_recovery",
+  "database.dbname": "main",
+
+  "_snapshot.mode" : "always,never,initial_only,exported,custom",
+  "snapshot.mode" : "always",
+
+  "_plugin.name": "w/out this set, the following error occurs -> ERROR: could not access file 'decoderbufs': No such file or directory",
+  "plugin.name": "pgoutput",
+
+  "publication.autocreate.mode" : "all_tables",
 
   "database.history.kafka.bootstrap.servers": "broker-1:9092,broker-2:9092,broker-3:9092",
-  "database.history.kafka.topic": "dbhistory.MAIN",
+  "database.history.kafka.topic": "dbhistory._postgres_",
   "include.schema.changes": "true" ,
+
+  "_key.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "key.converter.schemas.enable": "false",
+
+  "value.converter": "io.confluent.connect.avro.AvroConverter",
+  "value.converter.schema.registry.url": "http://schema-registry:8081",
+
 
   "transforms": "unwrap,extract_user_pk,extract_store_pk,extract_order_pk",
   "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
@@ -40,21 +55,12 @@
 
   "predicates" : "user_topic,store_topic,order_topic",
   "predicates.user_topic.type": "org.apache.kafka.connect.transforms.predicates.TopicNameMatches",
-  "predicates.user_topic.pattern": "mysql_main.MAIN.users",
+  "predicates.user_topic.pattern": ".*users",
 
   "predicates.store_topic.type": "org.apache.kafka.connect.transforms.predicates.TopicNameMatches",
-  "predicates.store_topic.pattern": "mysql_main.MAIN.stores",
+  "predicates.store_topic.pattern": ".*stores",
 
   "predicates.order_topic.type": "org.apache.kafka.connect.transforms.predicates.TopicNameMatches",
-  "predicates.order_topic.pattern": "mysql_main.MAIN.orders",
-
-
-  "_key.converter": "org.apache.kafka.connect.json.JsonConverter",
-  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
-  "key.converter.schemas.enable": "false",
-
-  "value.converter": "io.confluent.connect.avro.AvroConverter",
-  "value.converter.schema.registry.url": "http://schema-registry:8081"
-
+  "predicates.order_topic.pattern": ".*orders"
 
 }

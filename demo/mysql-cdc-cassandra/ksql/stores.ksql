@@ -1,6 +1,0 @@
-create or replace table STORES (
-  store_id 	  varchar primary key,
-  store_name 	  varchar
-) with (kafka_topic='mysql_main.MAIN.stores', value_format='avro', key_format='kafka');
-
-describe STORES extended;

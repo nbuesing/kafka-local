@@ -1,0 +1,6 @@
+create or replace table POSTGRES_USERS (
+  user_id 	  varchar primary key,
+  user_name 	  varchar
+) with (kafka_topic='_postgres_.public.users', value_format='avro', key_format='kafka');
+
+describe POSTGRES_USERS extended;

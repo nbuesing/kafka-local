@@ -1,0 +1,6 @@
+create or replace table MYSQL_USERS (
+  user_id 	  varchar primary key,
+  user_name 	  varchar
+) with (kafka_topic='_mysql_.main.users', value_format='avro', key_format='kafka');
+
+describe MYSQL_USERS extended;

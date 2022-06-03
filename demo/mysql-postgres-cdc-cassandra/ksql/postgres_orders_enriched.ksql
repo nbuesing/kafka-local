@@ -1,4 +1,4 @@
-create stream ORDERS_ENRICHED with(VALUE_FORMAT='avro')
+create stream POSTGRES_ORDERS_ENRICHED with(VALUE_FORMAT='avro')
  as
   select 
       cast(O.ORDER_ID as string) as ORDER_KEY,
@@ -9,10 +9,10 @@ create stream ORDERS_ENRICHED with(VALUE_FORMAT='avro')
       O.STORE_ID                 as STORE_ID,
       S.STORE_NAME               as STORE_NAME,
       O.QUANTITY                 as QUANTITY,
-      O.TS			             as TS
-    from ORDERS O
-    join USERS  U on U.USER_ID  = O.USER_ID
-    join STORES S on S.STORE_ID = O.STORE_ID
+      O.TS			 as TS
+    from POSTGRES_ORDERS O
+    join POSTGRES_USERS  U on U.USER_ID  = O.USER_ID
+    join POSTGRES_STORES S on S.STORE_ID = O.STORE_ID
     partition by cast(O.ORDER_ID as string);
 
-describe ORDERS_ENRICHED extended;
+describe POSTGRES_ORDERS_ENRICHED extended;

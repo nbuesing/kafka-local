@@ -1,0 +1,6 @@
+create or replace table MYSQL_STORES (
+  store_id 	  varchar primary key,
+  store_name 	  varchar
+) with (kafka_topic='_mysql_.main.stores', value_format='avro', key_format='kafka');
+
+describe MYSQL_STORES extended;

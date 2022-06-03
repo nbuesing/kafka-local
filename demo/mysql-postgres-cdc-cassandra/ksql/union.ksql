@@ -1,0 +1,30 @@
+
+
+create stream "ALL_ORDERS" with(VALUE_FORMAT='avro')
+as
+SELECT
+  'postgres' as SOURCE_SYSTEM,
+  concat('postgres|', ORDER_KEY) as ORDER_KEY,
+  ORDER_TS,
+  ORDER_ID,
+  USER_ID,
+  USER_NAME,
+  STORE_ID,
+  STORE_NAME,
+  QUANTITY
+ FROM POSTGRES_ORDERS_ENRICHED
+ PARTITION BY concat('postgres|', ORDER_KEY);
+
+insert into "ALL_ORDERS"
+SELECT
+  'mysql' as SOURCE_SYSTEM,
+  concat('mysql|', ORDER_KEY) as ORDER_KEY,
+  ORDER_TS,
+  ORDER_ID,
+  USER_ID,
+  USER_NAME,
+  STORE_ID,
+  STORE_NAME,
+  QUANTITY
+ FROM MYSQL_ORDERS_ENRICHED
+ PARTITION BY concat('mysql|', ORDER_KEY);

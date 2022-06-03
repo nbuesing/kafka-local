@@ -3,8 +3,7 @@
 .gradle
 grafana.db
 build
-
-
+/*/data/*
 
 node_modules
 package-lock.json
@@ -16,23 +15,18 @@ jmxterm.jar
 /tmp
 /ksqlDB/ext/*
 /connect/jars/*
-/connect/data/*
+
 /connect/tmp/*
-/mysql5/data/*
-/mysql/data/*
-/cassandra/data/*
-/oracle/data/*
 /druid/storage/*
 /druid/staging/*
 /oracle/init.d/startup
 /oracle/init.d/startup.stage
 /flink/jars/*
-/flink/data/*
 /flink/tmp/*
-/s3/data/*
-
-/storage/data/*
 /demo/**/tmp/*
 
-
 /connect/secrets/opensky.properties
+
+/gradle
+/gradlew
+/gradlew.bat

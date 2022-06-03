@@ -25,7 +25,8 @@ for i in $(seq $COUNT); do
 
  	echo "creating order order_id=${order_id}, store_id=${store_id}, user_id=${user_id}, quantity=${quantity}, ts=${ts}"
 
-	docker exec mysql sh -c "echo \"insert into orders values('${order_id}', '${store_id}', '${user_id}', ${quantity}, '${ts}')\" | mysql --user=user --password=userpw MAIN 2>/dev/null"
+	docker exec mysql sh -c "echo \"insert into orders values('${order_id}', '${store_id}', '${user_id}', ${quantity}, '${ts}')\" | mysql --user=user --password=userpw main"
+	docker exec postgres sh -c "echo \"insert into orders values('${order_id}', '${store_id}', '${user_id}', ${quantity}, '${ts}')\" | psql --dbname=main --user=admin"
 
 #        sleep 0.1
 done

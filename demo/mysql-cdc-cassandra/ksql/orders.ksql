@@ -1,9 +1,0 @@
-create or replace stream ORDERS (
-  order_id 	varchar,
-  user_id 	varchar,
-  store_id 	varchar,
-  quantity 	bigint,
-  ts            timestamp
-) with (kafka_topic='mysql_main.MAIN.orders', value_format='avro', key_format='kafka');
-
-describe ORDERS extended;

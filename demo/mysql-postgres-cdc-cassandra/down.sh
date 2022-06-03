@@ -10,4 +10,5 @@ cd $(dirname $0)/../..
 (cd connect; docker compose down -v)
 (cd kafka; docker compose down -v)
 (cd mysql; docker compose down -v)
+(cd postgres; docker compose down -v)
 (cd cassandra; docker compose down -v)
