@@ -1,24 +1,23 @@
 {
   "connector.class" : "io.debezium.connector.mongodb.MongoDbConnector",
+
   "tasks.max": "1",
 
   "mongodb.hosts": "rs0/mongo:27017", 
-  "_mongodb.hosts": "rs0/mongodb:27017", 
+  "mongodb.user": "root",
+  "mongodb.password": "mongo",
   
-  "mongodb.name": "_DATABASE_",
-  "__collection.include.list": "_COLLECTION_",
+  "mongodb.name": "restheart",
 
   "database.history.kafka.bootstrap.servers" : "broker-1:9092",
 
   "_key.converter": "org.apache.kafka.connect.storage.StringConverter",
-  "__key.converter": "io.confluent.connect.avro.AvroConverter",
-  "__value.converter": "io.confluent.connect.avro.AvroConverter",
+  "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "key.converter.schemas.enable": false,
 
-  "___key.converter": "org.apache.kafka.connect.json.JsonConverter",
-  "___key.converter.schemas.enable": false,
-
-  "___value.converter": "org.apache.kafka.connect.json.JsonConverter",
-  "___value.converter.schemas.enable": false,
+  "_value.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "value.converter.schemas.enable": false,
 
   "transforms" : "flatten,unwrap",
 
@@ -31,4 +30,5 @@
 
   "transforms.after.type" : "org.apache.kafka.connect.transforms.Flatten$Value",
   "transforms.after.blacklist" : "after"
+
 }

@@ -2,16 +2,23 @@
   "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
   "tasks.max": 1,
 
-  "connection.uri": "mongodb://mongo:27017",
-  "database": "_DATABASE_",
-  "collection": "_COLLECTION_",
+  "connection.uri": "mongodb://root:mongo@mongo:27017",
+  "database": "restheart",
+  "collection": "DEF",
 
-  "topics": "ORDERS_ENRICHED",
+  "topics": "restheart.restheart.ABC",
 
   "key.converter": "org.apache.kafka.connect.storage.StringConverter",
   "key.converter.schemas.enable": "false",
 
+  "_value.converter": "org.apache.kafka.connect.storage.StringConverter",
   "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-  "value.converter.schemas.enable": "false"
+  "value.converter.schemas.enable": "false",
+
+  "errors.tolerance": "all",
+  "errors.deadletterqueue.topic.name":"connect.sink.dlt.S3SinkConnector",
+  "errors.log.include.messages" : true,
+  "errors.deadletterqueue.context.headers.enable" : true,
+  "errors.deadletterqueue.topic.replication.factor": 3
 
 }
