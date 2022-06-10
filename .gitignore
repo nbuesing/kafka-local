@@ -4,26 +4,30 @@
 grafana.db
 build
 /*/data/*
+/*/jars/*
+
+/tmp
+/*/tmp/*
+/demo/**/tmp/*
+/demo/**/*.jar
+
+*.bak
+jmxterm.jar
 
 node_modules
 package-lock.json
 
-*.bak
-
-jmxterm.jar
-
-/tmp
 /ksqlDB/ext/*
-/connect/jars/*
 
-/connect/tmp/*
 /druid/storage/*
 /druid/staging/*
 /oracle/init.d/startup
 /oracle/init.d/startup.stage
-/flink/jars/*
-/flink/tmp/*
-/demo/**/tmp/*
+
+/cassandra3/debezium/*.log
+/cassandra3/debezium/*.jar
+/cassandra3/debezium/offsets
+/cassandra3/debezium/relocation
 
 /connect/secrets/opensky.properties
 

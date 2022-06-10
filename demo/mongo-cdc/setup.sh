@@ -10,8 +10,8 @@ alias kt='kafka-topics --bootstrap-server localhost:19092,localhost:29092,localh
 $CONNECT available
 [ $? -ne 0 ] && echo "connector RESTful API is not yet available, aborting script. wait until connector is ready to run this script." && exit 1
 
-#kt --create --replication-factor 3 --partitions 4 --topic mysql_main.MAIN.users
-#kt --create --replication-factor 3 --partitions 4 --topic mysql_main.MAIN.stores
+kt --create --replication-factor 3 --partitions 4 --topic users
+kt --create --replication-factor 3 --partitions 4 --topic stores
 #kt --create --replication-factor 3 --partitions 4 --topic mysql_main.MAIN.orders
 
 #restheart.restheart.ABC

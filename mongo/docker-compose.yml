@@ -44,9 +44,11 @@ services:
     ports:
       - "28080:8080"
     volumes:
+      - ./restheart/default.properties:/opt/restheart/etc/default.properties
       - ./restheart/users.yml:/opt/restheart/etc/users.yml
     environment:
-      MONGO_URI: mongodb://root:mongo@mongo:27017/?directConnection=true?authSource=admin
+      MONGO_URI: mongodb://root:mongo@mongo:27017/?directConnection=true
+      #MONGO_URI: mongodb://root:mongo@mongo:27017/?directConnection=true?authSource=admin
     depends_on:
       - mongo
     command: ["--envFile", "/opt/restheart/etc/default.properties"]

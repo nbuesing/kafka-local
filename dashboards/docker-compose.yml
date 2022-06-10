@@ -36,3 +36,19 @@ services:
     environment:
       DRUID: http://druid-router:8888
 
+  #
+  #GNU Affero General Public License (AGPL),
+  #
+  metabase:
+    image: metabase/metabase:v0.43.3
+    container_name: metabase
+    #healthcheck:
+    #  test: wget --spider http://localhost:3000 || exit 1
+    #  start_period: 3s
+    #  interval: 3s
+    #  timeout: 2s
+    #  retries: 3
+    ports:
+      - 23000:3000
+    #environment:
+    #  WTF_CSRF_ENABLED: "False"

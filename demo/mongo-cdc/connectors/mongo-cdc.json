@@ -7,7 +7,7 @@
   "mongodb.user": "root",
   "mongodb.password": "mongo",
   
-  "mongodb.name": "restheart",
+  "mongodb.name": "_mongo_",
 
   "database.history.kafka.bootstrap.servers" : "broker-1:9092",
 

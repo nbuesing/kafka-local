@@ -28,7 +28,7 @@ for i in $(seq $COUNT); do
         DOC="{ \"order_id\" : \"${order_id}\"  }"
 
 	#curl -i -H "Content-Type:application/json" -X POST -u "admin:restheart" http://localhost:28080/ABC -d "${DOC}"
-	curl -i -H "Content-Type:application/json" -X POST -u "admin:secret" http://localhost:28080/ABC -d "${DOC}"
+	curl -i -H "Content-Type:application/json" -X POST -u "admin:secret" http://localhost:28080/main -d "${DOC}"
 
 #        sleep 0.1
 
