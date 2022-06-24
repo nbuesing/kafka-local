@@ -65,7 +65,7 @@ services:
 
 
   druid-coordinator:
-    image: apache/druid:0.22.1
+    image: apache/druid:0.23.0
     container_name: druid-coordinator
     hostname: druid-coordinator
     healthcheck:
@@ -93,7 +93,7 @@ services:
       # -Djava.rmi.server.hostname=0.0.0.0 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.rmi.port=9999 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
 
   druid-broker:
-    image: apache/druid:0.22.1
+    image: apache/druid:0.23.0
     container_name: druid-broker
     hostname: druid-broker
     healthcheck:
@@ -124,7 +124,7 @@ services:
 #          memory: 1.25G 
 
   druid-historical:
-    image: apache/druid:0.22.1
+    image: apache/druid:0.23.0
     container_name: druid-historical
     hostname: druid-historical
     healthcheck:
@@ -152,7 +152,7 @@ services:
       JAVA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/druid-config.yml
 
   druid-middlemanager:
-    image: apache/druid:0.22.1
+    image: apache/druid:0.23.0
     container_name: druid-middlemanager
     hostname: druid-middlemanager
 #    deploy:
@@ -183,7 +183,7 @@ services:
       JAVA_OPTS: -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/druid-config.yml
 
   druid-router:
-    image: apache/druid:0.22.1
+    image: apache/druid:0.23.0
     container_name: druid-router
     hostname: druid-router
     healthcheck:
